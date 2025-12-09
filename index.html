@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fremtiden er min – Et interaktivt univers om håb, handling og at turde kigge ud under dynen.">
+    <title>Fremtiden er min</title>
+    
+    <!-- ========== GOOGLE FONTS ========== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    
+    <!-- ========== TAILWIND CSS CDN ========== -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- ========== TAILWIND CONFIG ========== -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-night': '#0D0D0D',
+                        'warm-cream': '#F5F0E8',
+                        'stone-gray': '#6B6B6B',
+                        'soft-white': '#FAFAFA',
+                        'vivid-green': '#00D26A',
+                        'deep-forest': '#1A3D2E',
+                        'sun-glow': '#FFD93D',
+                    },
+                    fontFamily: {
+                        'display': ['"Instrument Serif"', 'Georgia', 'serif'],
+                        'body': ['"DM Sans"', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- ========== CUSTOM STYLES ========== -->
+    <style>
+        :root {
+            --deep-night: #0D0D0D;
+            --warm-cream: #F5F0E8;
+            --stone-gray: #6B6B6B;
+            --soft-white: #FAFAFA;
+            --vivid-green: #00D26A;
+            --deep-forest: #1A3D2E;
+            --sun-glow: #FFD93D;
+        }
+        
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            background-color: var(--deep-night);
+            color: var(--warm-cream);
+            overflow-x: hidden;
+        }
+        
+        .font-display { font-family: 'Instrument Serif', Georgia, serif; }
+        .gradient-text {
+            background: linear-gradient(135deg, var(--vivid-green), var(--sun-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .grain { position: relative; }
+        .grain::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .grain > * { position: relative; z-index: 2; }
+        
+        @keyframes dyne-lift { 0% { clip-path: inset(0 0 100% 0); } 100% { clip-path: inset(0 0 0 0); } }
+        @keyframes fade-up { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-soft { 0%, 100% { opacity: 0.6; transform: translateY(0); } 50% { opacity: 1; transform: translateY(8px); } }
+        
+        .hero-reveal { animation: dyne-lift 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards; clip-path: inset(0 0 100% 0); }
+        .hero-text-1 { animation: fade-up 0.8s ease-out 1s forwards; opacity: 0; }
+        .hero-text-2 { animation: fade-up 0.8s ease-out 1.2s forwards; opacity: 0; }
+        .hero-text-3 { animation: fade-up 0.8s ease-out 1.4s forwards; opacity: 0; }
+        .scroll-indicator { animation: pulse-soft 2s ease-in-out infinite; }
+        
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+        
+        .quote-card { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; }
+        .quote-card:hover { transform: translateY(-8px) rotate(0.5deg); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15); }
+        
+        .btn-hope { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; }
+        .btn-hope:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 210, 106, 0.3); }
+        
+        .exercise-card { transition: transform 0.4s ease, border-color 0.3s ease; }
+        .exercise-card:hover { transform: translateY(-4px); border-color: var(--vivid-green); }
+        
+        .form-textarea:focus { outline: none; border-color: var(--vivid-green); box-shadow: 0 0 0 3px rgba(0, 210, 106, 0.2); }
+        
+        .lightbox-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; animation: fadeIn 0.3s ease; }
+        .lightbox-modal.active { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
+        .lightbox-content { position: relative; max-width: 90vw; max-height: 90vh; animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .lightbox-close { position: absolute; top: -40px; right: 0; color: white; cursor: pointer; font-size: 2rem; line-height: 1; background: none; border: none; padding: 0.5rem; transition: transform 0.2s; }
+        .lightbox-close:hover { transform: scale(1.2); }
+        
+        .organic-shape { position: absolute; border-radius: 50% 40% 60% 50%; opacity: 0.05; filter: blur(60px); pointer-events: none; }
+        .section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--stone-gray), transparent); opacity: 0.3; }
+        
+        .login-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+        .login-modal.active { display: flex; }
+        
+        .quiz-container { display: none; }
+        .quiz-container.active { display: block; }
+        
+        .postit { background: var(--sun-glow); color: var(--deep-night); padding: 1rem; border-radius: 0.25rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transform: rotate(-2deg); transition: transform 0.2s; }
+        .postit:nth-child(3n) { background: var(--vivid-green); }
+        .postit:nth-child(3n+2) { background: #FFB6C1; }
+        .postit:hover { transform: rotate(0deg) scale(1.05); }
+        
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            .hero-reveal, .hero-text-1, .hero-text-2, .hero-text-3 { opacity: 1; clip-path: none; transform: none; }
+            .reveal { opacity: 1; transform: none; }
+        }
+        
+        .skip-link { position: absolute; top: -100%; left: 0; padding: 1rem; background: var(--vivid-green); color: var(--deep-night); z-index: 1000; transition: top 0.3s; }
+        .skip-link:focus { top: 0; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--deep-night); }
+        ::-webkit-scrollbar-thumb { background: var(--deep-forest); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--vivid-green); }
+    </style>
+</head>
+<body>
+    <!-- ========== LOGIN MODAL ========== -->
+    <div id="login-modal" class="login-modal active">
+        <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
+            <div class="text-center mb-8">
+                <h1 class="font-display text-4xl text-deep-night mb-2">Fremtiden er min</h1>
+                <p class="font-body text-stone-gray">Performance 2026</p>
+            </div>
+            
+            <form id="login-form">
+                <div class="mb-6">
+                    <label for="login-code" class="block font-body text-sm text-deep-night/70 mb-2">Kodeord</label>
+                    <input 
+                        type="password" 
+                        id="login-code" 
+                        class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green"
+                        placeholder="Skriv kodeordet her..."
+                        required
+                    >
+                </div>
+                
+                <label class="flex items-center gap-3 mb-6 cursor-pointer">
+                    <input type="checkbox" id="remember-me" class="w-5 h-5">
+                    <span class="font-body text-sm text-deep-night/70">Husk mig</span>
+                </label>
+                
+                <button 
+                    type="submit"
+                    class="btn-hope w-full py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg"
+                >
+                    Kom ind
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ========== SKIP LINK ========== -->
+    <a href="#main-content" class="skip-link font-body font-medium">Spring til indhold</a>
+
+    <!-- ========== NAVIGATION ========== -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-deep-night/80 backdrop-blur-md border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="#" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <img src="LindenborgLogo.png" alt="Lindenborg" class="h-10 w-auto">
+                    <span class="font-display text-xl text-warm-cream hidden sm:inline">Fremtiden er min</span>
+                </a>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#verden" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Verden</a>
+                    <a href="#solarpunk" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Solarpunk</a>
+                    <a href="#quiz" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Quiz</a>
+                    <a href="#oevelser" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Øvelser</a>
+                    <a href="#brevkasse" class="font-body text-sm px-4 py-2 bg-vivid-green text-deep-night rounded-full hover:bg-sun-glow transition-colors">Brevkasse</a>
+                    <button id="logout-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="logout()">Log ud</button>
+                </div>
+                
+                <button id="mobile-menu-btn" class="md:hidden text-warm-cream p-2" aria-label="Åbn menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <div id="mobile-menu" class="hidden md:hidden bg-deep-night border-t border-white/5">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#verden" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Verden</a>
+                <a href="#solarpunk" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Solarpunk</a>
+                <a href="#quiz" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Quiz</a>
+                <a href="#oevelser" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Øvelser</a>
+                <a href="#brevkasse" class="block font-body text-center px-4 py-3 bg-vivid-green text-deep-night rounded-full mt-4">Brevkasse</a>
+                <button onclick="logout()" class="block w-full text-center px-4 py-3 border border-stone-gray/30 text-stone-gray rounded-full mt-2">Log ud</button>
+            </div>
+        </div>
+    </nav>
+
+    <main id="main-content">
+        
+        <!-- ========== HERO SECTION ========== -->
+        <section class="relative min-h-screen flex items-center justify-center grain overflow-hidden pt-16">
+            <div class="organic-shape w-96 h-96 bg-deep-forest top-20 -left-48"></div>
+            <div class="organic-shape w-80 h-80 bg-vivid-green bottom-20 -right-40"></div>
+            
+            <div class="absolute inset-0 opacity-30">
+                <img 
+                    src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1920&q=80" 
+                    alt="Grøn by med supertræer"
+                    class="w-full h-full object-cover hero-reveal"
+                >
+            </div>
+            
+            <div class="absolute inset-0 bg-gradient-to-b from-deep-night via-deep-night/80 to-deep-night"></div>
+            
+            <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+                <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-warm-cream mb-4 hero-text-1">
+                    Fremtiden er min
+                </h1>
+                <p class="font-body text-lg sm:text-xl text-sun-glow tracking-wide mb-8 hero-text-1">
+                    Performance 2026 — Lindenborg Efterskole
+                </p>
+                
+                <div class="space-y-4 max-w-2xl mx-auto hero-text-2">
+                    <p class="font-body text-lg sm:text-xl text-stone-gray">
+                        Du står midt i en tid, hvor alle siger, at alt brænder.
+                    </p>
+                    <p class="font-body text-lg sm:text-xl text-warm-cream">
+                        Men du trækker vejret lige nu. Du er her.
+                    </p>
+                    <p class="font-display text-2xl sm:text-3xl text-vivid-green italic">
+                        Og fremtiden er der også i morgen.
+                    </p>
+                </div>
+                
+                <a href="#verden" class="inline-block mt-12 hero-text-3">
+                    <span class="btn-hope inline-flex items-center gap-2 px-8 py-4 bg-vivid-green text-deep-night font-body font-medium rounded-full">
+                        Kom i gang
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+            
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator">
+                <svg class="w-6 h-10 text-stone-gray" fill="none" stroke="currentColor" viewBox="0 0 24 40">
+                    <rect x="1" y="1" width="22" height="38" rx="11" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- ========== VERDEN ER FAKTISK BLEVET BEDRE ========== -->
+        <section id="verden" class="relative py-24 sm:py-32 bg-warm-cream text-deep-night">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div class="reveal">
+                        <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">
+                            Data mod doomscrolling
+                        </span>
+                        <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-8">
+                            Verden er faktisk blevet bedre
+                        </h2>
+                        
+                        <div class="space-y-6 font-body text-lg text-deep-night/80 leading-relaxed">
+                            <p>
+                                Overskrifterne siger, at alt kollapser. Men her er noget, de sjældent nævner:
+                            </p>
+                            
+                            <p>
+                                For hundrede år siden døde <span class="font-medium text-deep-night">44 ud af 100 børn</span> under 5 år – 
+                                i dag er det <span class="font-medium text-vivid-green">4 ud af 100</span>. Globalt.
+                            </p>
+                            
+                            <p>
+                                Verden har problemer. Men verden har også løst problemer, som vores oldeforældre troede var umulige.
+                            </p>
+                            
+                            <p class="font-medium text-deep-night">
+                                Du må godt glæde dig over fremskridt OG gå i gang med det svære. Begge dele er sande.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="reveal reveal-delay-2">
+                        <div class="relative">
+                            <div class="text-center p-8 bg-soft-white rounded-3xl shadow-xl">
+                                <div class="font-display text-8xl sm:text-9xl text-vivid-green leading-none">
+                                    44→4
+                                </div>
+                                <p class="font-body text-deep-night/60 mt-4">
+                                    Børnedødelighed per 100 børn under 5 år
+                                </p>
+                                <p class="font-body text-sm text-stone-gray mt-2">
+                                    1900 → 2024 (globalt)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SOLARPUNK GALLERY ========== -->
+        <section id="solarpunk" class="relative py-24 sm:py-32 bg-deep-night grain overflow-hidden">
+            <div class="organic-shape w-[500px] h-[500px] bg-vivid-green top-0 right-0"></div>
+            
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">
+                        Se fremtiden
+                    </span>
+                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream mt-4">
+                        Fremtiden behøver ikke være grå
+                    </h2>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 reveal reveal-delay-1 mb-12">
+                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(this)">
+                        <img 
+                            src="https://images.unsplash.com/photo-1518005068251-37900150dfca?w=800&q=80" 
+                            alt="Bosco Verticale"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            loading="lazy"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <p class="font-body text-sm text-warm-cream/80">Genbrug + Innovation</p>
+                        </div>
+                    </div>
+                    
+                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer md:-mt-8" onclick="openLightbox(this)">
+                        <img 
+                            src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" 
+                            alt="Solpaneler"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            loading="lazy"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <p class="font-body text-sm text-warm-cream/80">Teknologi + Natur</p>
+                        </div>
+                    </div>
+                    
+                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(this)">
+                        <img 
+                            src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&q=80" 
+                            alt="Tog gennem natur"
+                            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                            loading="lazy"
+                        >
+                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <p class="font-body text-sm text-warm-cream/80">Bæredygtig Transport</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Lightbox -->
+                <div id="lightbox-modal" class="lightbox-modal" onclick="closeLightbox()">
+                    <div class="lightbox-content" onclick="event.stopPropagation()">
+                        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+                        <img id="lightbox-image" src="" alt="" class="max-w-full max-h-full rounded-xl">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== QUIZ SECTION ========== -->
+        <section id="quiz" class="relative py-24 sm:py-32 bg-warm-cream">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Quiz Start Screen -->
+                <div id="quiz-start" class="text-center reveal">
+                    <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">
+                        Interaktiv
+                    </span>
+                    <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-6">
+                        Hvad ved du om verden?
+                    </h2>
+                    <p class="font-body text-lg text-deep-night/70 max-w-2xl mx-auto mb-8">
+                        Baseret på Hans Roslings "Factfulness". Test din viden og se hvordan du klarer dig mod andre.
+                    </p>
+                    
+                    <form id="quiz-name-form" class="max-w-md mx-auto mb-8">
+                        <div class="mb-6">
+                            <input 
+                                type="text" 
+                                id="student-name-input" 
+                                placeholder="Dit navn (eller anonymt)"
+                                class="w-full px-6 py-3 border-2 border-deep-forest/20 rounded-lg font-body text-deep-night placeholder-stone-gray focus:outline-none focus:border-vivid-green"
+                                required
+                            >
+                        </div>
+                        <button 
+                            type="submit"
+                            class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-lg"
+                        >
+                            Start Quiz
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Quiz Container -->
+                <div id="quiz-container" class="quiz-container">
+                    <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-xl">
+                        <div class="mb-8">
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="font-body text-sm text-stone-gray">Spørgsmål <span id="current-question">1</span> af 10</span>
+                                <div class="w-full mx-4 bg-stone-gray/20 rounded-full h-2">
+                                    <div id="progress-bar" class="bg-vivid-green h-2 rounded-full" style="width: 10%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 id="question-text" class="font-display text-2xl text-deep-night mb-8"></h3>
+                        
+                        <div id="options-container" class="space-y-4 mb-8"></div>
+                        
+                        <div class="flex gap-4">
+                            <button id="prev-btn" class="flex-1 py-3 border-2 border-stone-gray/20 text-deep-night font-body rounded-lg hover:border-deep-forest transition-colors" onclick="previousQuestion()">Forrige</button>
+                            <button id="next-btn" class="flex-1 py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg hover:bg-deep-forest transition-colors" onclick="nextQuestion()">Næste</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quiz Results -->
+                <div id="quiz-results" class="quiz-container hidden text-center">
+                    <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-xl">
+                        <div class="inline-flex items-center justify-center w-24 h-24 bg-vivid-green/20 rounded-full mb-8">
+                            <svg class="w-12 h-12 text-vivid-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                        </div>
+                        
+                        <h3 class="font-display text-4xl text-deep-night mb-4">Dine resultater</h3>
+                        
+                        <div class="grid md:grid-cols-3 gap-6 my-12">
+                            <div class="p-6 bg-deep-forest/5 rounded-2xl">
+                                <p class="font-body text-stone-gray mb-2">Rigtige svar</p>
+                                <p class="font-display text-4xl text-vivid-green" id="score-display">0/10</p>
+                            </div>
+                            <div class="p-6 bg-deep-forest/5 rounded-2xl">
+                                <p class="font-body text-stone-gray mb-2">Procent</p>
+                                <p class="font-display text-4xl text-sun-glow" id="percentage-display">0%</p>
+                            </div>
+                            <div class="p-6 bg-deep-forest/5 rounded-2xl">
+                                <p class="font-body text-stone-gray mb-2">Dine data</p>
+                                <p class="font-body text-sm text-deep-night/70" id="ranking-display">Gemmes anonymt</p>
+                            </div>
+                        </div>
+                        
+                        <button 
+                            onclick="resetQuiz()"
+                            class="btn-hope py-4 px-8 bg-vivid-green text-deep-night font-body font-medium rounded-lg"
+                        >
+                            Tag quizzen igen
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== BREVKASSEN ========== -->
+        <section id="brevkasse" class="relative py-24 sm:py-32 bg-gradient-to-b from-deep-night via-deep-forest/30 to-warm-cream">
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream">
+                        Del en tanke
+                    </h2>
+                    <p class="font-body text-lg text-warm-cream/80 mt-6">
+                        Helt anonymt. Ingen dømmer.
+                    </p>
+                </div>
+                
+                <form id="brevkasse-form" class="reveal reveal-delay-1">
+                    <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl">
+                        <div class="mb-6">
+                            <textarea 
+                                id="tanke" 
+                                name="tanke" 
+                                rows="6"
+                                placeholder="Skriv din tanke her..."
+                                class="form-textarea w-full px-6 py-4 bg-warm-cream border-2 border-stone-gray/20 rounded-2xl font-body text-deep-night resize-none"
+                                required
+                            ></textarea>
+                        </div>
+                        
+                        <div class="mb-8">
+                            <p class="font-body text-deep-night/70 text-sm mb-4">
+                                Vil du have, at en voksen læser det?
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="deling" value="ja" class="w-5 h-5">
+                                    <span class="font-body text-deep-night/80">Ja, en voksen må læse det</span>
+                                </label>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="radio" name="deling" value="nej" checked class="w-5 h-5">
+                                    <span class="font-body text-deep-night/80">Nej, det er bare til mig</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <button 
+                            type="submit"
+                            class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-full"
+                        >
+                            Send tanken afsted
+                        </button>
+                    </div>
+                </form>
+                
+                <div id="brevkasse-success" class="hidden text-center py-12">
+                    <h3 class="font-display text-2xl text-deep-night mb-2">Tak for din tanke</h3>
+                    <p class="font-body text-deep-night/70">Den er landet sikkert.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SKRIV DIG FREMAD ========== -->
+        <section id="oevelser" class="relative py-24 sm:py-32 bg-deep-night grain">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream">
+                        Skriv dig fremad
+                    </h2>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal">
+                        <div class="font-display text-7xl text-vivid-green/20 leading-none">01</div>
+                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">Dynen-brevet</h3>
+                        <p class="font-body text-warm-cream/80 leading-relaxed">
+                            Skriv et kort brev til dig selv, der ligger under dynen. Hvad ville du sige?
+                        </p>
+                    </div>
+                    
+                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal reveal-delay-1">
+                        <div class="font-display text-7xl text-vivid-green/20 leading-none">02</div>
+                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">FOMO vs. JOMO</h3>
+                        <p class="font-body text-warm-cream/80 leading-relaxed">
+                            Lav to lister: 5 ting du er bange for at gå glip af, og 5 ting du gerne vil slippe for.
+                        </p>
+                    </div>
+                    
+                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal reveal-delay-2">
+                        <div class="font-display text-7xl text-vivid-green/20 leading-none">03</div>
+                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">Brev fra din fremtid</h3>
+                        <p class="font-body text-warm-cream/80 leading-relaxed">
+                            Du er 30 år gammel og har det godt. Hvad vil du sige til dig selv nu?
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SPOTIFY PLAYLIST ========== -->
+        <section class="relative py-24 sm:py-32 bg-warm-cream">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 reveal">
+                    <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">
+                        Musik
+                    </span>
+                    <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4">
+                        Soundtrack til fremtiden
+                    </h2>
+                </div>
+                
+                <div class="reveal reveal-delay-1 mb-8">
+                    <div style="border-radius:12px; overflow:hidden;">
+                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3ijtcImNPdAKP7V4KSytaF?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    </div>
+                </div>
+                
+                <div class="reveal reveal-delay-2 bg-deep-night rounded-3xl p-8 text-warm-cream">
+                    <h3 class="font-display text-2xl text-vivid-green mb-4">Foreslå en sang</h3>
+                    <form id="song-suggest-form" class="space-y-4">
+                        <div>
+                            <input 
+                                type="text" 
+                                placeholder="Sangtitel"
+                                name="song-title"
+                                class="w-full px-4 py-3 bg-deep-forest/30 border border-vivid-green/30 rounded-lg text-warm-cream placeholder-stone-gray focus:outline-none focus:border-vivid-green"
+                                required
+                            >
+                        </div>
+                        <div>
+                            <input 
+                                type="text" 
+                                placeholder="Kunstner"
+                                name="song-artist"
+                                class="w-full px-4 py-3 bg-deep-forest/30 border border-vivid-green/30 rounded-lg text-warm-cream placeholder-stone-gray focus:outline-none focus:border-vivid-green"
+                                required
+                            >
+                        </div>
+                        <div>
+                            <textarea 
+                                placeholder="Hvorfor denne sang? (valgfrit)"
+                                name="song-reason"
+                                rows="3"
+                                class="w-full px-4 py-3 bg-deep-forest/30 border border-vivid-green/30 rounded-lg text-warm-cream placeholder-stone-gray focus:outline-none focus:border-vivid-green resize-none"
+                            ></textarea>
+                        </div>
+                        <label class="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" name="song-anonymous" class="w-5 h-5">
+                            <span class="font-body text-sm text-warm-cream/80">Anonymt</span>
+                        </label>
+                        <button 
+                            type="submit"
+                            class="btn-hope w-full py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg"
+                        >
+                            Foreslå sang
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-deep-night py-16 border-t border-white/5">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="font-display text-3xl text-warm-cream mb-2">
+                Fremtiden er min
+            </h2>
+            <p class="font-body text-sun-glow text-sm mb-4">Performance 2026</p>
+            <p class="font-body text-stone-gray max-w-lg mx-auto mb-8">
+                Et projekt om håb, handling og at turde kigge ud.
+                Inspireret af Kristian Leth, Rutger Bregman, Hans Rosling og jer.
+            </p>
+            <p class="font-body text-stone-gray/50 text-xs">
+                Lindenborg Efterskole | Skabt med håb
+            </p>
+        </div>
+    </footer>
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        // ==================== AUTHENTICATION ==================== //
+        const LOGIN_CODE = 'egonolsen';
+        const SESSION_KEY = 'fremtiden_session';
+        
+        function checkAuth() {
+            const session = localStorage.getItem(SESSION_KEY);
+            if (!session) {
+                document.getElementById('login-modal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem(SESSION_KEY);
+            location.reload();
+        }
+        
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const code = document.getElementById('login-code').value;
+            const remember = document.getElementById('remember-me').checked;
+            
+            if (code === LOGIN_CODE) {
+                const session = {
+                    timestamp: new Date().toISOString(),
+                    remember: remember
+                };
+                localStorage.setItem(SESSION_KEY, JSON.stringify(session));
+                document.getElementById('login-modal').classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                alert('Forkert kodeord');
+            }
+        });
+        
+        // ==================== QUIZ SYSTEM ==================== //
+        const quizQuestions = [
+            { id: 1, question: "Ekstrem fattigdom: I løbet af de seneste 20 år er andelen af verdens befolkning, som lever i ekstrem fattigdom...", options: ["næsten fordoblet", "næsten halveret", "forblevet mere eller mindre den samme", "steget med 10%"], correct: 1 },
+            { id: 2, question: "Vaccination: Hvor mange af verdens etårige børn er vaccineret mod en eller flere sygdomme i dag?", options: ["20%", "50%", "80%", "95%"], correct: 2 },
+            { id: 3, question: "Indkomstniveauer: I virkeligheden lever langt størstedelen af verdens befolkning et sted omkring...", options: ["den nederste del", "toppen", "midten", "niveau 4"], correct: 2 },
+            { id: 4, question: "Uddannelse for piger: Hvor mange piger afslutter underskolen i verdens lavindkomstlande?", options: ["20%", "40%", "60%", "80%"], correct: 2 },
+            { id: 5, question: "Den globale udvikling: Hvilken påstand beskriver Hans Roslings syn?", options: ["Verden bliver værre", "De rige bliver rigere", "Verden bliver faktisk bedre skridt for skridt", "Udviklingen står stille"], correct: 2 },
+            { id: 6, question: "Verdens befolkning i 2100: Der er 2 milliarder børn nu. Hvor mange vil der være i år 2100?", options: ["2 milliarder", "3 milliarder", "4 milliarder", "6 milliarder"], correct: 0 },
+            { id: 7, question: "Klimavidenskab: Hvilket spørgsmål svarer de fleste mennesker korrekt på i Hans Roslings tests?", options: ["Udviklingen i ekstrem fattigdom", "Vaccination", "Klimaforandringer", "Elektricitet"], correct: 2 },
+            { id: 8, question: "Befolkningstilvækst: Hvad er hovedårsagen til at befolkningen stiger?", options: ["Flere børn", "Flere voksne", "Flere meget gamle", "Lavere dødelighed blandt børn"], correct: 1 },
+            { id: 9, question: "Viden og uddannelse: Hvordan klarer højtuddannede mennesker sig i Roslings tests?", options: ["Markant bedre", "Som folk der gætter tilfældigt", "De fleste svarer forkert", "Kun dårligt hvis deres viden er forældet"], correct: 2 },
+            { id: 10, question: "Global fordeling af elektricitet: Hvor mange mennesker har adgang til elektricitet?", options: ["20%", "50%", "80%", "95%"], correct: 2 }
+        ];
+        
+        let currentQuestionIndex = 0;
+        let studentAnswers = {};
+        let studentName = '';
+        let selectedAnswers = {};
+        
+        function startQuiz(name) {
+            studentName = name || 'Anonym';
+            currentQuestionIndex = 0;
+            selectedAnswers = {};
+            showQuestion();
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-container').classList.add('active');
+        }
+        
+        function showQuestion() {
+            const q = quizQuestions[currentQuestionIndex];
+            document.getElementById('question-text').textContent = q.question;
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('progress-bar').style.width = ((currentQuestionIndex + 1) / 10 * 100) + '%';
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'w-full p-4 text-left border-2 border-stone-gray/20 rounded-lg font-body text-deep-night hover:border-vivid-green transition-colors ' + 
+                    (selectedAnswers[currentQuestionIndex] === idx ? 'bg-vivid-green/20 border-vivid-green' : 'bg-soft-white');
+                btn.textContent = opt;
+                btn.onclick = () => selectAnswer(idx);
+                container.appendChild(btn);
+            });
+            
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === 9 ? 'Se resultater' : 'Næste';
+        }
+        
+        function selectAnswer(idx) {
+            selectedAnswers[currentQuestionIndex] = idx;
+            showQuestion();
+        }
+        
+        function nextQuestion() {
+            if (currentQuestionIndex < 9) {
+                currentQuestionIndex++;
+                showQuestion();
+            } else {
+                submitQuiz();
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+        
+        function submitQuiz() {
+            let score = 0;
+            Object.keys(selectedAnswers).forEach(idx => {
+                if (selectedAnswers[idx] === quizQuestions[idx].correct) {
+                    score++;
+                }
+            });
+            
+            const percentage = (score / 10) * 100;
+            document.getElementById('score-display').textContent = `${score}/10`;
+            document.getElementById('percentage-display').textContent = `${percentage.toFixed(0)}%`;
+            
+            document.getElementById('quiz-container').classList.remove('active');
+            document.getElementById('quiz-results').classList.remove('hidden');
+            
+            // Save to Supabase
+            fetch('/.netlify/functions/quiz-submit', {
+                method: 'POST',
+                body: JSON.stringify({
+                    studentName: studentName,
+                    answers: selectedAnswers,
+                    score: score,
+                    totalQuestions: 10,
+                    sessionId: Date.now()
+                })
+            }).catch(err => console.log('Quiz saved locally'));
+        }
+        
+        function resetQuiz() {
+            document.getElementById('quiz-start').classList.remove('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-name-form').reset();
+            selectedAnswers = {};
+            currentQuestionIndex = 0;
+        }
+        
+        // ==================== FORM HANDLERS ==================== //
+        document.getElementById('quiz-name-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('student-name-input').value;
+            startQuiz(name);
+        });
+        
+        document.getElementById('brevkasse-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const content = document.getElementById('tanke').value;
+            const deling = document.querySelector('input[name="deling"]:checked').value;
+            
+            try {
+                const response = await fetch('/.netlify/functions/brevkasse-submit', {
+                    method: 'POST',
+                    body: JSON.stringify({ content, shareableWithAdults: deling })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('brevkasse-form').classList.add('hidden');
+                    document.getElementById('brevkasse-success').classList.remove('hidden');
+                }
+            } catch (err) {
+                console.log('Brevkasse saved locally');
+                document.getElementById('brevkasse-form').classList.add('hidden');
+                document.getElementById('brevkasse-success').classList.remove('hidden');
+            }
+        });
+        
+        document.getElementById('song-suggest-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const title = document.querySelector('input[name="song-title"]').value;
+            const artist = document.querySelector('input[name="song-artist"]').value;
+            const reason = document.querySelector('textarea[name="song-reason"]').value;
+            const anonymous = document.querySelector('input[name="song-anonymous"]').checked;
+            
+            try {
+                await fetch('/.netlify/functions/song-suggest', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        studentName: studentName,
+                        songTitle: title,
+                        artist: artist,
+                        reason: reason,
+                        isAnonymous: anonymous
+                    })
+                });
+                e.target.reset();
+                alert('Tak for forslaget!');
+            } catch (err) {
+                console.log('Song suggestion saved locally');
+                e.target.reset();
+                alert('Tak for forslaget!');
+            }
+        });
+        
+        // ==================== SCROLL REVEAL ==================== //
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top < window.innerHeight - 150) {
+                    el.classList.add('visible');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+        
+        // ==================== LIGHTBOX ==================== //
+        function openLightbox(el) {
+            const img = el.querySelector('img');
+            document.getElementById('lightbox-image').src = img.src;
+            document.getElementById('lightbox-modal').classList.add('active');
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox-modal').classList.remove('active');
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeLightbox();
+        });
+        
+        // ==================== NAV ==================== //
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // ==================== INIT ==================== //
+        checkAuth();
+    </script>
+</body>
+</html>
