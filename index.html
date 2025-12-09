@@ -180,6 +180,43 @@
         </div>
     </div>
 
+    <!-- ========== ADMIN LOGIN MODAL ========== -->
+    <div id="admin-login-modal" class="login-modal">
+        <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
+            <div class="text-center mb-8">
+                <h1 class="font-display text-3xl text-deep-night mb-2">Admin Panel</h1>
+                <p class="font-body text-stone-gray text-sm">Lærer adgang</p>
+            </div>
+            
+            <form id="admin-login-form">
+                <div class="mb-6">
+                    <label for="admin-code" class="block font-body text-sm text-deep-night/70 mb-2">Admin Kode</label>
+                    <input 
+                        type="password" 
+                        id="admin-code" 
+                        class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green"
+                        placeholder="Skriv admin koden her..."
+                        required
+                    >
+                </div>
+                
+                <button 
+                    type="submit"
+                    class="btn-hope w-full py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg"
+                >
+                    Åbn Admin Panel
+                </button>
+            </form>
+            
+            <button 
+                onclick="closeAdminLogin()"
+                class="w-full mt-4 py-3 border-2 border-stone-gray/20 text-deep-night font-body rounded-lg hover:border-deep-forest transition-colors"
+            >
+                Tilbage
+            </button>
+        </div>
+    </div>
+
     <!-- ========== SKIP LINK ========== -->
     <a href="#main-content" class="skip-link font-body font-medium">Spring til indhold</a>
 
@@ -198,6 +235,7 @@
                     <a href="#quiz" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Quiz</a>
                     <a href="#oevelser" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Øvelser</a>
                     <a href="#brevkasse" class="font-body text-sm px-4 py-2 bg-vivid-green text-deep-night rounded-full hover:bg-sun-glow transition-colors">Brevkasse</a>
+                    <button id="admin-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="openAdminLogin()">Admin</button>
                     <button id="logout-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="logout()">Log ud</button>
                 </div>
                 
@@ -216,10 +254,141 @@
                 <a href="#quiz" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Quiz</a>
                 <a href="#oevelser" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Øvelser</a>
                 <a href="#brevkasse" class="block font-body text-center px-4 py-3 bg-vivid-green text-deep-night rounded-full mt-4">Brevkasse</a>
+                <button onclick="openAdminLogin()" class="block w-full text-center px-4 py-3 border border-stone-gray/30 text-stone-gray rounded-full mt-2">Admin</button>
                 <button onclick="logout()" class="block w-full text-center px-4 py-3 border border-stone-gray/30 text-stone-gray rounded-full mt-2">Log ud</button>
             </div>
         </div>
     </nav>
+
+    <!-- ========== ADMIN DASHBOARD ========== -->
+    <div id="admin-dashboard" class="hidden fixed inset-0 bg-deep-night z-40 overflow-y-auto pt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+            
+            <!-- Header -->
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <h1 class="font-display text-4xl text-warm-cream">Admin Panel</h1>
+                    <p class="font-body text-stone-gray mt-2">Moderation og trends</p>
+                </div>
+                <button 
+                    onclick="closeAdmin()"
+                    class="px-6 py-3 bg-deep-forest/30 text-warm-cream font-body rounded-lg hover:bg-deep-forest/50 transition-colors"
+                >
+                    Luk Admin
+                </button>
+            </div>
+            
+            <!-- Navigation Tabs -->
+            <div class="flex gap-4 mb-8 border-b border-white/10 overflow-x-auto">
+                <button class="admin-tab-btn active px-6 py-4 border-b-2 border-vivid-green font-body text-warm-cream" onclick="switchAdminTab('brainstorm')">
+                    Brainstorm (Pending)
+                </button>
+                <button class="admin-tab-btn px-6 py-4 border-b-2 border-transparent font-body text-stone-gray hover:text-warm-cream transition-colors" onclick="switchAdminTab('quiz')">
+                    Quiz Trends
+                </button>
+                <button class="admin-tab-btn px-6 py-4 border-b-2 border-transparent font-body text-stone-gray hover:text-warm-cream transition-colors" onclick="switchAdminTab('brevkasse')">
+                    Brevkasse
+                </button>
+                <button class="admin-tab-btn px-6 py-4 border-b-2 border-transparent font-body text-stone-gray hover:text-warm-cream transition-colors" onclick="switchAdminTab('songs')">
+                    Musik Forslag
+                </button>
+            </div>
+            
+            <!-- ========== BRAINSTORM MODERATION ========== -->
+            <div id="admin-brainstorm-tab" class="admin-tab">
+                <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="font-display text-2xl text-warm-cream">Brainstorm Posts (Afventer godkendelse)</h2>
+                        <button onclick="loadBrainstormPending()" class="px-4 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg">
+                            Genindlæs
+                        </button>
+                    </div>
+                    
+                    <div id="brainstorm-pending-container" class="space-y-4">
+                        <p class="font-body text-stone-gray text-center py-8">Indlæser...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ========== QUIZ TRENDS ========== -->
+            <div id="admin-quiz-tab" class="admin-tab hidden">
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
+                        <p class="font-body text-stone-gray text-sm mb-2">Samlede svar</p>
+                        <p class="font-display text-4xl text-vivid-green" id="quiz-total-responses">0</p>
+                    </div>
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
+                        <p class="font-body text-stone-gray text-sm mb-2">Gennemsnitlig score</p>
+                        <p class="font-display text-4xl text-sun-glow" id="quiz-average-percentage">0%</p>
+                    </div>
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
+                        <p class="font-body text-stone-gray text-sm mb-2">Højeste score</p>
+                        <p class="font-display text-4xl text-vivid-green" id="quiz-highest-score">0/10</p>
+                    </div>
+                </div>
+                
+                <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
+                    <div class="flex justify-between items-center mb-8">
+                        <h3 class="font-display text-2xl text-warm-cream">Top 10 Scores</h3>
+                        <button onclick="loadQuizTrends()" class="px-4 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg">
+                            Genindlæs
+                        </button>
+                    </div>
+                    
+                    <div id="quiz-top-scores-container" class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b border-deep-forest/30">
+                                    <th class="text-left py-3 px-4 font-body text-stone-gray text-sm">Navn</th>
+                                    <th class="text-left py-3 px-4 font-body text-stone-gray text-sm">Score</th>
+                                    <th class="text-left py-3 px-4 font-body text-stone-gray text-sm">Procent</th>
+                                    <th class="text-left py-3 px-4 font-body text-stone-gray text-sm">Dato</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quiz-scores-list">
+                                <tr>
+                                    <td colspan="4" class="text-center py-8 font-body text-stone-gray">Indlæser...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ========== BREVKASSE ========== -->
+            <div id="admin-brevkasse-tab" class="admin-tab hidden">
+                <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="font-display text-2xl text-warm-cream">Brevkasse Submissions</h2>
+                        <button onclick="loadBrevkasse()" class="px-4 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg">
+                            Genindlæs
+                        </button>
+                    </div>
+                    
+                    <div id="brevkasse-container" class="space-y-4 max-h-96 overflow-y-auto">
+                        <p class="font-body text-stone-gray text-center py-8">Indlæser...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ========== SONG SUGGESTIONS ========== -->
+            <div id="admin-songs-tab" class="admin-tab hidden">
+                <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
+                    <div class="flex justify-between items-center mb-8">
+                        <h2 class="font-display text-2xl text-warm-cream">Musik Forslag</h2>
+                        <button onclick="loadSongSuggestions()" class="px-4 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg">
+                            Genindlæs
+                        </button>
+                    </div>
+                    
+                    <div id="songs-container" class="space-y-4 max-h-96 overflow-y-auto">
+                        <p class="font-body text-stone-gray text-center py-8">Indlæser...</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 
     <main id="main-content">
         
@@ -698,6 +867,214 @@
             }
         });
         
+        // ==================== ADMIN PANEL ==================== //
+        const ADMIN_CODE = 'Kaj';
+        const ADMIN_SESSION_KEY = 'admin_session';
+        
+        function openAdminLogin() {
+            document.getElementById('admin-login-modal').classList.add('active');
+        }
+        
+        function closeAdminLogin() {
+            document.getElementById('admin-login-modal').classList.remove('active');
+        }
+        
+        function closeAdmin() {
+            document.getElementById('admin-dashboard').classList.add('hidden');
+            localStorage.removeItem(ADMIN_SESSION_KEY);
+        }
+        
+        document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const code = document.getElementById('admin-code').value;
+            
+            if (code === ADMIN_CODE) {
+                localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ timestamp: new Date().toISOString() }));
+                document.getElementById('admin-login-modal').classList.remove('active');
+                document.getElementById('admin-dashboard').classList.remove('hidden');
+                loadBrainstormPending();
+                loadQuizTrends();
+            } else {
+                alert('Forkert admin kode');
+            }
+        });
+        
+        function switchAdminTab(tabName) {
+            document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.add('hidden'));
+            document.getElementById(`admin-${tabName}-tab`).classList.remove('hidden');
+            
+            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+                btn.classList.remove('border-vivid-green', 'text-warm-cream');
+                btn.classList.add('border-transparent', 'text-stone-gray');
+            });
+            event.target.classList.remove('border-transparent', 'text-stone-gray');
+            event.target.classList.add('border-vivid-green', 'text-warm-cream');
+        }
+        
+        // ========== BRAINSTORM PENDING ==========
+        async function loadBrainstormPending() {
+            try {
+                const response = await fetch('/.netlify/functions/admin-data?type=brainstorm-pending');
+                const data = await response.json();
+                
+                const container = document.getElementById('brainstorm-pending-container');
+                if (!data.pendingPosts || data.pendingPosts.length === 0) {
+                    container.innerHTML = '<p class="font-body text-stone-gray text-center py-8">Ingen afventende posts</p>';
+                    return;
+                }
+                
+                container.innerHTML = data.pendingPosts.map(post => `
+                    <div class="bg-deep-night/50 border border-vivid-green/30 rounded-xl p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <p class="font-body text-vivid-green text-sm font-medium">${post.is_anonymous ? 'Anonym' : post.student_name}</p>
+                                <p class="font-body text-stone-gray text-xs mt-1">${new Date(post.created_at).toLocaleDateString('da-DK')}</p>
+                            </div>
+                            <span class="px-3 py-1 bg-sun-glow/20 text-sun-glow font-body text-xs rounded-full">${post.category || 'Uden kategori'}</span>
+                        </div>
+                        
+                        <p class="font-body text-warm-cream mb-6">${post.content}</p>
+                        
+                        <div class="flex gap-3">
+                            <button onclick="approveBrainstorm(${post.id})" class="flex-1 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg hover:bg-deep-forest transition-colors">
+                                ✓ Godkend
+                            </button>
+                            <button onclick="deleteBrainstorm(${post.id})" class="flex-1 py-2 bg-red-500/20 text-red-400 font-body text-sm rounded-lg hover:bg-red-500/40 transition-colors">
+                                ✕ Slet
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading brainstorm:', err);
+                document.getElementById('brainstorm-pending-container').innerHTML = '<p class="font-body text-red-400">Fejl ved indlæsning</p>';
+            }
+        }
+        
+        async function approveBrainstorm(postId) {
+            try {
+                const response = await fetch('/.netlify/functions/approve-brainstorm', {
+                    method: 'POST',
+                    body: JSON.stringify({ postId: postId, approved: true })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    loadBrainstormPending();
+                }
+            } catch (err) {
+                console.error('Error approving:', err);
+                alert('Fejl ved godkendelse');
+            }
+        }
+        
+        async function deleteBrainstorm(postId) {
+            if (!confirm('Er du sikker på at du vil slette dette post?')) return;
+            
+            try {
+                const response = await fetch('/.netlify/functions/delete-brainstorm', {
+                    method: 'DELETE',
+                    body: JSON.stringify({ postId: postId })
+                });
+                const data = await response.json();
+                if (data.success) {
+                    loadBrainstormPending();
+                }
+            } catch (err) {
+                console.error('Error deleting:', err);
+                alert('Fejl ved sletning');
+            }
+        }
+        
+        // ========== QUIZ TRENDS ==========
+        async function loadQuizTrends() {
+            try {
+                const response = await fetch('/.netlify/functions/admin-data?type=quiz-trends');
+                const data = await response.json();
+                
+                document.getElementById('quiz-total-responses').textContent = data.totalResponses || 0;
+                document.getElementById('quiz-average-percentage').textContent = (data.averagePercentage || 0) + '%';
+                
+                const topScores = data.topScores || [];
+                const highest = topScores.length > 0 ? topScores[0] : null;
+                document.getElementById('quiz-highest-score').textContent = highest ? `${highest.score}/${highest.total_questions}` : '0/10';
+                
+                const list = document.getElementById('quiz-scores-list');
+                if (topScores.length === 0) {
+                    list.innerHTML = '<tr><td colspan="4" class="text-center py-8 font-body text-stone-gray">Ingen scores endnu</td></tr>';
+                    return;
+                }
+                
+                list.innerHTML = topScores.map((score, idx) => `
+                    <tr class="border-b border-deep-forest/20">
+                        <td class="py-3 px-4 font-body text-warm-cream">${score.student_name || 'Anonym'}</td>
+                        <td class="py-3 px-4 font-body text-vivid-green">${score.score}/${score.total_questions}</td>
+                        <td class="py-3 px-4 font-body text-sun-glow">${score.percentage.toFixed(1)}%</td>
+                        <td class="py-3 px-4 font-body text-stone-gray text-sm">${new Date(score.created_at).toLocaleDateString('da-DK')}</td>
+                    </tr>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading quiz trends:', err);
+            }
+        }
+        
+        // ========== BREVKASSE ==========
+        async function loadBrevkasse() {
+            try {
+                const response = await fetch('/.netlify/functions/get-all-submissions?type=brevkasse');
+                const data = await response.json();
+                
+                const container = document.getElementById('brevkasse-container');
+                if (!data.submissions || data.submissions.length === 0) {
+                    container.innerHTML = '<p class="font-body text-stone-gray text-center py-8">Ingen brevkasse indlæg</p>';
+                    return;
+                }
+                
+                container.innerHTML = data.submissions.map(sub => `
+                    <div class="bg-deep-night/50 border border-deep-forest/30 rounded-xl p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <p class="font-body text-stone-gray text-xs">${new Date(sub.created_at).toLocaleDateString('da-DK')} ${new Date(sub.created_at).toLocaleTimeString('da-DK')}</p>
+                            ${sub.shareable_with_adults ? '<span class="px-2 py-1 bg-vivid-green/20 text-vivid-green font-body text-xs rounded">Deles med voksne</span>' : '<span class="px-2 py-1 bg-stone-gray/20 text-stone-gray font-body text-xs rounded">Privat</span>'}
+                        </div>
+                        <p class="font-body text-warm-cream">${sub.content}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading brevkasse:', err);
+                document.getElementById('brevkasse-container').innerHTML = '<p class="font-body text-red-400">Fejl ved indlæsning</p>';
+            }
+        }
+        
+        // ========== SONG SUGGESTIONS ==========
+        async function loadSongSuggestions() {
+            try {
+                const response = await fetch('/.netlify/functions/get-all-submissions?type=songs');
+                const data = await response.json();
+                
+                const container = document.getElementById('songs-container');
+                if (!data.submissions || data.submissions.length === 0) {
+                    container.innerHTML = '<p class="font-body text-stone-gray text-center py-8">Ingen musikforslag</p>';
+                    return;
+                }
+                
+                container.innerHTML = data.submissions.map(song => `
+                    <div class="bg-deep-night/50 border border-deep-forest/30 rounded-xl p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <div>
+                                <p class="font-body text-vivid-green font-medium">${song.song_title}</p>
+                                <p class="font-body text-stone-gray text-sm">${song.artist}</p>
+                            </div>
+                            ${song.is_anonymous ? '<span class="px-2 py-1 bg-sun-glow/20 text-sun-glow font-body text-xs rounded">Anonym</span>' : '<span class="px-2 py-1 bg-vivid-green/20 text-vivid-green font-body text-xs rounded">' + song.student_name + '</span>'}
+                        </div>
+                        ${song.reason ? `<p class="font-body text-warm-cream/80 text-sm italic mb-2">"${song.reason}"</p>` : ''}
+                        <p class="font-body text-stone-gray text-xs">${new Date(song.created_at).toLocaleDateString('da-DK')}</p>
+                    </div>
+                `).join('');
+            } catch (err) {
+                console.error('Error loading songs:', err);
+                document.getElementById('songs-container').innerHTML = '<p class="font-body text-red-400">Fejl ved indlæsning</p>';
+            }
+        }
+        
         // ==================== QUIZ SYSTEM ==================== //
         const quizQuestions = [
             { id: 1, question: "Ekstrem fattigdom: I løbet af de seneste 20 år er andelen af verdens befolkning, som lever i ekstrem fattigdom...", options: ["næsten fordoblet", "næsten halveret", "forblevet mere eller mindre den samme", "steget med 10%"], correct: 1 },
@@ -784,7 +1161,6 @@
             document.getElementById('quiz-container').classList.remove('active');
             document.getElementById('quiz-results').classList.remove('hidden');
             
-            // Save to Supabase
             fetch('/.netlify/functions/quiz-submit', {
                 method: 'POST',
                 body: JSON.stringify({
@@ -897,7 +1273,7 @@
             mobileMenu.classList.toggle('hidden');
         });
         
-        mobileMenu.querySelectorAll('a').forEach(link => {
+        mobileMenu.querySelectorAll('a, button').forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.add('hidden');
             });
