@@ -1,0 +1,32 @@
+[build]
+command = "npm run build"
+functions = "netlify/functions"
+publish = "."
+
+# Redirect all requests to index.html for SPA routing
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+
+# Environment variables (add via Netlify UI)
+[env.production]
+  [env.production.environment]
+    SUPABASE_URL = ""
+    SUPABASE_ANON_KEY = ""
+
+# Cache headers
+[[headers]]
+from = "/"
+[headers.values]
+  Cache-Control = "public, max-age=3600"
+
+[[headers]]
+from = "/index.html"
+[headers.values]
+  Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+from = "/*.{js,css,png,jpg,jpeg,gif,svg,woff,woff2,ttf,eot}"
+[headers.values]
+  Cache-Control = "public, max-age=31536000, immutable"
