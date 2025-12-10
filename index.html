@@ -1,130 +1,96 @@
 <!DOCTYPE html>
 <html lang="da">
 <head>
-    .hero-reveal { animation: dyne-lift 1.2s cubic-bezier(0.65, 0, 0.35, 1) 0.3s forwards; clip-path: inset(0 0 100% 0); }
-    .hero-text-1 { animation: fade-up 0.8s ease-out 1s forwards; opacity: 0; }
-    .hero-text-2 { animation: fade-up 0.8s ease-out 1.2s forwards; opacity: 0; }
-    .hero-text-3 { animation: fade-up 0.8s ease-out 1.4s forwards; opacity: 0; }
-    .scroll-indicator { animation: pulse-soft 2s ease-in-out infinite; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fremtiden er min – Et interaktivt univers om håb, handling og at turde kigge ud under dynen.">
+    <title>Fremtiden er min</title>
     
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     
-    .quote-card { transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease; }
-    .quote-card:hover { transform: translateY(-8px) rotate(0.5deg); box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15); }
+    <script src="https://cdn.tailwindcss.com"></script>
     
-    .btn-hope { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; }
-    .btn-hope:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 210, 106, 0.3); }
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-night': '#0D0D0D',
+                        'warm-cream': '#F5F0E8',
+                        'stone-gray': '#6B6B6B',
+                        'soft-white': '#FAFAFA',
+                        'vivid-green': '#00D26A',
+                        'deep-forest': '#1A3D2E',
+                        'sun-glow': '#FFD93D',
+                    },
+                    fontFamily: {
+                        'display': ['"Instrument Serif"', 'Georgia', 'serif'],
+                        'body': ['"DM Sans"', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
     
-    .exercise-card { transition: transform 0.4s ease, border-color 0.3s ease; }
-    .exercise-card:hover { transform: translateY(-4px); border-color: var(--vivid-green); }
-    
-    .form-textarea:focus { outline: none; border-color: var(--vivid-green); box-shadow: 0 0 0 3px rgba(0, 210, 106, 0.2); }
-    
-    .lightbox-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; animation: fadeIn 0.3s ease; }
-    .lightbox-modal.active { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    
-    .lightbox-content { position: relative; max-width: 90vw; max-height: 90vh; animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-    
-    .lightbox-close { position: absolute; top: -40px; right: 0; color: white; cursor: pointer; font-size: 2rem; line-height: 1; background: none; border: none; padding: 0.5rem; transition: transform 0.2s; }
-    .lightbox-close:hover { transform: scale(1.2); }
-    
-    .organic-shape { position: absolute; border-radius: 50% 40% 60% 50%; opacity: 0.05; filter: blur(60px); pointer-events: none; }
-    .section-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--stone-gray), transparent); opacity: 0.3; }
-    
-    .login-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
-    .login-modal.active { display: flex; }
-    
-    .quiz-container { display: none; }
-    .quiz-container.active { display: block; }
-    
-    .solarpunk-gradient {
-        background: linear-gradient(180deg, 
-            rgba(13, 13, 13, 1) 0%,
-            rgba(26, 61, 46, 0.3) 25%,
-            rgba(0, 210, 106, 0.05) 50%,
-            rgba(26, 61, 46, 0.2) 75%,
-            rgba(13, 13, 13, 1) 100%);
-    }
-    
-    .futuristic-grid {
-        background-image: 
-            linear-gradient(0deg, transparent 24%, rgba(0, 210, 106, 0.05) 25%, rgba(0, 210, 106, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 210, 106, 0.05) 75%, rgba(0, 210, 106, 0.05) 76%, transparent 77%, transparent),
-            linear-gradient(90deg, transparent 24%, rgba(0, 210, 106, 0.05) 25%, rgba(0, 210, 106, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 210, 106, 0.05) 75%, rgba(0, 210, 106, 0.05) 76%, transparent 77%, transparent);
-        background-size: 60px 60px;
-    }
-    
-    /* Animated Plants */
-    .plant-element {
-        position: fixed;
-        pointer-events: none;
-        z-index: 0;
-        font-size: 3rem;
-    }
-    
-    .plant-1 { animation: float-up 1.2s ease-out 0s forwards; }
-    .plant-2 { animation: float-up 1.4s ease-out 0.2s forwards; }
-    .plant-3 { animation: float-up 1.6s ease-out 0.4s forwards; }
-    .plant-4 { animation: float-up 1.8s ease-out 0.6s forwards; }
-    .plant-5 { animation: float-up 2s ease-out 0.8s forwards; }
-    
-    .vine-element {
-        position: fixed;
-        font-size: 4rem;
-        pointer-events: none;
-        z-index: 0;
-        animation: vine-wave 4s ease-in-out infinite;
-    }
-    
-    .question-review {
-        border-left: 4px solid transparent;
-        transition: all 0.3s ease;
-    }
-    .question-review.correct {
-        border-left-color: var(--vivid-green);
-        background-color: rgba(0, 210, 106, 0.05);
-    }
-    .question-review.incorrect {
-        border-left-color: #FF6B6B;
-        background-color: rgba(255, 107, 107, 0.05);
-    }
-    
-    .answer-option {
-        padding: 0.75rem 1rem;
-        border-radius: 0.5rem;
-        margin: 0.5rem 0;
-        border: 1px solid transparent;
-        transition: all 0.2s ease;
-    }
-    .answer-option.correct {
-        border-color: var(--vivid-green);
-        background-color: rgba(0, 210, 106, 0.1);
-        color: var(--vivid-green);
-    }
-    .answer-option.incorrect {
-        border-color: #FF6B6B;
-        background-color: rgba(255, 107, 107, 0.1);
-        color: #FF6B6B;
-    }
-    
-    @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
-    }
-    
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: var(--deep-night); }
-    ::-webkit-scrollbar-thumb { background: var(--deep-forest); border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--vivid-green); }
-</style>
+    <style>
+        :root {
+            --deep-night: #0D0D0D;
+            --warm-cream: #F5F0E8;
+            --stone-gray: #6B6B6B;
+            --soft-white: #FAFAFA;
+            --vivid-green: #00D26A;
+            --deep-forest: #1A3D2E;
+            --sun-glow: #FFD93D;
+        }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            background-color: var(--deep-night);
+            color: var(--warm-cream);
+            overflow-x: hidden;
+        }
+        
+        .font-display { font-family: 'Instrument Serif', Georgia, serif; }
+        
+        @keyframes fade-up { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse-soft { 0%, 100% { opacity: 0.6; transform: translateY(0); } 50% { opacity: 1; transform: translateY(8px); } }
+        
+        .hero-text-1 { animation: fade-up 0.8s ease-out 1s forwards; opacity: 0; }
+        .hero-text-2 { animation: fade-up 0.8s ease-out 1.2s forwards; opacity: 0; }
+        .hero-text-3 { animation: fade-up 0.8s ease-out 1.4s forwards; opacity: 0; }
+        .scroll-indicator { animation: pulse-soft 2s ease-in-out infinite; }
+        
+        .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        
+        .btn-hope { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .btn-hope:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 210, 106, 0.3); }
+        
+        .login-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+        .login-modal.active { display: flex; }
+        
+        .quiz-container { display: none; }
+        .quiz-container.active { display: block; }
+        
+        .lightbox-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
+        .lightbox-modal.active { display: flex; }
+        
+        .lightbox-content { position: relative; max-width: 90vw; max-height: 90vh; }
+        .lightbox-close { position: absolute; top: -40px; right: 0; color: white; cursor: pointer; font-size: 2rem; background: none; border: none; padding: 0.5rem; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--deep-night); }
+        ::-webkit-scrollbar-thumb { background: var(--deep-forest); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--vivid-green); }
+    </style>
 </head>
 <body>
-     <!-- LOGIN MODAL -->
     <div id="login-modal" class="login-modal active">
         <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
             <div class="text-center mb-8">
@@ -148,28 +114,6 @@
         </div>
     </div>
 
-    <!-- ADMIN LOGIN MODAL -->
-    <div id="admin-login-modal" class="login-modal">
-        <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
-            <div class="text-center mb-8">
-                <h1 class="font-display text-3xl text-deep-night mb-2">Admin Panel</h1>
-                <p class="font-body text-stone-gray text-sm">Lærer adgang</p>
-            </div>
-            
-            <form id="admin-login-form">
-                <div class="mb-6">
-                    <label for="admin-code" class="block font-body text-sm text-deep-night/70 mb-2">Admin Kode</label>
-                    <input type="password" id="admin-code" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green" placeholder="Skriv admin koden her..." required>
-                </div>
-                
-                <button type="submit" class="btn-hope w-full py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Åbn Admin Panel</button>
-            </form>
-            
-            <button onclick="closeAdminLogin()" class="w-full mt-4 py-3 border-2 border-stone-gray/20 text-deep-night font-body rounded-lg hover:border-deep-forest transition-colors">Tilbage</button>
-        </div>
-    </div>
-
-    <!-- NAVIGATION -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-deep-night/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -181,255 +125,16 @@
                     <a href="#verden" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Verden</a>
                     <a href="#solarpunk" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Solarpunk</a>
                     <a href="#quiz" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Quiz</a>
-                    <a href="#oevelser" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Øvelser</a>
                     <a href="#brevkasse" class="font-body text-sm px-4 py-2 bg-vivid-green text-deep-night rounded-full hover:bg-sun-glow transition-colors">Brevkasse</a>
-                    <button id="admin-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="openAdminLogin()">Admin</button>
                     <button id="logout-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="logout()">Log ud</button>
                 </div>
-                
-                <button id="mobile-menu-btn" class="md:hidden text-warm-cream p-2" aria-label="Åbn menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        
-        <div id="mobile-menu" class="hidden md:hidden bg-deep-night border-t border-white/5">
-            <div class="px-4 py-4 space-y-3">
-                <a href="#verden" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Verden</a>
-                <a href="#solarpunk" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Solarpunk</a>
-                <a href="#quiz" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Quiz</a>
-                <a href="#oevelser" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Øvelser</a>
-                <a href="#brevkasse" class="block font-body text-center px-4 py-3 bg-vivid-green text-deep-night rounded-full mt-4">Brevkasse</a>
-                <button onclick="openAdminLogin()" class="block w-full text-center px-4 py-3 border border-stone-gray/30 text-stone-gray rounded-full mt-2">Admin</button>
-                <button onclick="logout()" class="block w-full text-center px-4 py-3 border border-stone-gray/30 text-stone-gray rounded-full mt-2">Log ud</button>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- ========== ADMIN LOGIN MODAL ========== -->
-    <div id="admin-login-modal" class="login-modal">
-        <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
-            <div class="text-center mb-8">
-                <h1 class="font-display text-3xl text-deep-night mb-2">Admin Panel</h1>
-                <p class="font-body text-stone-gray text-sm">Lærer adgang</p>
-            </div>
-            
-            <form id="admin-login-form">
-                <div class="mb-6">
-                    <label for="admin-code" class="block font-body text-sm text-deep-night/70 mb-2">Admin Kode</label>
-                    <input 
-                        type="password" 
-                        id="admin-code" 
-                        class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green"
-                        placeholder="Skriv admin koden her..."
-                        required
-                    >
-                </div>
-                
-                <button 
-                    type="submit"
-                    class="btn-hope w-full py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg"
-                >
-                    Åbn Admin Panel
-                </button>
-            </form>
-            
-            <button 
-                onclick="closeAdminLogin()"
-                class="w-full mt-4 py-3 border-2 border-stone-gray/20 text-deep-night font-body rounded-lg hover:border-deep-forest transition-colors"
-            >
-                Tilbage
-            </button>
-        </div>
-    </div>
-
-    <!-- ========== SKIP LINK ========== -->
-    <a href="#main-content" class="skip-link font-body font-medium">Spring til indhold</a>
-
-    <!-- ========== NAVIGATION ========== -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-deep-night/80 backdrop-blur-md border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="#" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                    <img src="LindenborgLogo.png" alt="Lindenborg" class="h-10 w-auto">
-                    <span class="font-display text-xl text-warm-cream hidden sm:inline">Fremtiden er min</span>
-                </a>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#verden" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Verden</a>
-                    <a href="#solarpunk" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Solarpunk</a>
-                    <a href="#quiz" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Quiz</a>
-                    <a href="#oevelser" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Øvelser</a>
-                    <a href="#brevkasse" class="font-body text-sm px-4 py-2 bg-vivid-green text-deep-night rounded-full hover:bg-sun-glow transition-colors">Brevkasse</a>
-                    <button id="admin-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="openAdminLogin()">Admin</button>
-                    <button id="logout-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="logout()">Log ud</button>
-                </div>
-                
-                <button id="mobile-menu-btn" class="md:hidden text-warm-cream p-2" aria-label="Åbn menu">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-        
-        <div id="mobile-menu" class="hidden md:hidden bg-deep-night border-t border-white/5">
-            <div class="px-4 py-4 space-y-3">
-                <a href="#verden" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Verden</a>
-                <a href="#solarpunk" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Solarpunk</a>
-                <a href="#quiz" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Quiz</a>
-                <a href="#oevelser" class="block font-body text-stone-gray hover:text-warm-cream transition-colors py-2">Øvelser</a>
-                <a href="#brevkasse" class="block font-body text-center px-4 py-3 bg-vivid-green text-deep-night rounded-full mt-4">Brevkasse</a>
-                <button onclick="openAdminLogin()" class="block w-full text-center px-4 py-3 border border-stone-gray/30 text-stone-gray rounded-full mt-2">Admin</button>
-                <button onclick="logout()" class="block w-full text-center px-4 py-3 border border-stone-gray/30 text-stone-gray rounded-full mt-2">Log ud</button>
             </div>
         </div>
     </nav>
 
-    <!-- ========== ADMIN DASHBOARD ========== -->
-    <div id="admin-dashboard" class="hidden fixed inset-0 bg-deep-night z-40 overflow-y-auto pt-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
-            
-            <!-- Header -->
-            <div class="flex justify-between items-center mb-12">
-                <div>
-                    <h1 class="font-display text-4xl text-warm-cream">Admin Panel</h1>
-                    <p class="font-body text-stone-gray mt-2">Moderation og trends</p>
-                </div>
-                <button 
-                    onclick="closeAdmin()"
-                    class="px-6 py-3 bg-deep-forest/30 text-warm-cream font-body rounded-lg hover:bg-deep-forest/50 transition-colors"
-                >
-                    Luk Admin
-                </button>
-            </div>
-            
-            <!-- Navigation Tabs -->
-            <div class="flex gap-4 mb-8 border-b border-white/10 overflow-x-auto">
-                <button class="admin-tab-btn active px-6 py-4 border-b-2 border-vivid-green font-body text-warm-cream" onclick="switchAdminTab('brainstorm')">
-                    Brainstorm (Pending)
-                </button>
-                <button class="admin-tab-btn px-6 py-4 border-b-2 border-transparent font-body text-stone-gray hover:text-warm-cream transition-colors" onclick="switchAdminTab('quiz')">
-                    Quiz Trends
-                </button>
-                <button class="admin-tab-btn px-6 py-4 border-b-2 border-transparent font-body text-stone-gray hover:text-warm-cream transition-colors" onclick="switchAdminTab('brevkasse')">
-                    Brevkasse
-                </button>
-                <button class="admin-tab-btn px-6 py-4 border-b-2 border-transparent font-body text-stone-gray hover:text-warm-cream transition-colors" onclick="switchAdminTab('songs')">
-                    Musik Forslag
-                </button>
-            </div>
-            
-            <!-- ========== BRAINSTORM MODERATION ========== -->
-            <div id="admin-brainstorm-tab" class="admin-tab">
-                <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="font-display text-2xl text-warm-cream">Brainstorm Posts (Afventer godkendelse)</h2>
-                        <button onclick="loadBrainstormPending()" class="px-4 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg">
-                            Genindlæs
-                        </button>
-                    </div>
-                    
-                    <div id="brainstorm-pending-container" class="space-y-4">
-                        <p class="font-body text-stone-gray text-center py-8">Indlæser...</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ========== QUIZ TRENDS ========== -->
-            <div id="admin-quiz-tab" class="admin-tab hidden">
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
-                        <p class="font-body text-stone-gray text-sm mb-2">Samlede svar</p>
-                        <p class="font-display text-4xl text-vivid-green" id="quiz-total-responses">0</p>
-                    </div>
-                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
-                        <p class="font-body text-stone-gray text-sm mb-2">Gennemsnitlig score</p>
-                        <p class="font-display text-4xl text-sun-glow" id="quiz-average-percentage">0%</p>
-                    </div>
-                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
-                        <p class="font-body text-stone-gray text-sm mb-2">Højeste score</p>
-                        <p class="font-display text-4xl text-vivid-green" id="quiz-highest-score">0/10</p>
-                    </div>
-                </div>
-                
-                <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
-                    <div class="flex justify-between items-center mb-8">
-                        <h3 class="font-display text-2xl text-warm-cream">Top 10 Scores</h3>
-                        <button onclick="loadQuizTrends()" class="px-4 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg">
-                            Genindlæs
-                        </button>
-                    </div>
-                    
-                    <div id="quiz-top-scores-container" class="overflow-x-auto">
-                        <table class="w-full">
-                            <thead>
-                                <tr class="border-b border-deep-forest/30">
-                                    <th class="text-left py-3 px-4 font-body text-stone-gray text-sm">Navn</th>
-                                    <th class="text-left py-3 px-4 font-body text-stone-gray text-sm">Score</th>
-                                    <th class="text-left py-3 px-4 font-body text-stone-gray text-sm">Procent</th>
-                                    <th class="text-left py-3 px-4 font-body text-stone-gray text-sm">Dato</th>
-                                </tr>
-                            </thead>
-                            <tbody id="quiz-scores-list">
-                                <tr>
-                                    <td colspan="4" class="text-center py-8 font-body text-stone-gray">Indlæser...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ========== BREVKASSE ========== -->
-            <div id="admin-brevkasse-tab" class="admin-tab hidden">
-                <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="font-display text-2xl text-warm-cream">Brevkasse Submissions</h2>
-                        <button onclick="loadBrevkasse()" class="px-4 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg">
-                            Genindlæs
-                        </button>
-                    </div>
-                    
-                    <div id="brevkasse-container" class="space-y-4 max-h-96 overflow-y-auto">
-                        <p class="font-body text-stone-gray text-center py-8">Indlæser...</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- ========== SONG SUGGESTIONS ========== -->
-            <div id="admin-songs-tab" class="admin-tab hidden">
-                <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-8">
-                    <div class="flex justify-between items-center mb-8">
-                        <h2 class="font-display text-2xl text-warm-cream">Musik Forslag</h2>
-                        <button onclick="loadSongSuggestions()" class="px-4 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg">
-                            Genindlæs
-                        </button>
-                    </div>
-                    
-                    <div id="songs-container" class="space-y-4 max-h-96 overflow-y-auto">
-                        <p class="font-body text-stone-gray text-center py-8">Indlæser...</p>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-
-    <main id="main-content">
-        
-               <!-- HERO SECTION -->
-        <section class="relative min-h-screen flex items-center justify-center grain overflow-hidden pt-16">
-            <div class="organic-shape w-96 h-96 bg-deep-forest top-20 -left-48"></div>
-            <div class="organic-shape w-80 h-80 bg-vivid-green bottom-20 -right-40"></div>
-            
-            <div class="absolute inset-0 opacity-30">
-                <img src="https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?w=1920&q=80" alt="Grøn by" class="w-full h-full object-cover hero-reveal">
-            </div>
-            
-            <div class="absolute inset-0 bg-gradient-to-b from-deep-night via-deep-night/80 to-deep-night"></div>
+    <main id="main-content" class="pt-16">
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-deep-night via-deep-night/80 to-deep-night z-0"></div>
             
             <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
                 <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-warm-cream mb-4 hero-text-1">Fremtiden er min</h1>
@@ -445,22 +150,21 @@
                     <span class="btn-hope inline-flex items-center gap-2 px-8 py-4 bg-vivid-green text-deep-night font-body font-medium rounded-full">
                         Kom i gang
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
                         </svg>
                     </span>
                 </a>
             </div>
             
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator">
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator z-10">
                 <svg class="w-6 h-10 text-stone-gray" fill="none" stroke="currentColor" viewBox="0 0 24 40">
-                    <rect x="1" y="1" width="22" height="38" rx="11" stroke-width="2"/>
-                    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                    <rect x="1" y="1" width="22" height="38" rx="11" stroke-width="2"></rect>
+                    <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
                 </svg>
             </div>
         </section>
 
-        <!-- VERDEN ER FAKTISK BLEVET BEDRE -->
-        <section id="verden" class="relative py-24 sm:py-32 bg-warm-cream text-deep-night solarpunk-gradient">
+        <section id="verden" class="relative py-24 sm:py-32 bg-warm-cream text-deep-night">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
                     <div class="reveal">
@@ -475,7 +179,7 @@
                         </div>
                     </div>
                     
-                    <div class="reveal reveal-delay-2">
+                    <div class="reveal reveal-delay-1">
                         <div class="text-center p-8 bg-soft-white rounded-3xl shadow-xl">
                             <div class="font-display text-8xl sm:text-9xl text-vivid-green leading-none">44→4</div>
                             <p class="font-body text-deep-night/60 mt-4">Børnedødelighed per 100 børn under 5 år</p>
@@ -486,10 +190,7 @@
             </div>
         </section>
 
-        <!-- SOLARPUNK GALLERY -->
-        <section id="solarpunk" class="relative py-24 sm:py-32 bg-deep-night grain overflow-hidden futuristic-grid solarpunk-gradient">
-            <div class="organic-shape w-[500px] h-[500px] bg-vivid-green top-0 right-0"></div>
-            
+        <section id="solarpunk" class="relative py-24 sm:py-32 bg-deep-night">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-16 reveal">
                     <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Se fremtiden</span>
@@ -522,7 +223,6 @@
                     </div>
                 </div>
                 
-                <!-- Lightbox -->
                 <div id="lightbox-modal" class="lightbox-modal" onclick="closeLightbox()">
                     <div class="lightbox-content" onclick="event.stopPropagation()">
                         <button class="lightbox-close" onclick="closeLightbox()">×</button>
@@ -532,13 +232,8 @@
             </div>
         </section>
 
-        <!-- QUIZ SECTION -->
-        <section id="quiz" class="relative py-24 sm:py-32 bg-warm-cream grain solarpunk-gradient">
-            <div class="organic-shape w-[400px] h-[400px] bg-vivid-green -left-32 top-1/2"></div>
-            <div class="organic-shape w-[350px] h-[350px] bg-deep-forest -right-24 bottom-0"></div>
-            
+        <section id="quiz" class="relative py-24 sm:py-32 bg-warm-cream">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <!-- Quiz Start -->
                 <div id="quiz-start" class="text-center reveal">
                     <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Interaktiv</span>
                     <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-6">Hvad ved du om verden?</h2>
@@ -552,7 +247,6 @@
                     </form>
                 </div>
                 
-                <!-- Quiz Container -->
                 <div id="quiz-container" class="quiz-container">
                     <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-xl">
                         <div class="mb-8">
@@ -574,16 +268,9 @@
                     </div>
                 </div>
                 
-                <!-- Quiz Results -->
                 <div id="quiz-results" class="quiz-container hidden">
                     <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-xl">
                         <div class="text-center mb-12">
-                            <div class="inline-flex items-center justify-center w-24 h-24 bg-vivid-green/20 rounded-full mb-8">
-                                <svg class="w-12 h-12 text-vivid-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                                </svg>
-                            </div>
-                            
                             <h3 class="font-display text-4xl text-deep-night mb-4">Dine resultater</h3>
                             
                             <div class="grid md:grid-cols-3 gap-6 my-12">
@@ -602,13 +289,6 @@
                             </div>
                         </div>
                         
-                        <!-- Question Review -->
-                        <div class="mb-12">
-                            <h4 class="font-display text-2xl text-deep-night mb-6">Gennemgå dine svar</h4>
-                            <div id="review-container" class="space-y-6 max-h-96 overflow-y-auto"></div>
-                        </div>
-                        
-                        <!-- Scoreboard -->
                         <div class="mb-12">
                             <h4 class="font-display text-2xl text-deep-night mb-6">Scoreboard</h4>
                             <div id="scoreboard-container" class="bg-deep-night/5 rounded-2xl p-6">
@@ -625,8 +305,7 @@
             </div>
         </section>
 
-        <!-- BREVKASSEN -->
-        <section id="brevkasse" class="relative py-24 sm:py-32 bg-gradient-to-b from-deep-night via-deep-forest/30 to-warm-cream">
+        <section id="brevkasse" class="relative py-24 sm:py-32 bg-deep-night">
             <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="text-center mb-12 reveal">
                     <h2 class="font-display text-4xl sm:text-5xl text-warm-cream">Del en tanke</h2>
@@ -636,21 +315,7 @@
                 <form id="brevkasse-form" class="reveal reveal-delay-1">
                     <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl">
                         <div class="mb-6">
-                            <textarea id="tanke" name="tanke" rows="6" placeholder="Skriv din tanke her..." class="form-textarea w-full px-6 py-4 bg-warm-cream border-2 border-stone-gray/20 rounded-2xl font-body text-deep-night resize-none" required></textarea>
-                        </div>
-                        
-                        <div class="mb-8">
-                            <p class="font-body text-deep-night/70 text-sm mb-4">Vil du have, at en voksen læser det?</p>
-                            <div class="flex flex-col sm:flex-row gap-4">
-                                <label class="flex items-center gap-3 cursor-pointer">
-                                    <input type="radio" name="deling" value="ja" class="w-5 h-5">
-                                    <span class="font-body text-deep-night/80">Ja, en voksen må læse det</span>
-                                </label>
-                                <label class="flex items-center gap-3 cursor-pointer">
-                                    <input type="radio" name="deling" value="nej" checked class="w-5 h-5">
-                                    <span class="font-body text-deep-night/80">Nej, det er bare til mig</span>
-                                </label>
-                            </div>
+                            <textarea id="tanke" name="tanke" rows="6" placeholder="Skriv din tanke her..." class="w-full px-6 py-4 bg-warm-cream border-2 border-stone-gray/20 rounded-2xl font-body text-deep-night resize-none focus:outline-none focus:border-vivid-green" required></textarea>
                         </div>
                         
                         <button type="submit" class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-full">Send tanken afsted</button>
@@ -658,72 +323,23 @@
                 </form>
                 
                 <div id="brevkasse-success" class="hidden text-center py-12">
-                    <h3 class="font-display text-2xl text-deep-night mb-2">Tak for din tanke</h3>
-                    <p class="font-body text-deep-night/70">Den er landet sikkert.</p>
+                    <h3 class="font-display text-2xl text-warm-cream mb-2">Tak for din tanke</h3>
+                    <p class="font-body text-warm-cream/70">Den er landet sikkert.</p>
                 </div>
             </div>
         </section>
-
-        <!-- SKRIV DIG FREMAD -->
-        <section id="oevelser" class="relative py-24 sm:py-32 bg-deep-night grain solarpunk-gradient">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 reveal">
-                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream">Skriv dig fremad</h2>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal">
-                        <div class="font-display text-7xl text-vivid-green/20 leading-none">01</div>
-                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">Dynen-brevet</h3>
-                        <p class="font-body text-warm-cream/80 leading-relaxed">Skriv et kort brev til dig selv, der ligger under dynen. Hvad ville du sige?</p>
-                    </div>
-                    
-                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal reveal-delay-1">
-                        <div class="font-display text-7xl text-vivid-green/20 leading-none">02</div>
-                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">FOMO vs. JOMO</h3>
-                        <p class="font-body text-warm-cream/80 leading-relaxed">Lav to lister: 5 ting du er bange for at gå glip af, og 5 ting du gerne vil slippe for.</p>
-                    </div>
-                    
-                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal reveal-delay-2">
-                        <div class="font-display text-7xl text-vivid-green/20 leading-none">03</div>
-                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">Brev fra din fremtid</h3>
-                        <p class="font-body text-warm-cream/80 leading-relaxed">Du er 30 år gammel og har det godt. Hvad vil du sige til dig selv nu?</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SPOTIFY -->
-        <section class="relative py-24 sm:py-32 bg-warm-cream">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 reveal">
-                    <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Musik</span>
-                    <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4">Soundtrack til fremtiden</h2>
-                </div>
-                
-                <div class="reveal reveal-delay-1 mb-8">
-                    <div style="border-radius:12px; overflow:hidden;">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3ijtcImNPdAKP7V4KSytaF?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <!-- FOOTER -->
     <footer class="bg-deep-night py-16 border-t border-white/5">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="font-display text-3xl text-warm-cream mb-2">Fremtiden er min</h2>
             <p class="font-body text-sun-glow text-sm mb-4">Performance 2026</p>
-            <p class="font-body text-stone-gray max-w-lg mx-auto mb-8">Et projekt om håb, handling og at turde kigge ud. Inspireret af Kristian Leth, Rutger Bregman, Hans Rosling og jer.</p>
-            <p class="font-body text-stone-gray/50 text-xs">Lindenborg Efterskole | Skabt med håb</p>
+            <p class="font-body text-stone-gray max-w-lg mx-auto mb-8">Et projekt om håb, handling og at turde kigge ud.</p>
+            <p class="font-body text-stone-gray/50 text-xs">Lindenborg Efterskole</p>
         </div>
     </footer>
 
-    <!-- ========== JAVASCRIPT ========== -->
-    <script> 
-        // ==================== ALL 50 QUIZ QUESTIONS ==================== //
+    <script>
         const allQuizQuestions = [
             { q: "De seneste 20 år er andelen af mennesker i verden, der lever i ekstrem fattigdom...", a: ["Næsten fordoblet", "Næsten halveret", "Den samme som før", "Steget med 10%"], c: 1 },
             { q: "Hvor mange af verdens 1-årige børn har fået mindst én vaccination mod en sygdom?", a: ["20%", "50%", "80%", "95%"], c: 2 },
@@ -734,55 +350,41 @@
             { q: "Hvad siger forskerne om temperaturen på jorden de næste 100 år?", a: ["Den vil falde", "Den vil stige", "Den forbliver den samme", "Det er umuligt at sige"], c: 1 },
             { q: "Verdens befolkning vokser stadig, men hvorfor kommer vi til at være flere mennesker i år 2100?", a: ["Fordi vi får mange flere børn", "Fordi der bliver flere voksne (flere overlever barndommen)", "Fordi folk bliver 150 år gamle", "Fordi flere babyer bliver født"], c: 1 },
             { q: "Hvordan klarer eksperter og folk med lange uddannelser sig i tests om verdens tilstand?", a: ["De har næsten altid ret", "De gætter bedre end tilfældigt", "De svarer ofte forkert og har et forældet verdensbillede", "De ved alt om fattigdom"], c: 2 },
-            { q: "Hvor mange mennesker i verden har adgang til en eller anden form for elektricitet?", a: ["20%", "50%", "80%", "98%"], c: 2 },
-            { q: "Hvor gamle bliver folk i gennemsnit i verden i dag?", a: ["50 år", "60 år", "70 år", "85 år"], c: 2 },
-            { q: "Hvad er den største grund til, at mange tror verden går dårligere end den gør?", a: ["Medierne lyver altid", "Vores hjerne elsker drama og fokuserer på farer", "Folk er dumme", "Der findes ingen data"], c: 1 },
-            { q: "Mænd på 30 år har i gennemsnit gået 10 år i skole. Hvad med kvinder?", a: ["3 år", "6 år", "9 år", "10 år"], c: 2 },
-            { q: "Hvad definerer 'Level 1' (ekstrem fattigdom)?", a: ["Under $5 om dagen", "Under $2 om dagen", "Under $10 om dagen", "Ingen penge"], c: 1 },
-            { q: "Hvor mange mennesker lever på 'Level 2' ($2-$8 dagligt)?", a: ["Ca. 1 milliard", "Ca. 2 milliarder", "Ca. 3 milliarder", "Ca. 6 milliarder"], c: 2 },
-            { q: "Når en familie rykker fra fattigdom til middelklasse, hvad får de typisk?", a: ["En rumraket", "En knallert og måske en vaskemaskine", "En Ferrari", "Et privatfly"], c: 1 },
-            { q: "Hvor mange mennesker lever i demokratier?", a: ["Næsten ingen", "Kun Europa og USA", "Over halvdelen af verden", "Det falder hele tiden"], c: 2 },
-            { q: "Hvor gammel blev man i gennemsnit omkring år 1800?", a: ["Ca. 30-32 år", "Ca. 45 år", "Ca. 55 år", "Ca. 65 år"], c: 0 },
-            { q: "Hvilken sygdom udryddede verden helt i 1980?", a: ["Malaria", "Kopper", "Influenza", "Pest"], c: 1 },
-            { q: "I 1965 fik kvinder i snit 5 børn. Og i dag?", a: ["5 børn", "3,5 børn", "2,5 børn", "1,5 børn"], c: 2 },
-            { q: "Hvad skete med børnedødeligheden i Bangladesh siden 1972?", a: ["Den er steget", "Uændret", "Faldet fra ca. 22% til under 3,5%", "Vi har ingen tal"], c: 2 },
-            { q: "Hvorfor stopper befolkningstallet ikke med at stige med det samme?", a: ["'Demografisk Momentum' - børn bliver voksne", "Folk dør aldrig", "Alle flytter til byerne", "Det er en regnefejl"], c: 0 },
-            { q: "Hvad skete med ozonlaget efter vi lavede regler mod skadelige stoffer?", a: ["Ingenting", "Vi bruger næsten ikke stofferne mere, og hullet heler", "Ozonlaget forsvandt helt", "Vi bruger stadig stofferne"], c: 1 },
-            { q: "Sker der flere store olieudslip fra tankskibe i dag end i 1970'erne?", a: ["Ja, mange flere", "Det er det samme", "Nej, faldet fra 24 årligt til under 2", "Olieudslip findes ikke mere"], c: 2 },
-            { q: "Dødstallet fra naturkatastrofer har ændret sig hvordan?", a: ["Steget", "Faldet med ca. 75%", "Uændret", "Fordoblet"], c: 1 },
-            { q: "Hvad kommer det meste af verdens energi fra?", a: ["Vindmøller", "Solceller", "Fossile brændstoffer", "Vandkraft"], c: 2 },
-            { q: "Hvad er status for beskyttede naturområder?", a: ["Færre", "Arealet er steget", "Ingen går op i det", "Kun rige lande"], c: 1 },
-            { q: "Hvor mange lande har lovligt slaveri i dag?", a: ["0 lande", "10 lande", "50 lande", "Alle i Afrika"], c: 0 },
-            { q: "Hvornår fik kvinder lov at stemme i Saudi-Arabien?", a: ["1950", "1980", "2015", "Aldrig"], c: 2 },
-            { q: "Hvilket land er det eneste hvor ingen kan stemme?", a: ["Nordkorea", "Iran", "Vatikanstaten", "USA"], c: 2 },
-            { q: "Hvad viser tallene om børnearbejde siden år 2000?", a: ["Stiger", "Falder", "Uændret", "Findes ikke mere"], c: 1 },
-            { q: "Hvad er statistisk set farligst i USA?", a: ["Terrorisme", "Alkohol (50x flere dødsfald)", "De er lige farlige", "Terror findes ikke"], c: 1 },
-            { q: "I 1980'erne var der 60.000 atomvåben. Nu?", a: ["100.000", "60.000", "Ca. 15.000", "0"], c: 2 },
-            { q: "Er verden blevet mere voldelig de sidste 30 år?", a: ["Ja", "Nej, trenden er faldende", "Umuligt at måle", "Kun i fattige lande"], c: 1 },
-            { q: "Er det sikrere at flyve nu end for 70 år siden?", a: ["Meget mere usikkert", "Uændret", "Ja, næsten nul dødsfald per rejse", "Kun sikkert i Europa"], c: 2 },
-            { q: "Hvorfor tror vi verden er delt i 'Os' og 'Dem'?", a: ["Det er sandt", "Vi har et 'Kløft-instinkt'", "Alle er enten rige eller hjemløse", "Grænserne er mure"], c: 1 },
-            { q: "Hvad betyder 'Den lige linje-instinktet'?", a: ["At gå ligeud", "At ting bliver ved med at vokse for evigt", "Tegne uden lineal", "Udvikling er altid glat"], c: 1 },
-            { q: "Hvad er 'Kemofobi'?", a: ["Frygten for kemitimer", "Frygten for kemikalier og tro på naturligt er godt", "Frygten for medicin", "Allergi mod plastik"], c: 1 },
-            { q: "Hvad skete der med vilde tigre siden 1996?", a: ["Uddøde", "Faldet", "Steget fra 3.200 til 3.900", "Uændret"], c: 2 },
-            { q: "Hvor mange døde af Spanske Syge i 1918?", a: ["1 million", "10 millioner", "Ca. 50 millioner", "100 millioner"], c: 2 },
-            { q: "Hvorfor flyver flygtninge ikke oftere?", a: ["De kan ikke lide fly", "De har ikke pas", "Regler forhindrer det uden visum", "Ingen lufthavne"], c: 2 },
-            { q: "Børnedødelighed Sverige 1800 vs Mozambique nu?", a: ["Sverige lavere dengang", "Mozambique lavere nu", "Præcis det samme", "Mozambique har ingen"], c: 1 },
-            { q: "Bliver der lavet mere videnskab i dag?", a: ["Mindre", "Det samme", "Meget mere", "Kun USA"], c: 2 },
-            { q: "Hvad sviner mest med CO2 i rige lande?", a: ["Mad over bål", "Transport", "Skovhugst", "Vandforbrug"], c: 1 },
-            { q: "Hvad gjorde Sverige mod drukneulykker blandt børn?", a: ["Forbød svømning", "Obligatorisk svømmeundervisning", "Fjernede søerne", "Redningsveste"], c: 1 },
-            { q: "Er der flere guitarejere i dag?", a: ["Færre", "Flere", "Det samme", "Ingen spiller"], c: 1 },
-            { q: "Hvilket land forbød bly i benzin først (1986)?", a: ["USA", "Sverige", "Japan", "Tyskland"], c: 2 },
-            { q: "Hvor mange børn overlever kræft i rige lande?", a: ["20%", "50%", "Over 80%", "100%"], c: 2 },
-            { q: "Hvor stor del af verden har rent drikkevand?", a: ["30%", "50%", "Ca. 90%", "100%"], c: 2 },
-            { q: "Hvad sker der med antallet af nye film?", a: ["Falder", "Stiger eksplosivt", "Konstant", "Kun Hollywood"], c: 1 }
+            { q: "Hvor mange mennesker i verden har adgang til en eller anden form for elektricitet?", a: ["20%", "50%", "80%", "98%"], c: 2 }
         ];
 
         let currentQuiz = [];
         let currentQuestionIndex = 0;
-        let studentAnswers = {};
-        let studentName = '';
         let selectedAnswers = {};
-        let quizScores = [];
+        let studentName = '';
+
+        const LOGIN_CODE = 'egonolsen';
+        const SESSION_KEY = 'fremtiden_session';
+
+        function checkAuth() {
+            const session = localStorage.getItem(SESSION_KEY);
+            if (!session) {
+                document.getElementById('login-modal').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem(SESSION_KEY);
+            location.reload();
+        }
+
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const code = document.getElementById('login-code').value;
+            if (code === LOGIN_CODE) {
+                localStorage.setItem(SESSION_KEY, JSON.stringify({ timestamp: new Date().toISOString() }));
+                document.getElementById('login-modal').classList.remove('active');
+                document.body.style.overflow = '';
+            } else {
+                alert('Forkert kodeord');
+            }
+        });
 
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
@@ -793,8 +395,7 @@
         }
 
         function getRandomQuestions() {
-            const shuffled = shuffleArray([...allQuizQuestions]);
-            return shuffled.slice(0, 10);
+            return shuffleArray([...allQuizQuestions]).slice(0, 10);
         }
 
         function startQuiz(name) {
@@ -852,22 +453,8 @@
 
         function submitQuiz() {
             let score = 0;
-            const reviewData = [];
-
             Object.keys(selectedAnswers).forEach(idx => {
-                const question = currentQuiz[idx];
-                const userAnswerIdx = selectedAnswers[idx];
-                const isCorrect = userAnswerIdx === question.c;
-                if (isCorrect) score++;
-
-                reviewData.push({
-                    index: parseInt(idx),
-                    question: question.q,
-                    userAnswer: question.a[userAnswerIdx],
-                    correctAnswer: question.a[question.c],
-                    isCorrect: isCorrect,
-                    allOptions: question.a
-                });
+                if (selectedAnswers[idx] === currentQuiz[idx].c) score++;
             });
 
             const percentage = (score / 10) * 100;
@@ -875,65 +462,16 @@
             document.getElementById('wrong-display').textContent = `${10 - score}`;
             document.getElementById('percentage-display').textContent = `${percentage.toFixed(0)}%`;
 
-            const reviewContainer = document.getElementById('review-container');
-            reviewContainer.innerHTML = reviewData.map(item => `
-                <div class="question-review ${item.isCorrect ? 'correct' : 'incorrect'} p-6 rounded-xl">
-                    <div class="flex items-start justify-between mb-4">
-                        <h5 class="font-body font-semibold text-deep-night flex-1">Spørgsmål ${item.index + 1}</h5>
-                        <span class="px-3 py-1 rounded-full text-xs font-body ${item.isCorrect ? 'bg-vivid-green/20 text-vivid-green' : 'bg-red-500/20 text-red-500'}">
-                            ${item.isCorrect ? '✓ Korrekt' : '✗ Forkert'}
-                        </span>
-                    </div>
-                    <p class="font-body text-deep-night mb-4">${item.question}</p>
-                    <div class="space-y-2">
-                        ${item.allOptions.map((opt, i) => `
-                            <div class="answer-option ${opt === item.userAnswer ? 'user-selected' : ''} ${opt === item.correctAnswer ? 'correct' : opt === item.userAnswer && !item.isCorrect ? 'incorrect' : 'bg-soft-white'}">
-                                ${opt === item.userAnswer && !item.isCorrect ? '✗ Dit svar: ' : ''}${opt === item.correctAnswer && item.isCorrect ? '✓ ' : ''}${opt === item.correctAnswer && !item.isCorrect ? '✓ Korrekt svar: ' : ''}${opt}
-                            </div>
-                        `).join('')}
-                    </div>
-                </div>
-            `).join('');
-
-            quizScores = [
-                { name: studentName, score: score, percentage: percentage, isUserScore: true },
-                { name: 'Emma L.', score: 9, percentage: 90, isUserScore: false },
-                { name: 'Kasper M.', score: 8, percentage: 80, isUserScore: false },
-                { name: 'Sofie K.', score: 8, percentage: 80, isUserScore: false },
-                { name: 'Johan P.', score: 7, percentage: 70, isUserScore: false },
-                { name: 'Liv T.', score: 7, percentage: 70, isUserScore: false },
-                { name: 'Viktor R.', score: 6, percentage: 60, isUserScore: false },
-                { name: 'Anna S.', score: 6, percentage: 60, isUserScore: false },
-                { name: 'Nikolaj H.', score: 5, percentage: 50, isUserScore: false },
-                { name: 'Freja B.', score: 5, percentage: 50, isUserScore: false }
-            ];
-
             const scoreboardList = document.getElementById('scoreboard-list');
-            scoreboardList.innerHTML = quizScores.map((entry, idx) => `
-                <div class="scoreboard-entry ${entry.isUserScore ? 'user-score' : 'bg-deep-night/10'} p-4 rounded-lg flex justify-between items-center">
-                    <div>
-                        <p class="font-body font-semibold text-deep-night">#${idx + 1} ${entry.name}</p>
-                    </div>
-                    <div class="text-right">
-                        <p class="font-display text-lg text-vivid-green">${entry.score}/10</p>
-                        <p class="font-body text-sm text-stone-gray">${entry.percentage.toFixed(0)}%</p>
-                    </div>
+            scoreboardList.innerHTML = `
+                <div class="bg-vivid-green/10 p-4 rounded-lg flex justify-between items-center">
+                    <p class="font-body font-semibold text-deep-night">#1 ${studentName}</p>
+                    <div class="text-right"><p class="font-display text-lg text-vivid-green">${score}/10</p><p class="font-body text-sm text-stone-gray">${percentage.toFixed(0)}%</p></div>
                 </div>
-            `).join('');
+            `;
 
             document.getElementById('quiz-container').classList.remove('active');
             document.getElementById('quiz-results').classList.remove('hidden');
-
-            fetch('/.netlify/functions/quiz-submit', {
-                method: 'POST',
-                body: JSON.stringify({
-                    studentName: studentName,
-                    score: score,
-                    totalQuestions: 10,
-                    percentage: percentage,
-                    sessionId: Date.now()
-                })
-            }).catch(err => console.log('Quiz saved locally'));
         }
 
         function resetQuiz() {
@@ -947,97 +485,17 @@
 
         document.getElementById('quiz-name-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const name = document.getElementById('student-name-input').value;
-            startQuiz(name);
+            startQuiz(document.getElementById('student-name-input').value);
         });
 
-        // ==================== AUTHENTICATION ==================== //
-        const LOGIN_CODE = 'egonolsen';
-        const SESSION_KEY = 'fremtiden_session';
-
-        function checkAuth() {
-            const session = localStorage.getItem(SESSION_KEY);
-            if (!session) {
-                document.getElementById('login-modal').classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem(SESSION_KEY);
-            location.reload();
-        }
-
-        document.getElementById('login-form').addEventListener('submit', (e) => {
+        document.getElementById('brevkasse-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            const code = document.getElementById('login-code').value;
-            const remember = document.getElementById('remember-me').checked;
-
-            if (code === LOGIN_CODE) {
-                const session = {
-                    timestamp: new Date().toISOString(),
-                    remember: remember
-                };
-                localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-                document.getElementById('login-modal').classList.remove('active');
-                document.body.style.overflow = '';
-            } else {
-                alert('Forkert kodeord');
-            }
-        });
-
-        // ==================== ADMIN PANEL ==================== //
-        const ADMIN_CODE = 'Kaj';
-
-        function openAdminLogin() {
-            document.getElementById('admin-login-modal').classList.add('active');
-        }
-
-        function closeAdminLogin() {
-            document.getElementById('admin-login-modal').classList.remove('active');
-        }
-
-        function closeAdmin() {
-            document.getElementById('admin-dashboard').classList.add('hidden');
-        }
-
-        document.getElementById('admin-login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const code = document.getElementById('admin-code').value;
-
-            if (code === ADMIN_CODE) {
-                document.getElementById('admin-login-modal').classList.remove('active');
-                document.getElementById('admin-dashboard').classList.remove('hidden');
-            } else {
-                alert('Forkert admin kode');
-            }
-        });
-
-        // ==================== FORMS ==================== //
-        document.getElementById('brevkasse-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const content = document.getElementById('tanke').value;
             document.getElementById('brevkasse-form').classList.add('hidden');
             document.getElementById('brevkasse-success').classList.remove('hidden');
         });
 
-        // ==================== SCROLL REVEAL ==================== //
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOnScroll = () => {
-            revealElements.forEach(el => {
-                const top = el.getBoundingClientRect().top;
-                if (top < window.innerHeight - 150) {
-                    el.classList.add('visible');
-                }
-            });
-        };
-        window.addEventListener('scroll', revealOnScroll);
-        window.addEventListener('load', revealOnScroll);
-
-        // ==================== LIGHTBOX ==================== //
         function openLightbox(el) {
-            const img = el.querySelector('img');
-            document.getElementById('lightbox-image').src = img.src;
+            document.getElementById('lightbox-image').src = el.querySelector('img').src;
             document.getElementById('lightbox-modal').classList.add('active');
         }
 
@@ -1049,21 +507,17 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        // ==================== NAV ==================== //
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            revealElements.forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 150) {
+                    el.classList.add('visible');
+                }
             });
-            mobileMenu.querySelectorAll('a, button').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                });
-            });
-        }
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
 
-        // ==================== INIT ==================== //
         checkAuth();
     </script>
 </body>
