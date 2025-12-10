@@ -11,6 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
         tailwind.config = {
@@ -58,6 +59,9 @@
         
         @keyframes fade-up { 0% { opacity: 0; transform: translateY(30px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes pulse-soft { 0%, 100% { opacity: 0.6; transform: translateY(0); } 50% { opacity: 1; transform: translateY(8px); } }
+        @keyframes float-up { 0% { opacity: 0; transform: translateY(100px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes vine-wave { 0%, 100% { transform: translateX(0) translateY(0); } 25% { transform: translateX(10px) translateY(-5px); } 75% { transform: translateX(-10px) translateY(-5px); } }
+        @keyframes plant-grow { 0% { opacity: 0; transform: scaleY(0) translateY(20px); } 100% { opacity: 1; transform: scaleY(1) translateY(0); } }
         
         .hero-text-1 { animation: fade-up 0.8s ease-out 1s forwards; opacity: 0; }
         .hero-text-2 { animation: fade-up 0.8s ease-out 1.2s forwards; opacity: 0; }
@@ -68,12 +72,31 @@
         .reveal.visible { opacity: 1; transform: translateY(0); }
         .reveal-delay-1 { transition-delay: 0.1s; }
         .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
         
         .btn-hope { transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .btn-hope:hover { transform: scale(1.05); box-shadow: 0 10px 30px rgba(0, 210, 106, 0.3); }
         
+        .plant-element { position: fixed; pointer-events: none; z-index: 5; font-size: 3rem; opacity: 0; }
+        .plant-1 { animation: float-up 1.2s ease-out 0s forwards; }
+        .plant-2 { animation: float-up 1.4s ease-out 0.2s forwards; }
+        .plant-3 { animation: float-up 1.6s ease-out 0.4s forwards; }
+        .plant-4 { animation: float-up 1.8s ease-out 0.6s forwards; }
+        .plant-5 { animation: float-up 2s ease-out 0.8s forwards; }
+        
+        .vine-element { position: fixed; font-size: 4rem; pointer-events: none; z-index: 5; animation: vine-wave 4s ease-in-out infinite; }
+        
+        .organic-shape { position: absolute; border-radius: 50% 40% 60% 50%; opacity: 0.08; filter: blur(60px); pointer-events: none; }
+        
         .login-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
         .login-modal.active { display: flex; }
+        
+        .admin-login-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 2000; align-items: center; justify-content: center; padding: 1rem; }
+        .admin-login-modal.active { display: flex; }
+        
+        .admin-dashboard { display: none; position: fixed; inset: 0; background-color: var(--deep-night); z-index: 1500; overflow-y: auto; padding-top: 5rem; }
+        .admin-dashboard.active { display: block; }
         
         .quiz-container { display: none; }
         .quiz-container.active { display: block; }
@@ -84,6 +107,28 @@
         .lightbox-content { position: relative; max-width: 90vw; max-height: 90vh; }
         .lightbox-close { position: absolute; top: -40px; right: 0; color: white; cursor: pointer; font-size: 2rem; background: none; border: none; padding: 0.5rem; }
         
+        .solarpunk-gradient {
+            background: linear-gradient(180deg, rgba(13, 13, 13, 1) 0%, rgba(26, 61, 46, 0.3) 25%, rgba(0, 210, 106, 0.05) 50%, rgba(26, 61, 46, 0.2) 75%, rgba(13, 13, 13, 1) 100%);
+        }
+        
+        .futuristic-grid {
+            background-image: 
+                linear-gradient(0deg, transparent 24%, rgba(0, 210, 106, 0.05) 25%, rgba(0, 210, 106, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 210, 106, 0.05) 75%, rgba(0, 210, 106, 0.05) 76%, transparent 77%, transparent),
+                linear-gradient(90deg, transparent 24%, rgba(0, 210, 106, 0.05) 25%, rgba(0, 210, 106, 0.05) 26%, transparent 27%, transparent 74%, rgba(0, 210, 106, 0.05) 75%, rgba(0, 210, 106, 0.05) 76%, transparent 77%, transparent);
+            background-size: 60px 60px;
+        }
+        
+        .exercise-card { transition: transform 0.4s ease, border-color 0.3s ease; }
+        .exercise-card:hover { transform: translateY(-4px); border-color: var(--vivid-green); }
+        
+        .question-review { border-left: 4px solid transparent; transition: all 0.3s ease; }
+        .question-review.correct { border-left-color: var(--vivid-green); background-color: rgba(0, 210, 106, 0.05); }
+        .question-review.incorrect { border-left-color: #FF6B6B; background-color: rgba(255, 107, 107, 0.05); }
+        
+        .answer-option { padding: 0.75rem 1rem; border-radius: 0.5rem; margin: 0.5rem 0; border: 1px solid transparent; transition: all 0.2s ease; }
+        .answer-option.correct { border-color: var(--vivid-green); background-color: rgba(0, 210, 106, 0.1); color: var(--vivid-green); }
+        .answer-option.incorrect { border-color: #FF6B6B; background-color: rgba(255, 107, 107, 0.1); color: #FF6B6B; }
+        
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--deep-night); }
         ::-webkit-scrollbar-thumb { background: var(--deep-forest); border-radius: 4px; }
@@ -91,434 +136,3 @@
     </style>
 </head>
 <body>
-    <div id="login-modal" class="login-modal active">
-        <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
-            <div class="text-center mb-8">
-                <h1 class="font-display text-4xl text-deep-night mb-2">Fremtiden er min</h1>
-                <p class="font-body text-stone-gray">Performance 2026</p>
-            </div>
-            
-            <form id="login-form">
-                <div class="mb-6">
-                    <label for="login-code" class="block font-body text-sm text-deep-night/70 mb-2">Kodeord</label>
-                    <input type="password" id="login-code" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green" placeholder="Skriv kodeordet her..." required>
-                </div>
-                
-                <label class="flex items-center gap-3 mb-6 cursor-pointer">
-                    <input type="checkbox" id="remember-me" class="w-5 h-5">
-                    <span class="font-body text-sm text-deep-night/70">Husk mig</span>
-                </label>
-                
-                <button type="submit" class="btn-hope w-full py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Kom ind</button>
-            </form>
-        </div>
-    </div>
-
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-deep-night/80 backdrop-blur-md border-b border-white/5">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <a href="#" class="flex items-center gap-3 hover:opacity-80 transition-opacity">
-                    <span class="font-display text-xl text-warm-cream">Fremtiden er min</span>
-                </a>
-                
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="#verden" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Verden</a>
-                    <a href="#solarpunk" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Solarpunk</a>
-                    <a href="#quiz" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Quiz</a>
-                    <a href="#brevkasse" class="font-body text-sm px-4 py-2 bg-vivid-green text-deep-night rounded-full hover:bg-sun-glow transition-colors">Brevkasse</a>
-                    <button id="logout-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="logout()">Log ud</button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <main id="main-content" class="pt-16">
-        <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-b from-deep-night via-deep-night/80 to-deep-night z-0"></div>
-            
-            <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-                <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-warm-cream mb-4 hero-text-1">Fremtiden er min</h1>
-                <p class="font-body text-lg sm:text-xl text-sun-glow tracking-wide mb-8 hero-text-1">Performance 2026 — Lindenborg Efterskole</p>
-                
-                <div class="space-y-4 max-w-2xl mx-auto hero-text-2">
-                    <p class="font-body text-lg sm:text-xl text-stone-gray">Du står midt i en tid, hvor alle siger, at alt brænder.</p>
-                    <p class="font-body text-lg sm:text-xl text-warm-cream">Men du trækker vejret lige nu. Du er her.</p>
-                    <p class="font-display text-2xl sm:text-3xl text-vivid-green italic">Og fremtiden er der også i morgen.</p>
-                </div>
-                
-                <a href="#verden" class="inline-block mt-12 hero-text-3">
-                    <span class="btn-hope inline-flex items-center gap-2 px-8 py-4 bg-vivid-green text-deep-night font-body font-medium rounded-full">
-                        Kom i gang
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                        </svg>
-                    </span>
-                </a>
-            </div>
-            
-            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator z-10">
-                <svg class="w-6 h-10 text-stone-gray" fill="none" stroke="currentColor" viewBox="0 0 24 40">
-                    <rect x="1" y="1" width="22" height="38" rx="11" stroke-width="2"></rect>
-                    <circle cx="12" cy="12" r="3" fill="currentColor"></circle>
-                </svg>
-            </div>
-        </section>
-
-        <section id="verden" class="relative py-24 sm:py-32 bg-warm-cream text-deep-night">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-                    <div class="reveal">
-                        <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Data mod doomscrolling</span>
-                        <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-8">Verden er faktisk blevet bedre</h2>
-                        
-                        <div class="space-y-6 font-body text-lg text-deep-night/80 leading-relaxed">
-                            <p>Overskrifterne siger, at alt kollapser. Men her er noget, de sjældent nævner:</p>
-                            <p>For hundrede år siden døde <span class="font-medium text-deep-night">44 ud af 100 børn</span> under 5 år – i dag er det <span class="font-medium text-vivid-green">4 ud af 100</span>. Globalt.</p>
-                            <p>Verden har problemer. Men verden har også løst problemer, som vores oldeforældre troede var umulige.</p>
-                            <p class="font-medium text-deep-night">Du må godt glæde dig over fremskridt OG gå i gang med det svære. Begge dele er sande.</p>
-                        </div>
-                    </div>
-                    
-                    <div class="reveal reveal-delay-1">
-                        <div class="text-center p-8 bg-soft-white rounded-3xl shadow-xl">
-                            <div class="font-display text-8xl sm:text-9xl text-vivid-green leading-none">44→4</div>
-                            <p class="font-body text-deep-night/60 mt-4">Børnedødelighed per 100 børn under 5 år</p>
-                            <p class="font-body text-sm text-stone-gray mt-2">1900 → 2024 (globalt)</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="solarpunk" class="relative py-24 sm:py-32 bg-deep-night">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 reveal">
-                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Se fremtiden</span>
-                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream mt-4">Fremtiden behøver ikke være grå</h2>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-6 reveal reveal-delay-1 mb-12">
-                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(this)">
-                        <img src="https://images.unsplash.com/photo-1518005068251-37900150dfca?w=800&q=80" alt="Bosco Verticale" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                        <div class="absolute bottom-4 left-4 right-4">
-                            <p class="font-body text-sm text-warm-cream/80">Genbrug + Innovation</p>
-                        </div>
-                    </div>
-                    
-                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer md:-mt-8" onclick="openLightbox(this)">
-                        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Solpaneler" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                        <div class="absolute bottom-4 left-4 right-4">
-                            <p class="font-body text-sm text-warm-cream/80">Teknologi + Natur</p>
-                        </div>
-                    </div>
-                    
-                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(this)">
-                        <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&q=80" alt="Tog gennem natur" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                        <div class="absolute bottom-4 left-4 right-4">
-                            <p class="font-body text-sm text-warm-cream/80">Bæredygtig Transport</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="lightbox-modal" class="lightbox-modal" onclick="closeLightbox()">
-                    <div class="lightbox-content" onclick="event.stopPropagation()">
-                        <button class="lightbox-close" onclick="closeLightbox()">×</button>
-                        <img id="lightbox-image" src="" alt="" class="max-w-full max-h-full rounded-xl">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="quiz" class="relative py-24 sm:py-32 bg-warm-cream">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div id="quiz-start" class="text-center reveal">
-                    <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Interaktiv</span>
-                    <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-6">Hvad ved du om verden?</h2>
-                    <p class="font-body text-lg text-deep-night/70 max-w-2xl mx-auto mb-8">Baseret på Hans Roslings "Factfulness". Test din viden og se hvordan du klarer dig mod andre.</p>
-                    
-                    <form id="quiz-name-form" class="max-w-md mx-auto mb-8">
-                        <div class="mb-6">
-                            <input type="text" id="student-name-input" placeholder="Dit navn (eller anonymt)" class="w-full px-6 py-3 border-2 border-deep-forest/20 rounded-lg font-body text-deep-night placeholder-stone-gray focus:outline-none focus:border-vivid-green" required>
-                        </div>
-                        <button type="submit" class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Start Quiz</button>
-                    </form>
-                </div>
-                
-                <div id="quiz-container" class="quiz-container">
-                    <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-xl">
-                        <div class="mb-8">
-                            <div class="flex justify-between items-center mb-4">
-                                <span class="font-body text-sm text-stone-gray">Spørgsmål <span id="current-question">1</span> af 10</span>
-                                <div class="w-full mx-4 bg-stone-gray/20 rounded-full h-2">
-                                    <div id="progress-bar" class="bg-vivid-green h-2 rounded-full" style="width: 10%"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <h3 id="question-text" class="font-display text-2xl text-deep-night mb-8"></h3>
-                        <div id="options-container" class="space-y-4 mb-8"></div>
-                        
-                        <div class="flex gap-4">
-                            <button id="prev-btn" class="flex-1 py-3 border-2 border-stone-gray/20 text-deep-night font-body rounded-lg hover:border-deep-forest transition-colors" onclick="previousQuestion()">Forrige</button>
-                            <button id="next-btn" class="flex-1 py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg hover:bg-deep-forest transition-colors" onclick="nextQuestion()">Næste</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <div id="quiz-results" class="quiz-container hidden">
-                    <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-xl">
-                        <div class="text-center mb-12">
-                            <h3 class="font-display text-4xl text-deep-night mb-4">Dine resultater</h3>
-                            
-                            <div class="grid md:grid-cols-3 gap-6 my-12">
-                                <div class="p-6 bg-deep-forest/5 rounded-2xl">
-                                    <p class="font-body text-stone-gray mb-2">Rigtige svar</p>
-                                    <p class="font-display text-4xl text-vivid-green" id="score-display">0/10</p>
-                                </div>
-                                <div class="p-6 bg-deep-forest/5 rounded-2xl">
-                                    <p class="font-body text-stone-gray mb-2">Forkerte svar</p>
-                                    <p class="font-display text-4xl text-red-500" id="wrong-display">0</p>
-                                </div>
-                                <div class="p-6 bg-deep-forest/5 rounded-2xl">
-                                    <p class="font-body text-stone-gray mb-2">Procent</p>
-                                    <p class="font-display text-4xl text-sun-glow" id="percentage-display">0%</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mb-12">
-                            <h4 class="font-display text-2xl text-deep-night mb-6">Scoreboard</h4>
-                            <div id="scoreboard-container" class="bg-deep-night/5 rounded-2xl p-6">
-                                <div id="scoreboard-list" class="space-y-3"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="flex gap-4">
-                            <button onclick="resetQuiz()" class="btn-hope flex-1 py-4 px-8 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Tag quizzen igen</button>
-                            <a href="#verden" class="flex-1"><button class="btn-hope w-full py-4 px-8 border-2 border-deep-forest text-deep-night font-body font-medium rounded-lg hover:bg-deep-forest/5 transition-colors">Tilbage til toppen</button></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="brevkasse" class="relative py-24 sm:py-32 bg-deep-night">
-            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-12 reveal">
-                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream">Del en tanke</h2>
-                    <p class="font-body text-lg text-warm-cream/80 mt-6">Helt anonymt. Ingen dømmer.</p>
-                </div>
-                
-                <form id="brevkasse-form" class="reveal reveal-delay-1">
-                    <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl">
-                        <div class="mb-6">
-                            <textarea id="tanke" name="tanke" rows="6" placeholder="Skriv din tanke her..." class="w-full px-6 py-4 bg-warm-cream border-2 border-stone-gray/20 rounded-2xl font-body text-deep-night resize-none focus:outline-none focus:border-vivid-green" required></textarea>
-                        </div>
-                        
-                        <button type="submit" class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-full">Send tanken afsted</button>
-                    </div>
-                </form>
-                
-                <div id="brevkasse-success" class="hidden text-center py-12">
-                    <h3 class="font-display text-2xl text-warm-cream mb-2">Tak for din tanke</h3>
-                    <p class="font-body text-warm-cream/70">Den er landet sikkert.</p>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="bg-deep-night py-16 border-t border-white/5">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="font-display text-3xl text-warm-cream mb-2">Fremtiden er min</h2>
-            <p class="font-body text-sun-glow text-sm mb-4">Performance 2026</p>
-            <p class="font-body text-stone-gray max-w-lg mx-auto mb-8">Et projekt om håb, handling og at turde kigge ud.</p>
-            <p class="font-body text-stone-gray/50 text-xs">Lindenborg Efterskole</p>
-        </div>
-    </footer>
-
-    <script>
-        const allQuizQuestions = [
-            { q: "De seneste 20 år er andelen af mennesker i verden, der lever i ekstrem fattigdom...", a: ["Næsten fordoblet", "Næsten halveret", "Den samme som før", "Steget med 10%"], c: 1 },
-            { q: "Hvor mange af verdens 1-årige børn har fået mindst én vaccination mod en sygdom?", a: ["20%", "50%", "80%", "95%"], c: 2 },
-            { q: "Hvis vi kigger på økonomi, hvor bor størstedelen af verdens befolkning så?", a: ["I meget fattige lande", "I meget rige lande", "I midten (mellemindkomstlande)", "Vi ved det ikke"], c: 2 },
-            { q: "Hvor mange piger gør deres grundskole færdig i verdens fattigste lande?", a: ["20%", "40%", "60%", "80%"], c: 2 },
-            { q: "Hvis du ser på verden generelt, hvad sker der så med udviklingen?", a: ["Det går værre og værre", "De rige bliver rigere, og alle andre bliver fattigere", "Verden bliver faktisk bedre skridt for skridt", "Det står helt stille"], c: 2 },
-            { q: "Der er 2 milliarder børn i verden i dag. Hvor mange tror FN, der vil være i år 2100?", a: ["2 milliarder", "3 milliarder", "4 milliarder", "6 milliarder"], c: 0 },
-            { q: "Hvad siger forskerne om temperaturen på jorden de næste 100 år?", a: ["Den vil falde", "Den vil stige", "Den forbliver den samme", "Det er umuligt at sige"], c: 1 },
-            { q: "Verdens befolkning vokser stadig, men hvorfor kommer vi til at være flere mennesker i år 2100?", a: ["Fordi vi får mange flere børn", "Fordi der bliver flere voksne (flere overlever barndommen)", "Fordi folk bliver 150 år gamle", "Fordi flere babyer bliver født"], c: 1 },
-            { q: "Hvordan klarer eksperter og folk med lange uddannelser sig i tests om verdens tilstand?", a: ["De har næsten altid ret", "De gætter bedre end tilfældigt", "De svarer ofte forkert og har et forældet verdensbillede", "De ved alt om fattigdom"], c: 2 },
-            { q: "Hvor mange mennesker i verden har adgang til en eller anden form for elektricitet?", a: ["20%", "50%", "80%", "98%"], c: 2 }
-        ];
-
-        let currentQuiz = [];
-        let currentQuestionIndex = 0;
-        let selectedAnswers = {};
-        let studentName = '';
-
-        const LOGIN_CODE = 'egonolsen';
-        const SESSION_KEY = 'fremtiden_session';
-
-        function checkAuth() {
-            const session = localStorage.getItem(SESSION_KEY);
-            if (!session) {
-                document.getElementById('login-modal').classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem(SESSION_KEY);
-            location.reload();
-        }
-
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const code = document.getElementById('login-code').value;
-            if (code === LOGIN_CODE) {
-                localStorage.setItem(SESSION_KEY, JSON.stringify({ timestamp: new Date().toISOString() }));
-                document.getElementById('login-modal').classList.remove('active');
-                document.body.style.overflow = '';
-            } else {
-                alert('Forkert kodeord');
-            }
-        });
-
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
-
-        function getRandomQuestions() {
-            return shuffleArray([...allQuizQuestions]).slice(0, 10);
-        }
-
-        function startQuiz(name) {
-            studentName = name || 'Anonym';
-            currentQuiz = getRandomQuestions();
-            currentQuestionIndex = 0;
-            selectedAnswers = {};
-            showQuestion();
-            document.getElementById('quiz-start').classList.add('hidden');
-            document.getElementById('quiz-container').classList.add('active');
-        }
-
-        function showQuestion() {
-            const q = currentQuiz[currentQuestionIndex];
-            document.getElementById('question-text').textContent = q.q;
-            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
-            document.getElementById('progress-bar').style.width = ((currentQuestionIndex + 1) / 10 * 100) + '%';
-
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            q.a.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'w-full p-4 text-left border-2 border-stone-gray/20 rounded-lg font-body text-deep-night hover:border-vivid-green transition-colors ' + 
-                    (selectedAnswers[currentQuestionIndex] === idx ? 'bg-vivid-green/20 border-vivid-green' : 'bg-soft-white');
-                btn.textContent = opt;
-                btn.onclick = () => selectAnswer(idx);
-                container.appendChild(btn);
-            });
-
-            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
-            document.getElementById('next-btn').textContent = currentQuestionIndex === 9 ? 'Se resultater' : 'Næste';
-        }
-
-        function selectAnswer(idx) {
-            selectedAnswers[currentQuestionIndex] = idx;
-            showQuestion();
-        }
-
-        function nextQuestion() {
-            if (currentQuestionIndex < 9) {
-                currentQuestionIndex++;
-                showQuestion();
-            } else {
-                submitQuiz();
-            }
-        }
-
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                showQuestion();
-            }
-        }
-
-        function submitQuiz() {
-            let score = 0;
-            Object.keys(selectedAnswers).forEach(idx => {
-                if (selectedAnswers[idx] === currentQuiz[idx].c) score++;
-            });
-
-            const percentage = (score / 10) * 100;
-            document.getElementById('score-display').textContent = `${score}/10`;
-            document.getElementById('wrong-display').textContent = `${10 - score}`;
-            document.getElementById('percentage-display').textContent = `${percentage.toFixed(0)}%`;
-
-            const scoreboardList = document.getElementById('scoreboard-list');
-            scoreboardList.innerHTML = `
-                <div class="bg-vivid-green/10 p-4 rounded-lg flex justify-between items-center">
-                    <p class="font-body font-semibold text-deep-night">#1 ${studentName}</p>
-                    <div class="text-right"><p class="font-display text-lg text-vivid-green">${score}/10</p><p class="font-body text-sm text-stone-gray">${percentage.toFixed(0)}%</p></div>
-                </div>
-            `;
-
-            document.getElementById('quiz-container').classList.remove('active');
-            document.getElementById('quiz-results').classList.remove('hidden');
-        }
-
-        function resetQuiz() {
-            document.getElementById('quiz-start').classList.remove('hidden');
-            document.getElementById('quiz-results').classList.add('hidden');
-            document.getElementById('quiz-name-form').reset();
-            selectedAnswers = {};
-            currentQuestionIndex = 0;
-            currentQuiz = [];
-        }
-
-        document.getElementById('quiz-name-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            startQuiz(document.getElementById('student-name-input').value);
-        });
-
-        document.getElementById('brevkasse-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            document.getElementById('brevkasse-form').classList.add('hidden');
-            document.getElementById('brevkasse-success').classList.remove('hidden');
-        });
-
-        function openLightbox(el) {
-            document.getElementById('lightbox-image').src = el.querySelector('img').src;
-            document.getElementById('lightbox-modal').classList.add('active');
-        }
-
-        function closeLightbox() {
-            document.getElementById('lightbox-modal').classList.remove('active');
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeLightbox();
-        });
-
-        const revealElements = document.querySelectorAll('.reveal');
-        const revealOnScroll = () => {
-            revealElements.forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 150) {
-                    el.classList.add('visible');
-                }
-            });
-        };
-        window.addEventListener('scroll', revealOnScroll);
-        window.addEventListener('load', revealOnScroll);
-
-        checkAuth();
-    </script>
-</body>
-</html>
