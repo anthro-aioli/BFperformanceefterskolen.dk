@@ -192,6 +192,34 @@
             line-height: 1.6;
         }
         
+        .author-card {
+            background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(26, 61, 46, 0.1) 100%);
+            border: 2px solid rgba(0, 210, 106, 0.2);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.4s ease;
+        }
+        
+        .author-card:hover {
+            border-color: var(--vivid-green);
+            box-shadow: 0 10px 30px rgba(0, 210, 106, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .author-title {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.3rem;
+            color: var(--vivid-green);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .author-text {
+            font-size: 0.95rem;
+            color: rgba(245, 240, 232, 0.8);
+            line-height: 1.6;
+        }
+        
         .exercise-card { transition: transform 0.4s ease, border-color 0.3s ease; }
         .exercise-card:hover { transform: translateY(-4px); border-color: var(--vivid-green); }
         
@@ -255,7 +283,7 @@
                 </a>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#verden" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Verden</a>
-                    <a href="#ideer" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Idéer</a>
+                    <a href="#litteratur" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Litteratur</a>
                     <a href="#quiz" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Quiz</a>
                     <a href="#øvelser" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Øvelser</a>
                     <a href="#musik" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Musik</a>
@@ -337,44 +365,100 @@
             </div>
         </section>
 
-        <!-- 9 IDÉER SEKTION -->
-        <section id="ideer" class="relative py-24 sm:py-32 bg-deep-night">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- SKABT TIL FREMTIDEN - LITTERATUR SEKTION -->
+        <section id="litteratur" class="relative py-24 sm:py-32 bg-deep-night">
+            <!-- SEKTION 1: INTRO -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div class="reveal">
+                        <h2 class="font-display text-4xl sm:text-5xl text-warm-cream mb-8">Skabt til fremtiden – Performance EL</h2>
+                        <div class="space-y-6 font-body text-lg text-stone-gray leading-relaxed">
+                            <p>På Performance henter vi ofte inspiration i forskellig litteratur, og vi ønsker at arbejde med litteraturen, så ordene og pointerne bliver mere forståelige og tilgængelige for både voksne og teenagere.</p>
+                            <p>Forfatterne til de fire bøger, vi arbejder med, har brugt hele liv på at opnå deres enorme viden og konklusioner. Den får vi lov at dykke ned i, blive klogere på og inspireret af, så vi kan skrive vores egen performance-årgangsfortælling.</p>
+                        </div>
+                    </div>
+                    <div class="reveal reveal-delay-1">
+                        <div class="w-full h-96 bg-gradient-to-br from-vivid-green/10 to-deep-forest/10 rounded-2xl border-2 border-vivid-green/20 flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-8xl mb-4">🎭</p>
+                                <p class="font-body text-stone-gray">Scene fra Performance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 2: DE FIRE BØGER -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Fire kilder til inspiration</span>
+                    <h3 class="font-display text-3xl sm:text-4xl text-warm-cream mt-4">Bøgerne hedder:</h3>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 reveal">
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-6 text-center">
+                        <p class="font-display text-xl text-vivid-green mb-2">Håb</p>
+                        <p class="font-body text-sm text-stone-gray">Kristian Leth</p>
+                    </div>
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-6 text-center">
+                        <p class="font-display text-xl text-vivid-green mb-2">Fremtiden er der også i morgen</p>
+                        <p class="font-body text-sm text-stone-gray">Kristian Leth</p>
+                    </div>
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-6 text-center">
+                        <p class="font-display text-xl text-vivid-green mb-2">Factfulness</p>
+                        <p class="font-body text-sm text-stone-gray">Hans Rosling</p>
+                    </div>
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-6 text-center">
+                        <p class="font-display text-xl text-vivid-green mb-2">Det gode menneske</p>
+                        <p class="font-body text-sm text-stone-gray">Rutger Bregman</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-vivid-green/10 to-deep-forest/10 border-l-4 border-vivid-green rounded-xl p-8 reveal reveal-delay-1">
+                    <p class="font-body text-lg text-warm-cream leading-relaxed mb-4">De fire bøger deler en stærk fælles kerne:</p>
+                    <div class="space-y-3">
+                        <p class="font-body text-warm-cream"><span class="font-medium">Verdens tilstand er langt bedre, end de fleste tror.</span></p>
+                        <p class="font-body text-warm-cream"><span class="font-medium">Mennesker er grundlæggende samarbejdende og gode, og fremtiden rummer store muligheder –</span></p>
+                        <p class="font-body text-warm-cream"><span class="font-medium">hvis vi tør se virkeligheden klart og handle med håb, fakta og tillid.</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 3: 9 IDÉER GRID -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
                 <div class="text-center mb-16 reveal">
                     <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Fra fire bøger</span>
-                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream mt-4">9 idéer, der former vores forestilling</h2>
-                    <p class="font-body text-lg text-stone-gray max-w-2xl mx-auto mt-6">Bøgerne peger på mange af de samme ting. Her er ni af de vigtigste idéer, vi arbejder videre med, når vi skaber performance.</p>
+                    <h3 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream mt-4">9 idéer, der former vores forestilling</h3>
+                    <p class="font-body text-lg text-stone-gray max-w-2xl mx-auto mt-6">Bøgerne peger på mange af de samme ting. Her er ni af de vigtigste idéer, vi arbejder videre med, når vi skaber performance:</p>
                 </div>
                 
                 <div class="grid md:grid-cols-3 gap-8">
                     <div class="idea-card reveal">
                         <div class="idea-card-content">
                             <div class="idea-number">1</div>
-                            <h3 class="idea-title">Verden går markant bedre end vi tror</h3>
-                            <p class="idea-text">Hans Rosling viser gennem data: faldende fattigdom, længere levetid og højere uddannelsesniveauer. Kristian Leth og Rutger Bregman skildrer samme mønster gennem historiske perspektiver.</p>
+                            <h4 class="idea-title">Verden går markant bedre end vi tror</h4>
+                            <p class="idea-text">Alle fire bøger insisterer på, at vi systematisk undervurderer menneskelig fremgang. Hans Rosling viser dette gennem data om faldende fattigdom, længere levetid og højere uddannelsesniveauer. Kristian Leth og Rutger Bregman skildrer samme mønster gennem historiske, kulturelle og filosofiske perspektiver.</p>
                         </div>
                     </div>
 
                     <div class="idea-card reveal reveal-delay-1">
                         <div class="idea-card-content">
                             <div class="idea-number">2</div>
-                            <h3 class="idea-title">Mennesker er grundlæggende bedre og mere samarbejdende</h3>
-                            <p class="idea-text">Rutger Bregman kritiserer idéen om "det egoistiske menneske". Kristian Leth inviterer os til at forstå, hvorfor vi fortæller dommedagshistorier.</p>
+                            <h4 class="idea-title">Mennesker er grundlæggende bedre og mere samarbejdende</h4>
+                            <p class="idea-text">Et centralt budskab er troen på menneskets godhed og evne til at handle rationelt og omsorgsfuldt. Rutger Bregman kritiserer idéen om "det egoistiske menneske". Kristian Leth inviterer os til at forstå, hvorfor vi fortæller dommedagshistorier – og hvorfor de ikke nødvendigvis er sande.</p>
                         </div>
                     </div>
 
                     <div class="idea-card reveal reveal-delay-2">
                         <div class="idea-card-content">
                             <div class="idea-number">3</div>
-                            <h3 class="idea-title">Pessimisme er ofte en illusion skabt af medier og bias</h3>
-                            <p class="idea-text">Hans Rosling beskriver vores "dramatiske instinkter". Kristian Leth taler om kulturelle narrativer. Rutger Bregman viser, hvordan negative menneskesyn farver politik.</p>
+                            <h4 class="idea-title">Pessimisme er ofte en illusion skabt af medier og bias</h4>
+                            <p class="idea-text">Hans Rosling beskriver vores "dramatiske instinkter". Kristian Leth taler om kulturelle narrativer. Rutger Bregman viser, hvordan negative menneskesyn farver politik, økonomi og uddannelse.</p>
                         </div>
                     </div>
 
                     <div class="idea-card reveal reveal-delay-3">
                         <div class="idea-card-content">
                             <div class="idea-number">4</div>
-                            <h3 class="idea-title">Håb er et aktivt valg – ikke naivitet</h3>
+                            <h4 class="idea-title">Håb er et aktivt valg – ikke naivitet</h4>
                             <p class="idea-text">Forfatterne går op imod idéen om, at håb er blåøjet. Håb bliver præsenteret som en måde at forstå verden realistisk – baseret på fakta og menneskers faktiske adfærd.</p>
                         </div>
                     </div>
@@ -382,7 +466,7 @@
                     <div class="idea-card reveal reveal-delay-4">
                         <div class="idea-card-content">
                             <div class="idea-number">5</div>
-                            <h3 class="idea-title">Fremtiden er formbar – ikke forudbestemt</h3>
+                            <h4 class="idea-title">Fremtiden er formbar – ikke forudbestemt</h4>
                             <p class="idea-text">Hans Rosling: bedre beslutninger gennem fakta. Rutger Bregman: institutioner bør bygges på tillid. Kristian Leth: fremtidens fortælling skabes af, hvordan vi ser verden.</p>
                         </div>
                     </div>
@@ -390,32 +474,130 @@
                     <div class="idea-card reveal reveal-delay-1">
                         <div class="idea-card-content">
                             <div class="idea-number">6</div>
-                            <h3 class="idea-title">Narrativer styrer vores verdensbillede</h3>
-                            <p class="idea-text">Vi tager ofte fejl – ikke fordi verden er dårlig, men fordi fortællingen om verden ser sådan ud. Rutger Bregman sammenligner nyhedsstrømmen med dagligt "skadeligt stof".</p>
+                            <h4 class="idea-title">Narrativer styrer vores verdensbillede</h4>
+                            <p class="idea-text">Vi tager ofte fejl – ikke fordi verden er dårlig, men fordi fortællingen om verden ser sådan ud. Som i efterskolens hverdagsdramaer oplever mennesker den samme historie vidt forskelligt. Rutger Bregman sammenligner nyhedsstrømmen med et dagligt "skadeligt stof": krig, ødelæggelse og katastrofer får opmærksomheden – stille fremgang gør ikke.</p>
                         </div>
                     </div>
 
                     <div class="idea-card reveal reveal-delay-2">
                         <div class="idea-card-content">
                             <div class="idea-number">7</div>
-                            <h3 class="idea-title">Langtidsholdbare valg og ansvar for kommende generationer</h3>
-                            <p class="idea-text">Kristian Leth og Rutger Bregman opfordrer os til at tænke længere end nu: Hvordan bygger vi en verden, der er god – også for dem, der lever efter os?</p>
+                            <h4 class="idea-title">Langtidsholdbare valg og ansvar for kommende generationer</h4>
+                            <p class="idea-text">Kristian Leth og Rutger Bregman opfordrer os til at tænke længere end nuet: Hvordan bygger vi en verden, der er god – også for dem, der lever efter os?</p>
                         </div>
                     </div>
 
                     <div class="idea-card reveal reveal-delay-3">
                         <div class="idea-card-content">
                             <div class="idea-number">8</div>
-                            <h3 class="idea-title">Empati, samarbejde og tillid er undervurderede redskaber</h3>
-                            <p class="idea-text">Rutger Bregman argumenterer for institutioner bygget på tillid. Kristian Leth og Hans Rosling viser, hvordan menneskeligt samarbejde er grundlaget for fremgang.</p>
+                            <h4 class="idea-title">Empati, samarbejde og tillid er undervurderede redskaber</h4>
+                            <p class="idea-text">Rutger Bregman argumenterer for institutioner bygget på tillid. Kristian Leth og Hans Rosling viser, hvordan menneskeligt samarbejde er grundlaget for næsten al fremgang.</p>
                         </div>
                     </div>
 
                     <div class="idea-card reveal reveal-delay-4">
                         <div class="idea-card-content">
                             <div class="idea-number">9</div>
-                            <h3 class="idea-title">Fremtiden er værd at kæmpe for</h3>
+                            <h4 class="idea-title">Fremtiden er værd at kæmpe for</h4>
                             <p class="idea-text">Optimisme er ikke ønsketænkning, men en realistisk forventning om forbedring baseret på verdenshistorien.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 4: SÆRLIGT CITAT - TO ULVE -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div class="reveal">
+                        <div class="bg-gradient-to-br from-vivid-green/10 to-deep-forest/10 border-l-4 border-vivid-green rounded-xl p-12">
+                            <p class="font-display text-2xl text-warm-cream mb-6 italic">"En gammel mand sagde til sit barnebarn:</p>
+                            <p class="font-display text-xl text-warm-cream mb-4 italic">Der foregår en kamp indeni mig, det er en skrækkelig kamp om to ulve.</p>
+                            <p class="font-display text-xl text-warm-cream mb-4 italic">… Den ene er ond … den anden er god …</p>
+                            <p class="font-display text-xl text-warm-cream mb-6 italic">Efter et øjeblik spurgte drengen: Hvilken ulv vinder?</p>
+                            <p class="font-display text-xl text-warm-cream mb-2 italic">Den gamle mand smilede og sagde:</p>
+                            <p class="font-display text-2xl text-vivid-green font-bold italic">Den du fodrer."</p>
+                            <p class="font-body text-sm text-stone-gray mt-6">– Uddrag fra Det gode menneske</p>
+                        </div>
+                        <div class="mt-8 reveal reveal-delay-1">
+                            <p class="font-body text-lg text-stone-gray leading-relaxed"><span class="font-medium text-warm-cream">Fortællingen peger på, at vi alle rummer både mørke og lys – men det, vi giver opmærksomhed og handling, vokser.</span></p>
+                        </div>
+                    </div>
+                    <div class="reveal reveal-delay-2">
+                        <div class="w-full h-96 bg-gradient-to-br from-vivid-green/10 to-deep-forest/10 rounded-2xl border-2 border-vivid-green/20 flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-8xl mb-4">🐺</p>
+                                <p class="font-body text-stone-gray">Den ulv du fodrer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 5: FORFATTERNE -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Deres perspektiver</span>
+                    <h3 class="font-display text-4xl sm:text-5xl text-warm-cream mt-4">Hvad siger hver forfatter?</h3>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <div class="author-card reveal">
+                        <h4 class="author-title">Kristian Leth – Håb + Fremtiden er der også i morgen</h4>
+                        <ul class="author-text space-y-3">
+                            <li>• Dominerende fortællinger om undergang er kulturelle – ikke nødvendigvis sande.</li>
+                            <li>• Håb er nødvendigt for at forstå verden nuanceret.</li>
+                            <li>• Vi må genopdage det gode i historien, mennesket og fremtiden.</li>
+                        </ul>
+                    </div>
+                    <div class="author-card reveal reveal-delay-1">
+                        <h4 class="author-title">Hans Rosling – Factfulness</h4>
+                        <ul class="author-text space-y-3">
+                            <li>• Vi tager systematisk fejl om verdens tilstand.</li>
+                            <li>• Data viser, at verden på næsten alle områder bliver bedre.</li>
+                            <li>• En korrekt forståelse af verden giver bedre beslutninger – og færre panikløsninger.</li>
+                        </ul>
+                    </div>
+                    <div class="author-card reveal reveal-delay-2">
+                        <h4 class="author-title">Rutger Bregman – Det gode menneske</h4>
+                        <ul class="author-text space-y-3">
+                            <li>• Mennesket er dybt socialt og hjælpsomt.</li>
+                            <li>• Institutioner bør bygges på tillid – ikke mistro.</li>
+                            <li>• En bedre fremtid kræver, at vi gentænker, hvem vi tror mennesker er.</li>
+                        </ul>
+                    </div>
+                    <div class="author-card reveal reveal-delay-3">
+                        <h4 class="author-title">Fælles budskab</h4>
+                        <ul class="author-text space-y-3">
+                            <li>• Verdens tilstand er bedre end vi tror.</li>
+                            <li>• Mennesker er grundlæggende gode og samarbejdende.</li>
+                            <li>• Fremtiden er værd at arbejde for.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 6: FRA BOG TIL SCENE -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div class="reveal">
+                        <h3 class="font-display text-3xl sm:text-4xl text-warm-cream mb-8">Fra bog til scene</h3>
+                        <div class="space-y-6 font-body text-lg text-stone-gray leading-relaxed">
+                            <p>I Performance arbejder vi med litteraturen, så idéerne bliver levende – i krop, lyd, ord og billeder.</p>
+                            <p class="font-medium text-warm-cream">Vi bruger bøgerne til at undersøge:</p>
+                            <ul class="space-y-2 ml-4">
+                                <li>• hvad vi tror om mennesker</li>
+                                <li>• hvordan fortællinger former virkeligheden</li>
+                                <li>• hvordan vi selv vil være med til at skabe fremtiden</li>
+                            </ul>
+                            <p>Resultatet er en performance, hvor vi ikke bare spiller roller –</p>
+                            <p class="font-medium text-vivid-green">vi skaber en fortælling, der betyder noget.</p>
+                        </div>
+                    </div>
+                    <div class="reveal reveal-delay-1">
+                        <div class="w-full h-96 bg-gradient-to-br from-vivid-green/10 to-deep-forest/10 rounded-2xl border-2 border-vivid-green/20 flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-8xl mb-4">📖🎭</p>
+                                <p class="font-body text-stone-gray">Fra tekst til scene</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -677,10 +859,6 @@
         document.getElementById('quiz-name-form').addEventListener('submit', (e) => { e.preventDefault(); startQuiz(document.getElementById('student-name-input').value); });
         document.getElementById('brevkasse-form').addEventListener('submit', (e) => { e.preventDefault(); document.getElementById('brevkasse-form').classList.add('hidden'); document.getElementById('brevkasse-success').classList.remove('hidden'); });
         document.getElementById('song-suggestion-form').addEventListener('submit', (e) => { e.preventDefault(); alert('Tak for dit forslag!'); document.getElementById('song-suggestion-form').reset(); });
-
-        function openLightbox(el) { document.getElementById('lightbox-image').src = el.querySelector('img').src; document.getElementById('lightbox-modal').classList.add('active'); }
-        function closeLightbox() { document.getElementById('lightbox-modal').classList.remove('active'); }
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
 
         // SCROLL REVEAL WITH INTERSECTION OBSERVER
         const revealElements = document.querySelectorAll('.reveal');
