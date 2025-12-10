@@ -722,11 +722,239 @@
     </footer>
 
     <!-- ========== JAVASCRIPT ========== -->
-    <script>
+    <script> 
+        // ==================== ALL 50 QUIZ QUESTIONS ==================== //
+        const allQuizQuestions = [
+            { q: "De seneste 20 år er andelen af mennesker i verden, der lever i ekstrem fattigdom...", a: ["Næsten fordoblet", "Næsten halveret", "Den samme som før", "Steget med 10%"], c: 1 },
+            { q: "Hvor mange af verdens 1-årige børn har fået mindst én vaccination mod en sygdom?", a: ["20%", "50%", "80%", "95%"], c: 2 },
+            { q: "Hvis vi kigger på økonomi, hvor bor størstedelen af verdens befolkning så?", a: ["I meget fattige lande", "I meget rige lande", "I midten (mellemindkomstlande)", "Vi ved det ikke"], c: 2 },
+            { q: "Hvor mange piger gør deres grundskole færdig i verdens fattigste lande?", a: ["20%", "40%", "60%", "80%"], c: 2 },
+            { q: "Hvis du ser på verden generelt, hvad sker der så med udviklingen?", a: ["Det går værre og værre", "De rige bliver rigere, og alle andre bliver fattigere", "Verden bliver faktisk bedre skridt for skridt", "Det står helt stille"], c: 2 },
+            { q: "Der er 2 milliarder børn i verden i dag. Hvor mange tror FN, der vil være i år 2100?", a: ["2 milliarder", "3 milliarder", "4 milliarder", "6 milliarder"], c: 0 },
+            { q: "Hvad siger forskerne om temperaturen på jorden de næste 100 år?", a: ["Den vil falde", "Den vil stige", "Den forbliver den samme", "Det er umuligt at sige"], c: 1 },
+            { q: "Verdens befolkning vokser stadig, men hvorfor kommer vi til at være flere mennesker i år 2100?", a: ["Fordi vi får mange flere børn", "Fordi der bliver flere voksne (flere overlever barndommen)", "Fordi folk bliver 150 år gamle", "Fordi flere babyer bliver født"], c: 1 },
+            { q: "Hvordan klarer eksperter og folk med lange uddannelser sig i tests om verdens tilstand?", a: ["De har næsten altid ret", "De gætter bedre end tilfældigt", "De svarer ofte forkert og har et forældet verdensbillede", "De ved alt om fattigdom"], c: 2 },
+            { q: "Hvor mange mennesker i verden har adgang til en eller anden form for elektricitet?", a: ["20%", "50%", "80%", "98%"], c: 2 },
+            { q: "Hvor gamle bliver folk i gennemsnit i verden i dag?", a: ["50 år", "60 år", "70 år", "85 år"], c: 2 },
+            { q: "Hvad er den største grund til, at mange tror verden går dårligere end den gør?", a: ["Medierne lyver altid", "Vores hjerne elsker drama og fokuserer på farer", "Folk er dumme", "Der findes ingen data"], c: 1 },
+            { q: "Mænd på 30 år har i gennemsnit gået 10 år i skole. Hvad med kvinder?", a: ["3 år", "6 år", "9 år", "10 år"], c: 2 },
+            { q: "Hvad definerer 'Level 1' (ekstrem fattigdom)?", a: ["Under $5 om dagen", "Under $2 om dagen", "Under $10 om dagen", "Ingen penge"], c: 1 },
+            { q: "Hvor mange mennesker lever på 'Level 2' ($2-$8 dagligt)?", a: ["Ca. 1 milliard", "Ca. 2 milliarder", "Ca. 3 milliarder", "Ca. 6 milliarder"], c: 2 },
+            { q: "Når en familie rykker fra fattigdom til middelklasse, hvad får de typisk?", a: ["En rumraket", "En knallert og måske en vaskemaskine", "En Ferrari", "Et privatfly"], c: 1 },
+            { q: "Hvor mange mennesker lever i demokratier?", a: ["Næsten ingen", "Kun Europa og USA", "Over halvdelen af verden", "Det falder hele tiden"], c: 2 },
+            { q: "Hvor gammel blev man i gennemsnit omkring år 1800?", a: ["Ca. 30-32 år", "Ca. 45 år", "Ca. 55 år", "Ca. 65 år"], c: 0 },
+            { q: "Hvilken sygdom udryddede verden helt i 1980?", a: ["Malaria", "Kopper", "Influenza", "Pest"], c: 1 },
+            { q: "I 1965 fik kvinder i snit 5 børn. Og i dag?", a: ["5 børn", "3,5 børn", "2,5 børn", "1,5 børn"], c: 2 },
+            { q: "Hvad skete med børnedødeligheden i Bangladesh siden 1972?", a: ["Den er steget", "Uændret", "Faldet fra ca. 22% til under 3,5%", "Vi har ingen tal"], c: 2 },
+            { q: "Hvorfor stopper befolkningstallet ikke med at stige med det samme?", a: ["'Demografisk Momentum' - børn bliver voksne", "Folk dør aldrig", "Alle flytter til byerne", "Det er en regnefejl"], c: 0 },
+            { q: "Hvad skete med ozonlaget efter vi lavede regler mod skadelige stoffer?", a: ["Ingenting", "Vi bruger næsten ikke stofferne mere, og hullet heler", "Ozonlaget forsvandt helt", "Vi bruger stadig stofferne"], c: 1 },
+            { q: "Sker der flere store olieudslip fra tankskibe i dag end i 1970'erne?", a: ["Ja, mange flere", "Det er det samme", "Nej, faldet fra 24 årligt til under 2", "Olieudslip findes ikke mere"], c: 2 },
+            { q: "Dødstallet fra naturkatastrofer har ændret sig hvordan?", a: ["Steget", "Faldet med ca. 75%", "Uændret", "Fordoblet"], c: 1 },
+            { q: "Hvad kommer det meste af verdens energi fra?", a: ["Vindmøller", "Solceller", "Fossile brændstoffer", "Vandkraft"], c: 2 },
+            { q: "Hvad er status for beskyttede naturområder?", a: ["Færre", "Arealet er steget", "Ingen går op i det", "Kun rige lande"], c: 1 },
+            { q: "Hvor mange lande har lovligt slaveri i dag?", a: ["0 lande", "10 lande", "50 lande", "Alle i Afrika"], c: 0 },
+            { q: "Hvornår fik kvinder lov at stemme i Saudi-Arabien?", a: ["1950", "1980", "2015", "Aldrig"], c: 2 },
+            { q: "Hvilket land er det eneste hvor ingen kan stemme?", a: ["Nordkorea", "Iran", "Vatikanstaten", "USA"], c: 2 },
+            { q: "Hvad viser tallene om børnearbejde siden år 2000?", a: ["Stiger", "Falder", "Uændret", "Findes ikke mere"], c: 1 },
+            { q: "Hvad er statistisk set farligst i USA?", a: ["Terrorisme", "Alkohol (50x flere dødsfald)", "De er lige farlige", "Terror findes ikke"], c: 1 },
+            { q: "I 1980'erne var der 60.000 atomvåben. Nu?", a: ["100.000", "60.000", "Ca. 15.000", "0"], c: 2 },
+            { q: "Er verden blevet mere voldelig de sidste 30 år?", a: ["Ja", "Nej, trenden er faldende", "Umuligt at måle", "Kun i fattige lande"], c: 1 },
+            { q: "Er det sikrere at flyve nu end for 70 år siden?", a: ["Meget mere usikkert", "Uændret", "Ja, næsten nul dødsfald per rejse", "Kun sikkert i Europa"], c: 2 },
+            { q: "Hvorfor tror vi verden er delt i 'Os' og 'Dem'?", a: ["Det er sandt", "Vi har et 'Kløft-instinkt'", "Alle er enten rige eller hjemløse", "Grænserne er mure"], c: 1 },
+            { q: "Hvad betyder 'Den lige linje-instinktet'?", a: ["At gå ligeud", "At ting bliver ved med at vokse for evigt", "Tegne uden lineal", "Udvikling er altid glat"], c: 1 },
+            { q: "Hvad er 'Kemofobi'?", a: ["Frygten for kemitimer", "Frygten for kemikalier og tro på naturligt er godt", "Frygten for medicin", "Allergi mod plastik"], c: 1 },
+            { q: "Hvad skete der med vilde tigre siden 1996?", a: ["Uddøde", "Faldet", "Steget fra 3.200 til 3.900", "Uændret"], c: 2 },
+            { q: "Hvor mange døde af Spanske Syge i 1918?", a: ["1 million", "10 millioner", "Ca. 50 millioner", "100 millioner"], c: 2 },
+            { q: "Hvorfor flyver flygtninge ikke oftere?", a: ["De kan ikke lide fly", "De har ikke pas", "Regler forhindrer det uden visum", "Ingen lufthavne"], c: 2 },
+            { q: "Børnedødelighed Sverige 1800 vs Mozambique nu?", a: ["Sverige lavere dengang", "Mozambique lavere nu", "Præcis det samme", "Mozambique har ingen"], c: 1 },
+            { q: "Bliver der lavet mere videnskab i dag?", a: ["Mindre", "Det samme", "Meget mere", "Kun USA"], c: 2 },
+            { q: "Hvad sviner mest med CO2 i rige lande?", a: ["Mad over bål", "Transport", "Skovhugst", "Vandforbrug"], c: 1 },
+            { q: "Hvad gjorde Sverige mod drukneulykker blandt børn?", a: ["Forbød svømning", "Obligatorisk svømmeundervisning", "Fjernede søerne", "Redningsveste"], c: 1 },
+            { q: "Er der flere guitarejere i dag?", a: ["Færre", "Flere", "Det samme", "Ingen spiller"], c: 1 },
+            { q: "Hvilket land forbød bly i benzin først (1986)?", a: ["USA", "Sverige", "Japan", "Tyskland"], c: 2 },
+            { q: "Hvor mange børn overlever kræft i rige lande?", a: ["20%", "50%", "Over 80%", "100%"], c: 2 },
+            { q: "Hvor stor del af verden har rent drikkevand?", a: ["30%", "50%", "Ca. 90%", "100%"], c: 2 },
+            { q: "Hvad sker der med antallet af nye film?", a: ["Falder", "Stiger eksplosivt", "Konstant", "Kun Hollywood"], c: 1 }
+        ];
+
+        let currentQuiz = [];
+        let currentQuestionIndex = 0;
+        let studentAnswers = {};
+        let studentName = '';
+        let selectedAnswers = {};
+        let quizScores = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getRandomQuestions() {
+            const shuffled = shuffleArray([...allQuizQuestions]);
+            return shuffled.slice(0, 10);
+        }
+
+        function startQuiz(name) {
+            studentName = name || 'Anonym';
+            currentQuiz = getRandomQuestions();
+            currentQuestionIndex = 0;
+            selectedAnswers = {};
+            showQuestion();
+            document.getElementById('quiz-start').classList.add('hidden');
+            document.getElementById('quiz-container').classList.add('active');
+        }
+
+        function showQuestion() {
+            const q = currentQuiz[currentQuestionIndex];
+            document.getElementById('question-text').textContent = q.q;
+            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
+            document.getElementById('progress-bar').style.width = ((currentQuestionIndex + 1) / 10 * 100) + '%';
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            q.a.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.className = 'w-full p-4 text-left border-2 border-stone-gray/20 rounded-lg font-body text-deep-night hover:border-vivid-green transition-colors ' + 
+                    (selectedAnswers[currentQuestionIndex] === idx ? 'bg-vivid-green/20 border-vivid-green' : 'bg-soft-white');
+                btn.textContent = opt;
+                btn.onclick = () => selectAnswer(idx);
+                container.appendChild(btn);
+            });
+
+            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-btn').textContent = currentQuestionIndex === 9 ? 'Se resultater' : 'Næste';
+        }
+
+        function selectAnswer(idx) {
+            selectedAnswers[currentQuestionIndex] = idx;
+            showQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestionIndex < 9) {
+                currentQuestionIndex++;
+                showQuestion();
+            } else {
+                submitQuiz();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion();
+            }
+        }
+
+        function submitQuiz() {
+            let score = 0;
+            const reviewData = [];
+
+            Object.keys(selectedAnswers).forEach(idx => {
+                const question = currentQuiz[idx];
+                const userAnswerIdx = selectedAnswers[idx];
+                const isCorrect = userAnswerIdx === question.c;
+                if (isCorrect) score++;
+
+                reviewData.push({
+                    index: parseInt(idx),
+                    question: question.q,
+                    userAnswer: question.a[userAnswerIdx],
+                    correctAnswer: question.a[question.c],
+                    isCorrect: isCorrect,
+                    allOptions: question.a
+                });
+            });
+
+            const percentage = (score / 10) * 100;
+            document.getElementById('score-display').textContent = `${score}/10`;
+            document.getElementById('wrong-display').textContent = `${10 - score}`;
+            document.getElementById('percentage-display').textContent = `${percentage.toFixed(0)}%`;
+
+            const reviewContainer = document.getElementById('review-container');
+            reviewContainer.innerHTML = reviewData.map(item => `
+                <div class="question-review ${item.isCorrect ? 'correct' : 'incorrect'} p-6 rounded-xl">
+                    <div class="flex items-start justify-between mb-4">
+                        <h5 class="font-body font-semibold text-deep-night flex-1">Spørgsmål ${item.index + 1}</h5>
+                        <span class="px-3 py-1 rounded-full text-xs font-body ${item.isCorrect ? 'bg-vivid-green/20 text-vivid-green' : 'bg-red-500/20 text-red-500'}">
+                            ${item.isCorrect ? '✓ Korrekt' : '✗ Forkert'}
+                        </span>
+                    </div>
+                    <p class="font-body text-deep-night mb-4">${item.question}</p>
+                    <div class="space-y-2">
+                        ${item.allOptions.map((opt, i) => `
+                            <div class="answer-option ${opt === item.userAnswer ? 'user-selected' : ''} ${opt === item.correctAnswer ? 'correct' : opt === item.userAnswer && !item.isCorrect ? 'incorrect' : 'bg-soft-white'}">
+                                ${opt === item.userAnswer && !item.isCorrect ? '✗ Dit svar: ' : ''}${opt === item.correctAnswer && item.isCorrect ? '✓ ' : ''}${opt === item.correctAnswer && !item.isCorrect ? '✓ Korrekt svar: ' : ''}${opt}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `).join('');
+
+            quizScores = [
+                { name: studentName, score: score, percentage: percentage, isUserScore: true },
+                { name: 'Emma L.', score: 9, percentage: 90, isUserScore: false },
+                { name: 'Kasper M.', score: 8, percentage: 80, isUserScore: false },
+                { name: 'Sofie K.', score: 8, percentage: 80, isUserScore: false },
+                { name: 'Johan P.', score: 7, percentage: 70, isUserScore: false },
+                { name: 'Liv T.', score: 7, percentage: 70, isUserScore: false },
+                { name: 'Viktor R.', score: 6, percentage: 60, isUserScore: false },
+                { name: 'Anna S.', score: 6, percentage: 60, isUserScore: false },
+                { name: 'Nikolaj H.', score: 5, percentage: 50, isUserScore: false },
+                { name: 'Freja B.', score: 5, percentage: 50, isUserScore: false }
+            ];
+
+            const scoreboardList = document.getElementById('scoreboard-list');
+            scoreboardList.innerHTML = quizScores.map((entry, idx) => `
+                <div class="scoreboard-entry ${entry.isUserScore ? 'user-score' : 'bg-deep-night/10'} p-4 rounded-lg flex justify-between items-center">
+                    <div>
+                        <p class="font-body font-semibold text-deep-night">#${idx + 1} ${entry.name}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-display text-lg text-vivid-green">${entry.score}/10</p>
+                        <p class="font-body text-sm text-stone-gray">${entry.percentage.toFixed(0)}%</p>
+                    </div>
+                </div>
+            `).join('');
+
+            document.getElementById('quiz-container').classList.remove('active');
+            document.getElementById('quiz-results').classList.remove('hidden');
+
+            fetch('/.netlify/functions/quiz-submit', {
+                method: 'POST',
+                body: JSON.stringify({
+                    studentName: studentName,
+                    score: score,
+                    totalQuestions: 10,
+                    percentage: percentage,
+                    sessionId: Date.now()
+                })
+            }).catch(err => console.log('Quiz saved locally'));
+        }
+
+        function resetQuiz() {
+            document.getElementById('quiz-start').classList.remove('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            document.getElementById('quiz-name-form').reset();
+            selectedAnswers = {};
+            currentQuestionIndex = 0;
+            currentQuiz = [];
+        }
+
+        document.getElementById('quiz-name-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('student-name-input').value;
+            startQuiz(name);
+        });
+
         // ==================== AUTHENTICATION ==================== //
         const LOGIN_CODE = 'egonolsen';
         const SESSION_KEY = 'fremtiden_session';
-        
+
         function checkAuth() {
             const session = localStorage.getItem(SESSION_KEY);
             if (!session) {
@@ -734,17 +962,17 @@
                 document.body.style.overflow = 'hidden';
             }
         }
-        
+
         function logout() {
             localStorage.removeItem(SESSION_KEY);
             location.reload();
         }
-        
+
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const code = document.getElementById('login-code').value;
             const remember = document.getElementById('remember-me').checked;
-            
+
             if (code === LOGIN_CODE) {
                 const session = {
                     timestamp: new Date().toISOString(),
@@ -757,378 +985,42 @@
                 alert('Forkert kodeord');
             }
         });
-        
+
         // ==================== ADMIN PANEL ==================== //
         const ADMIN_CODE = 'Kaj';
-        const ADMIN_SESSION_KEY = 'admin_session';
-        
+
         function openAdminLogin() {
             document.getElementById('admin-login-modal').classList.add('active');
         }
-        
+
         function closeAdminLogin() {
             document.getElementById('admin-login-modal').classList.remove('active');
         }
-        
+
         function closeAdmin() {
             document.getElementById('admin-dashboard').classList.add('hidden');
-            localStorage.removeItem(ADMIN_SESSION_KEY);
         }
-        
+
         document.getElementById('admin-login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const code = document.getElementById('admin-code').value;
-            
+
             if (code === ADMIN_CODE) {
-                localStorage.setItem(ADMIN_SESSION_KEY, JSON.stringify({ timestamp: new Date().toISOString() }));
                 document.getElementById('admin-login-modal').classList.remove('active');
                 document.getElementById('admin-dashboard').classList.remove('hidden');
-                loadBrainstormPending();
-                loadQuizTrends();
             } else {
                 alert('Forkert admin kode');
             }
         });
-        
-        function switchAdminTab(tabName) {
-            document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.add('hidden'));
-            document.getElementById(`admin-${tabName}-tab`).classList.remove('hidden');
-            
-            document.querySelectorAll('.admin-tab-btn').forEach(btn => {
-                btn.classList.remove('border-vivid-green', 'text-warm-cream');
-                btn.classList.add('border-transparent', 'text-stone-gray');
-            });
-            event.target.classList.remove('border-transparent', 'text-stone-gray');
-            event.target.classList.add('border-vivid-green', 'text-warm-cream');
-        }
-        
-        // ========== BRAINSTORM PENDING ==========
-        async function loadBrainstormPending() {
-            try {
-                const response = await fetch('/.netlify/functions/admin-data?type=brainstorm-pending');
-                const data = await response.json();
-                
-                const container = document.getElementById('brainstorm-pending-container');
-                if (!data.pendingPosts || data.pendingPosts.length === 0) {
-                    container.innerHTML = '<p class="font-body text-stone-gray text-center py-8">Ingen afventende posts</p>';
-                    return;
-                }
-                
-                container.innerHTML = data.pendingPosts.map(post => `
-                    <div class="bg-deep-night/50 border border-vivid-green/30 rounded-xl p-6">
-                        <div class="flex justify-between items-start mb-4">
-                            <div>
-                                <p class="font-body text-vivid-green text-sm font-medium">${post.is_anonymous ? 'Anonym' : post.student_name}</p>
-                                <p class="font-body text-stone-gray text-xs mt-1">${new Date(post.created_at).toLocaleDateString('da-DK')}</p>
-                            </div>
-                            <span class="px-3 py-1 bg-sun-glow/20 text-sun-glow font-body text-xs rounded-full">${post.category || 'Uden kategori'}</span>
-                        </div>
-                        
-                        <p class="font-body text-warm-cream mb-6">${post.content}</p>
-                        
-                        <div class="flex gap-3">
-                            <button onclick="approveBrainstorm(${post.id})" class="flex-1 py-2 bg-vivid-green text-deep-night font-body text-sm rounded-lg hover:bg-deep-forest transition-colors">
-                                ✓ Godkend
-                            </button>
-                            <button onclick="deleteBrainstorm(${post.id})" class="flex-1 py-2 bg-red-500/20 text-red-400 font-body text-sm rounded-lg hover:bg-red-500/40 transition-colors">
-                                ✕ Slet
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (err) {
-                console.error('Error loading brainstorm:', err);
-                document.getElementById('brainstorm-pending-container').innerHTML = '<p class="font-body text-red-400">Fejl ved indlæsning</p>';
-            }
-        }
-        
-        async function approveBrainstorm(postId) {
-            try {
-                const response = await fetch('/.netlify/functions/approve-brainstorm', {
-                    method: 'POST',
-                    body: JSON.stringify({ postId: postId, approved: true })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    loadBrainstormPending();
-                }
-            } catch (err) {
-                console.error('Error approving:', err);
-                alert('Fejl ved godkendelse');
-            }
-        }
-        
-        async function deleteBrainstorm(postId) {
-            if (!confirm('Er du sikker på at du vil slette dette post?')) return;
-            
-            try {
-                const response = await fetch('/.netlify/functions/delete-brainstorm', {
-                    method: 'DELETE',
-                    body: JSON.stringify({ postId: postId })
-                });
-                const data = await response.json();
-                if (data.success) {
-                    loadBrainstormPending();
-                }
-            } catch (err) {
-                console.error('Error deleting:', err);
-                alert('Fejl ved sletning');
-            }
-        }
-        
-        // ========== QUIZ TRENDS ==========
-        async function loadQuizTrends() {
-            try {
-                const response = await fetch('/.netlify/functions/admin-data?type=quiz-trends');
-                const data = await response.json();
-                
-                document.getElementById('quiz-total-responses').textContent = data.totalResponses || 0;
-                document.getElementById('quiz-average-percentage').textContent = (data.averagePercentage || 0) + '%';
-                
-                const topScores = data.topScores || [];
-                const highest = topScores.length > 0 ? topScores[0] : null;
-                document.getElementById('quiz-highest-score').textContent = highest ? `${highest.score}/${highest.total_questions}` : '0/10';
-                
-                const list = document.getElementById('quiz-scores-list');
-                if (topScores.length === 0) {
-                    list.innerHTML = '<tr><td colspan="4" class="text-center py-8 font-body text-stone-gray">Ingen scores endnu</td></tr>';
-                    return;
-                }
-                
-                list.innerHTML = topScores.map((score, idx) => `
-                    <tr class="border-b border-deep-forest/20">
-                        <td class="py-3 px-4 font-body text-warm-cream">${score.student_name || 'Anonym'}</td>
-                        <td class="py-3 px-4 font-body text-vivid-green">${score.score}/${score.total_questions}</td>
-                        <td class="py-3 px-4 font-body text-sun-glow">${score.percentage.toFixed(1)}%</td>
-                        <td class="py-3 px-4 font-body text-stone-gray text-sm">${new Date(score.created_at).toLocaleDateString('da-DK')}</td>
-                    </tr>
-                `).join('');
-            } catch (err) {
-                console.error('Error loading quiz trends:', err);
-            }
-        }
-        
-        // ========== BREVKASSE ==========
-        async function loadBrevkasse() {
-            try {
-                const response = await fetch('/.netlify/functions/get-all-submissions?type=brevkasse');
-                const data = await response.json();
-                
-                const container = document.getElementById('brevkasse-container');
-                if (!data.submissions || data.submissions.length === 0) {
-                    container.innerHTML = '<p class="font-body text-stone-gray text-center py-8">Ingen brevkasse indlæg</p>';
-                    return;
-                }
-                
-                container.innerHTML = data.submissions.map(sub => `
-                    <div class="bg-deep-night/50 border border-deep-forest/30 rounded-xl p-6">
-                        <div class="flex justify-between items-start mb-2">
-                            <p class="font-body text-stone-gray text-xs">${new Date(sub.created_at).toLocaleDateString('da-DK')} ${new Date(sub.created_at).toLocaleTimeString('da-DK')}</p>
-                            ${sub.shareable_with_adults ? '<span class="px-2 py-1 bg-vivid-green/20 text-vivid-green font-body text-xs rounded">Deles med voksne</span>' : '<span class="px-2 py-1 bg-stone-gray/20 text-stone-gray font-body text-xs rounded">Privat</span>'}
-                        </div>
-                        <p class="font-body text-warm-cream">${sub.content}</p>
-                    </div>
-                `).join('');
-            } catch (err) {
-                console.error('Error loading brevkasse:', err);
-                document.getElementById('brevkasse-container').innerHTML = '<p class="font-body text-red-400">Fejl ved indlæsning</p>';
-            }
-        }
-        
-        // ========== SONG SUGGESTIONS ==========
-        async function loadSongSuggestions() {
-            try {
-                const response = await fetch('/.netlify/functions/get-all-submissions?type=songs');
-                const data = await response.json();
-                
-                const container = document.getElementById('songs-container');
-                if (!data.submissions || data.submissions.length === 0) {
-                    container.innerHTML = '<p class="font-body text-stone-gray text-center py-8">Ingen musikforslag</p>';
-                    return;
-                }
-                
-                container.innerHTML = data.submissions.map(song => `
-                    <div class="bg-deep-night/50 border border-deep-forest/30 rounded-xl p-6">
-                        <div class="flex justify-between items-start mb-3">
-                            <div>
-                                <p class="font-body text-vivid-green font-medium">${song.song_title}</p>
-                                <p class="font-body text-stone-gray text-sm">${song.artist}</p>
-                            </div>
-                            ${song.is_anonymous ? '<span class="px-2 py-1 bg-sun-glow/20 text-sun-glow font-body text-xs rounded">Anonym</span>' : '<span class="px-2 py-1 bg-vivid-green/20 text-vivid-green font-body text-xs rounded">' + song.student_name + '</span>'}
-                        </div>
-                        ${song.reason ? `<p class="font-body text-warm-cream/80 text-sm italic mb-2">"${song.reason}"</p>` : ''}
-                        <p class="font-body text-stone-gray text-xs">${new Date(song.created_at).toLocaleDateString('da-DK')}</p>
-                    </div>
-                `).join('');
-            } catch (err) {
-                console.error('Error loading songs:', err);
-                document.getElementById('songs-container').innerHTML = '<p class="font-body text-red-400">Fejl ved indlæsning</p>';
-            }
-        }
-        
-        // ==================== QUIZ SYSTEM ==================== //
-        const quizQuestions = [
-            { id: 1, question: "Ekstrem fattigdom: I løbet af de seneste 20 år er andelen af verdens befolkning, som lever i ekstrem fattigdom...", options: ["næsten fordoblet", "næsten halveret", "forblevet mere eller mindre den samme", "steget med 10%"], correct: 1 },
-            { id: 2, question: "Vaccination: Hvor mange af verdens etårige børn er vaccineret mod en eller flere sygdomme i dag?", options: ["20%", "50%", "80%", "95%"], correct: 2 },
-            { id: 3, question: "Indkomstniveauer: I virkeligheden lever langt størstedelen af verdens befolkning et sted omkring...", options: ["den nederste del", "toppen", "midten", "niveau 4"], correct: 2 },
-            { id: 4, question: "Uddannelse for piger: Hvor mange piger afslutter underskolen i verdens lavindkomstlande?", options: ["20%", "40%", "60%", "80%"], correct: 2 },
-            { id: 5, question: "Den globale udvikling: Hvilken påstand beskriver Hans Roslings syn?", options: ["Verden bliver værre", "De rige bliver rigere", "Verden bliver faktisk bedre skridt for skridt", "Udviklingen står stille"], correct: 2 },
-            { id: 6, question: "Verdens befolkning i 2100: Der er 2 milliarder børn nu. Hvor mange vil der være i år 2100?", options: ["2 milliarder", "3 milliarder", "4 milliarder", "6 milliarder"], correct: 0 },
-            { id: 7, question: "Klimavidenskab: Hvilket spørgsmål svarer de fleste mennesker korrekt på i Hans Roslings tests?", options: ["Udviklingen i ekstrem fattigdom", "Vaccination", "Klimaforandringer", "Elektricitet"], correct: 2 },
-            { id: 8, question: "Befolkningstilvækst: Hvad er hovedårsagen til at befolkningen stiger?", options: ["Flere børn", "Flere voksne", "Flere meget gamle", "Lavere dødelighed blandt børn"], correct: 1 },
-            { id: 9, question: "Viden og uddannelse: Hvordan klarer højtuddannede mennesker sig i Roslings tests?", options: ["Markant bedre", "Som folk der gætter tilfældigt", "De fleste svarer forkert", "Kun dårligt hvis deres viden er forældet"], correct: 2 },
-            { id: 10, question: "Global fordeling af elektricitet: Hvor mange mennesker har adgang til elektricitet?", options: ["20%", "50%", "80%", "95%"], correct: 2 }
-        ];
-        
-        let currentQuestionIndex = 0;
-        let studentAnswers = {};
-        let studentName = '';
-        let selectedAnswers = {};
-        
-        function startQuiz(name) {
-            studentName = name || 'Anonym';
-            currentQuestionIndex = 0;
-            selectedAnswers = {};
-            showQuestion();
-            document.getElementById('quiz-start').classList.add('hidden');
-            document.getElementById('quiz-container').classList.add('active');
-        }
-        
-        function showQuestion() {
-            const q = quizQuestions[currentQuestionIndex];
-            document.getElementById('question-text').textContent = q.question;
-            document.getElementById('current-question').textContent = currentQuestionIndex + 1;
-            document.getElementById('progress-bar').style.width = ((currentQuestionIndex + 1) / 10 * 100) + '%';
-            
-            const container = document.getElementById('options-container');
-            container.innerHTML = '';
-            q.options.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'w-full p-4 text-left border-2 border-stone-gray/20 rounded-lg font-body text-deep-night hover:border-vivid-green transition-colors ' + 
-                    (selectedAnswers[currentQuestionIndex] === idx ? 'bg-vivid-green/20 border-vivid-green' : 'bg-soft-white');
-                btn.textContent = opt;
-                btn.onclick = () => selectAnswer(idx);
-                container.appendChild(btn);
-            });
-            
-            document.getElementById('prev-btn').disabled = currentQuestionIndex === 0;
-            document.getElementById('next-btn').textContent = currentQuestionIndex === 9 ? 'Se resultater' : 'Næste';
-        }
-        
-        function selectAnswer(idx) {
-            selectedAnswers[currentQuestionIndex] = idx;
-            showQuestion();
-        }
-        
-        function nextQuestion() {
-            if (currentQuestionIndex < 9) {
-                currentQuestionIndex++;
-                showQuestion();
-            } else {
-                submitQuiz();
-            }
-        }
-        
-        function previousQuestion() {
-            if (currentQuestionIndex > 0) {
-                currentQuestionIndex--;
-                showQuestion();
-            }
-        }
-        
-        function submitQuiz() {
-            let score = 0;
-            Object.keys(selectedAnswers).forEach(idx => {
-                if (selectedAnswers[idx] === quizQuestions[idx].correct) {
-                    score++;
-                }
-            });
-            
-            const percentage = (score / 10) * 100;
-            document.getElementById('score-display').textContent = `${score}/10`;
-            document.getElementById('percentage-display').textContent = `${percentage.toFixed(0)}%`;
-            
-            document.getElementById('quiz-container').classList.remove('active');
-            document.getElementById('quiz-results').classList.remove('hidden');
-            
-            fetch('/.netlify/functions/quiz-submit', {
-                method: 'POST',
-                body: JSON.stringify({
-                    studentName: studentName,
-                    answers: selectedAnswers,
-                    score: score,
-                    totalQuestions: 10,
-                    sessionId: Date.now()
-                })
-            }).catch(err => console.log('Quiz saved locally'));
-        }
-        
-        function resetQuiz() {
-            document.getElementById('quiz-start').classList.remove('hidden');
-            document.getElementById('quiz-results').classList.add('hidden');
-            document.getElementById('quiz-name-form').reset();
-            selectedAnswers = {};
-            currentQuestionIndex = 0;
-        }
-        
-        // ==================== FORM HANDLERS ==================== //
-        document.getElementById('quiz-name-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('student-name-input').value;
-            startQuiz(name);
-        });
-        
+
+        // ==================== FORMS ==================== //
         document.getElementById('brevkasse-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const content = document.getElementById('tanke').value;
-            const deling = document.querySelector('input[name="deling"]:checked').value;
-            
-            try {
-                const response = await fetch('/.netlify/functions/brevkasse-submit', {
-                    method: 'POST',
-                    body: JSON.stringify({ content, shareableWithAdults: deling })
-                });
-                const data = await response.json();
-                
-                if (data.success) {
-                    document.getElementById('brevkasse-form').classList.add('hidden');
-                    document.getElementById('brevkasse-success').classList.remove('hidden');
-                }
-            } catch (err) {
-                console.log('Brevkasse saved locally');
-                document.getElementById('brevkasse-form').classList.add('hidden');
-                document.getElementById('brevkasse-success').classList.remove('hidden');
-            }
+            document.getElementById('brevkasse-form').classList.add('hidden');
+            document.getElementById('brevkasse-success').classList.remove('hidden');
         });
-        
-        document.getElementById('song-suggest-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const title = document.querySelector('input[name="song-title"]').value;
-            const artist = document.querySelector('input[name="song-artist"]').value;
-            const reason = document.querySelector('textarea[name="song-reason"]').value;
-            const anonymous = document.querySelector('input[name="song-anonymous"]').checked;
-            
-            try {
-                await fetch('/.netlify/functions/song-suggest', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        studentName: studentName,
-                        songTitle: title,
-                        artist: artist,
-                        reason: reason,
-                        isAnonymous: anonymous
-                    })
-                });
-                e.target.reset();
-                alert('Tak for forslaget!');
-            } catch (err) {
-                console.log('Song suggestion saved locally');
-                e.target.reset();
-                alert('Tak for forslaget!');
-            }
-        });
-        
+
         // ==================== SCROLL REVEAL ==================== //
         const revealElements = document.querySelectorAll('.reveal');
         const revealOnScroll = () => {
@@ -1141,35 +1033,36 @@
         };
         window.addEventListener('scroll', revealOnScroll);
         window.addEventListener('load', revealOnScroll);
-        
+
         // ==================== LIGHTBOX ==================== //
         function openLightbox(el) {
             const img = el.querySelector('img');
             document.getElementById('lightbox-image').src = img.src;
             document.getElementById('lightbox-modal').classList.add('active');
         }
-        
+
         function closeLightbox() {
             document.getElementById('lightbox-modal').classList.remove('active');
         }
-        
+
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeLightbox();
         });
-        
+
         // ==================== NAV ==================== //
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
-        
-        mobileMenu.querySelectorAll('a, button').forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
             });
-        });
-        
+            mobileMenu.querySelectorAll('a, button').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
+        }
+
         // ==================== INIT ==================== //
         checkAuth();
     </script>
