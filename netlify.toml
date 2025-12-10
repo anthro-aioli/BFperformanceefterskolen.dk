@@ -1,24 +1,26 @@
 [build]
-command = "npm run build"
-functions = "netlify/functions"
-publish = "."
+  # No build command needed - this is a static site
+  command = ""
+  functions = "netlify/functions"
+  publish = "."
 
 [[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+  from = "/*"
+  to = "/index.html"
+  status = 200
 
 [[headers]]
-for = "/"
-[headers.values]
-Cache-Control = "public, max-age=3600"
+  for = "/"
+  [headers.values]
+    Cache-Control = "public, max-age=3600"
 
 [[headers]]
-for = "/index.html"
-[headers.values]
-Cache-Control = "public, max-age=0, must-revalidate"
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Type = "text/html; charset=utf-8"
 
 [[headers]]
-for = "/*.{js,css,png,jpg,jpeg,gif,svg,woff,woff2,ttf,eot}"
-[headers.values]
-Cache-Control = "public, max-age=31536000, immutable"
+  for = "/*.{js,css,png,jpg,jpeg,gif,svg,woff,woff2,ttf,eot}"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
