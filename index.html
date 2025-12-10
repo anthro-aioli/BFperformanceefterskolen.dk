@@ -65,25 +65,13 @@
             0%, 100% { opacity: 0.6; transform: translateY(0); } 
             50% { opacity: 1; transform: translateY(8px); } 
         }
-        @keyframes float-vine { 
-            0%, 100% { transform: translateY(0px) rotate(0deg) scaleX(1); } 
-            25% { transform: translateY(-20px) rotate(5deg) scaleX(1.05); } 
-            50% { transform: translateY(-40px) rotate(0deg) scaleX(1); } 
-            75% { transform: translateY(-20px) rotate(-5deg) scaleX(0.95); } 
+        @keyframes plant-grow { 
+            0% { opacity: 0; transform: scaleY(0) translateY(30px); } 
+            100% { opacity: 1; transform: scaleY(1) translateY(0); } 
         }
-        @keyframes leaf-float { 
-            0% { opacity: 0; transform: translateY(100px) translateX(-50px) rotate(0deg); } 
-            10% { opacity: 1; } 
-            90% { opacity: 1; } 
-            100% { opacity: 0; transform: translateY(-100px) translateX(50px) rotate(360deg); } 
-        }
-        @keyframes grow-from-bottom {
-            0% { opacity: 0; transform: scaleY(0) translateY(50px); }
-            100% { opacity: 1; transform: scaleY(1) translateY(0); }
-        }
-        @keyframes slide-in-up {
-            0% { opacity: 0; transform: translateY(40px); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes leaf-sway { 
+            0%, 100% { transform: rotateZ(-2deg); } 
+            50% { transform: rotateZ(2deg); } 
         }
         
         .hero-text-1 { animation: fade-up 0.8s ease-out 1s forwards; opacity: 0; }
@@ -135,7 +123,7 @@
             pointer-events: none; 
         }
         
-        .vine-container {
+        .plant-container {
             position: fixed;
             width: 100%;
             height: 100%;
@@ -146,35 +134,66 @@
             overflow: hidden;
         }
         
-        .animated-vine {
+        .plant {
             position: absolute;
-            width: 8px;
-            height: 200px;
-            background: linear-gradient(180deg, rgba(0, 210, 106, 0.4) 0%, rgba(0, 210, 106, 0) 100%);
-            border-radius: 50%;
+            font-size: 2rem;
             opacity: 0;
-            transform-origin: top center;
-            filter: drop-shadow(0 0 8px rgba(0, 210, 106, 0.3));
+            filter: drop-shadow(0 0 10px rgba(0, 210, 106, 0.4));
         }
         
-        .leaf {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: radial-gradient(ellipse at 30% 30%, rgba(0, 210, 106, 0.8), rgba(0, 210, 106, 0.3));
-            border-radius: 50% 0% 50% 50%;
-            opacity: 0;
+        .plant.grow { animation: plant-grow 1.2s ease-out forwards; }
+        .plant.sway { animation: leaf-sway 3s ease-in-out infinite; }
+        
+        .idea-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(26, 61, 46, 0.1) 100%);
+            border: 2px solid rgba(0, 210, 106, 0.2);
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+        
+        .idea-card:hover {
+            border-color: var(--vivid-green);
+            box-shadow: 0 10px 30px rgba(0, 210, 106, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .idea-card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .idea-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--vivid-green);
+            opacity: 0.3;
+            margin-bottom: 1rem;
+        }
+        
+        .idea-title {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.5rem;
+            color: var(--warm-cream);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .idea-text {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 0.95rem;
+            color: rgba(245, 240, 232, 0.8);
+            line-height: 1.6;
         }
         
         .exercise-card { transition: transform 0.4s ease, border-color 0.3s ease; }
         .exercise-card:hover { transform: translateY(-4px); border-color: var(--vivid-green); }
-        
-        .story-card {
-            border-left: 4px solid var(--vivid-green);
-            background: linear-gradient(135deg, rgba(0, 210, 106, 0.05) 0%, rgba(26, 61, 46, 0.05) 100%);
-            transition: all 0.3s ease;
-        }
-        .story-card:hover { transform: translateX(10px); box-shadow: 0 10px 30px rgba(0, 210, 106, 0.1); }
         
         .song-suggestion-form { background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(255, 217, 61, 0.05) 100%); }
         
@@ -185,8 +204,8 @@
     </style>
 </head>
 <body>
-    <!-- VINE CONTAINER FOR FLOATING ANIMATIONS -->
-    <div class="vine-container" id="vine-container"></div>
+    <!-- PLANT CONTAINER FOR GROWING ANIMATIONS -->
+    <div class="plant-container" id="plant-container"></div>
     
     <!-- LOGIN MODAL -->
     <div id="login-modal" class="login-modal active">
@@ -236,10 +255,9 @@
                 </a>
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="#verden" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Verden</a>
-                    <a href="#solarpunk" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Solarpunk</a>
-                    <a href="#stories" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Historier</a>
+                    <a href="#ideer" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Idéer</a>
                     <a href="#quiz" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Quiz</a>
-                    <a href="#oevelser" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Øvelser</a>
+                    <a href="#øvelser" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Øvelser</a>
                     <a href="#musik" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors">Musik</a>
                     <a href="#brevkasse" class="font-body text-sm px-4 py-2 bg-vivid-green text-deep-night rounded-full hover:bg-sun-glow transition-colors">Brevkasse</a>
                     <button id="admin-btn" class="font-body text-sm text-stone-gray hover:text-warm-cream transition-colors" onclick="openAdminLogin()">Admin</button>
@@ -319,66 +337,86 @@
             </div>
         </section>
 
-        <!-- SOLARPUNK GALLERY -->
-        <section id="solarpunk" class="relative py-24 sm:py-32 bg-deep-night">
+        <!-- 9 IDÉER SEKTION -->
+        <section id="ideer" class="relative py-24 sm:py-32 bg-deep-night">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center mb-16 reveal">
-                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Se fremtiden</span>
-                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream mt-4">Fremtiden behøver ikke være grå</h2>
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Fra fire bøger</span>
+                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream mt-4">9 idéer, der former vores forestilling</h2>
+                    <p class="font-body text-lg text-stone-gray max-w-2xl mx-auto mt-6">Bøgerne peger på mange af de samme ting. Her er ni af de vigtigste idéer, vi arbejder videre med, når vi skaber performance.</p>
                 </div>
-                <div class="grid md:grid-cols-3 gap-6 reveal reveal-delay-1 mb-12">
-                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(this)">
-                        <img src="https://images.unsplash.com/photo-1518005068251-37900150dfca?w=800&q=80" alt="Bosco Verticale" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                        <div class="absolute bottom-4 left-4 right-4"><p class="font-body text-sm text-warm-cream/80">Genbrug + Innovation</p></div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="idea-card reveal">
+                        <div class="idea-card-content">
+                            <div class="idea-number">1</div>
+                            <h3 class="idea-title">Verden går markant bedre end vi tror</h3>
+                            <p class="idea-text">Hans Rosling viser gennem data: faldende fattigdom, længere levetid og højere uddannelsesniveauer. Kristian Leth og Rutger Bregman skildrer samme mønster gennem historiske perspektiver.</p>
+                        </div>
                     </div>
-                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer md:-mt-8" onclick="openLightbox(this)">
-                        <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80" alt="Solpaneler" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                        <div class="absolute bottom-4 left-4 right-4"><p class="font-body text-sm text-warm-cream/80">Teknologi + Natur</p></div>
-                    </div>
-                    <div class="group relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer" onclick="openLightbox(this)">
-                        <img src="https://images.unsplash.com/photo-1474487548417-781cb71495f3?w=800&q=80" alt="Tog gennem natur" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" loading="lazy">
-                        <div class="absolute inset-0 bg-gradient-to-t from-deep-night via-transparent opacity-60 group-hover:opacity-80 transition-opacity"></div>
-                        <div class="absolute bottom-4 left-4 right-4"><p class="font-body text-sm text-warm-cream/80">Bæredygtig Transport</p></div>
-                    </div>
-                </div>
-                <div id="lightbox-modal" class="lightbox-modal" onclick="closeLightbox()">
-                    <div class="lightbox-content" onclick="event.stopPropagation()">
-                        <button class="lightbox-close" onclick="closeLightbox()">×</button>
-                        <img id="lightbox-image" src="" alt="" class="max-w-full max-h-full rounded-xl">
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- IMAGINED FUTURES / STORIES -->
-        <section id="stories" class="relative py-24 sm:py-32 bg-warm-cream text-deep-night">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 reveal">
-                    <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Drømme om fremtiden</span>
-                    <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4">Historier fra verden, der kunne være</h2>
-                </div>
-                <div class="grid md:grid-cols-2 gap-8 reveal">
-                    <div class="story-card p-8 rounded-2xl">
-                        <h3 class="font-display text-2xl text-deep-night mb-4">London 2045</h3>
-                        <p class="font-body text-deep-night/80 leading-relaxed mb-4">Det første, som slår dig, når du går ned ad Oxford Street, er stilheden. Hvor der engang var råb og trafikkens gevaldige larm, er der nu blomsterduft og det blide skrænende lyd fra mekaniske vogner.</p>
-                        <p class="font-body text-deep-night/80 leading-relaxed italic text-vivid-green">"De gamle gader havde kun én lugt: hestlort og diesel. Nu? Jasmin, hyacinter og håb."</p>
+                    <div class="idea-card reveal reveal-delay-1">
+                        <div class="idea-card-content">
+                            <div class="idea-number">2</div>
+                            <h3 class="idea-title">Mennesker er grundlæggende bedre og mere samarbejdende</h3>
+                            <p class="idea-text">Rutger Bregman kritiserer idéen om "det egoistiske menneske". Kristian Leth inviterer os til at forstå, hvorfor vi fortæller dommedagshistorier.</p>
+                        </div>
                     </div>
-                    <div class="story-card p-8 rounded-2xl">
-                        <h3 class="font-display text-2xl text-deep-night mb-4">Lagos 2050</h3>
-                        <p class="font-body text-deep-night/80 leading-relaxed mb-4">Takene er dyrket. Hele klimaanlægget er baseret på fordampning fra grønne mure. Børnene leger mellem solpaneler, der ser ud som kunstnerisk installationer.</p>
-                        <p class="font-body text-deep-night/80 leading-relaxed italic text-vivid-green">"Min morfar sagde, at fremtiden ville være værre. Men han så ikke det her."</p>
+
+                    <div class="idea-card reveal reveal-delay-2">
+                        <div class="idea-card-content">
+                            <div class="idea-number">3</div>
+                            <h3 class="idea-title">Pessimisme er ofte en illusion skabt af medier og bias</h3>
+                            <p class="idea-text">Hans Rosling beskriver vores "dramatiske instinkter". Kristian Leth taler om kulturelle narrativer. Rutger Bregman viser, hvordan negative menneskesyn farver politik.</p>
+                        </div>
                     </div>
-                    <div class="story-card p-8 rounded-2xl">
-                        <h3 class="font-display text-2xl text-deep-night mb-4">København 2048</h3>
-                        <p class="font-body text-deep-night/80 leading-relaxed mb-4">Kanalen har ikke været så rens i 200 år. Økosystemet regenererer sig selv. De mennesker, der byggede denne verden, vidste, at det var muligt – de valgte det.</p>
-                        <p class="font-body text-deep-night/80 leading-relaxed italic text-vivid-green">"Vi var så bange for det var for sent. Det var det aldrig."</p>
+
+                    <div class="idea-card reveal reveal-delay-3">
+                        <div class="idea-card-content">
+                            <div class="idea-number">4</div>
+                            <h3 class="idea-title">Håb er et aktivt valg – ikke naivitet</h3>
+                            <p class="idea-text">Forfatterne går op imod idéen om, at håb er blåøjet. Håb bliver præsenteret som en måde at forstå verden realistisk – baseret på fakta og menneskers faktiske adfærd.</p>
+                        </div>
                     </div>
-                    <div class="story-card p-8 rounded-2xl">
-                        <h3 class="font-display text-2xl text-deep-night mb-4">Nairobi 2055</h3>
-                        <p class="font-body text-deep-night/80 leading-relaxed mb-4">Elafanterne bevæger sig gennem de urbane haver. Mennesker og vildtliv deler det samme rum uden konflikt. Teknologi møder Savanna.</p>
-                        <p class="font-body text-deep-night/80 leading-relaxed italic text-vivid-green">"Vi glemte ikke, hvor vi kom fra. Vi byggede blot videre på det."</p>
+
+                    <div class="idea-card reveal reveal-delay-4">
+                        <div class="idea-card-content">
+                            <div class="idea-number">5</div>
+                            <h3 class="idea-title">Fremtiden er formbar – ikke forudbestemt</h3>
+                            <p class="idea-text">Hans Rosling: bedre beslutninger gennem fakta. Rutger Bregman: institutioner bør bygges på tillid. Kristian Leth: fremtidens fortælling skabes af, hvordan vi ser verden.</p>
+                        </div>
+                    </div>
+
+                    <div class="idea-card reveal reveal-delay-1">
+                        <div class="idea-card-content">
+                            <div class="idea-number">6</div>
+                            <h3 class="idea-title">Narrativer styrer vores verdensbillede</h3>
+                            <p class="idea-text">Vi tager ofte fejl – ikke fordi verden er dårlig, men fordi fortællingen om verden ser sådan ud. Rutger Bregman sammenligner nyhedsstrømmen med dagligt "skadeligt stof".</p>
+                        </div>
+                    </div>
+
+                    <div class="idea-card reveal reveal-delay-2">
+                        <div class="idea-card-content">
+                            <div class="idea-number">7</div>
+                            <h3 class="idea-title">Langtidsholdbare valg og ansvar for kommende generationer</h3>
+                            <p class="idea-text">Kristian Leth og Rutger Bregman opfordrer os til at tænke længere end nu: Hvordan bygger vi en verden, der er god – også for dem, der lever efter os?</p>
+                        </div>
+                    </div>
+
+                    <div class="idea-card reveal reveal-delay-3">
+                        <div class="idea-card-content">
+                            <div class="idea-number">8</div>
+                            <h3 class="idea-title">Empati, samarbejde og tillid er undervurderede redskaber</h3>
+                            <p class="idea-text">Rutger Bregman argumenterer for institutioner bygget på tillid. Kristian Leth og Hans Rosling viser, hvordan menneskeligt samarbejde er grundlaget for fremgang.</p>
+                        </div>
+                    </div>
+
+                    <div class="idea-card reveal reveal-delay-4">
+                        <div class="idea-card-content">
+                            <div class="idea-number">9</div>
+                            <h3 class="idea-title">Fremtiden er værd at kæmpe for</h3>
+                            <p class="idea-text">Optimisme er ikke ønsketænkning, men en realistisk forventning om forbedring baseret på verdenshistorien.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -438,7 +476,7 @@
         </section>
 
         <!-- SKRIV DIG FREMAD -->
-        <section id="oevelser" class="relative py-24 sm:py-32 bg-deep-night">
+        <section id="øvelser" class="relative py-24 sm:py-32 bg-deep-night">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div class="text-center mb-16 reveal"><h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream">Skriv dig fremad</h2></div>
                 <div class="grid md:grid-cols-3 gap-8">
@@ -659,21 +697,24 @@
         }, observerOptions);
         revealElements.forEach(el => observer.observe(el));
 
-        // ANIMATED VINES & PLANTS
-        function createAnimatedVines() {
-            const container = document.getElementById('vine-container');
-            for (let i = 0; i < 8; i++) {
-                const vine = document.createElement('div');
-                vine.className = 'animated-vine';
-                vine.style.left = Math.random() * 100 + '%';
-                vine.style.top = Math.random() * 100 + '%';
-                vine.style.animation = `float-vine ${3 + Math.random() * 3}s ease-in-out ${Math.random() * 2}s infinite`;
-                vine.style.opacity = Math.random() * 0.4 + 0.2;
-                container.appendChild(vine);
+        // GROWING PLANTS ANIMATION
+        function createGrowingPlants() {
+            const container = document.getElementById('plant-container');
+            const plants = ['🌱', '🌿', '🍃', '🌾', '🌳'];
+            
+            for (let i = 0; i < 12; i++) {
+                const plant = document.createElement('div');
+                plant.className = 'plant grow sway';
+                plant.textContent = plants[Math.floor(Math.random() * plants.length)];
+                plant.style.left = Math.random() * 100 + '%';
+                plant.style.top = Math.random() * 100 + '%';
+                plant.style.animationDelay = Math.random() * 2 + 's';
+                plant.style.animationDuration = (1 + Math.random() * 0.8) + 's';
+                container.appendChild(plant);
             }
         }
 
-        createAnimatedVines();
+        createGrowingPlants();
         checkAuth();
     </script>
 </body>
