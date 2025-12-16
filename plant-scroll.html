@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voksende Planter - Scrollytelling</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #10b981, #34d399, #6ee7b7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.5rem);
+            opacity: 0.8;
+            max-width: 600px;
+        }
+
+        /* Scroll Container */
+        .scroll-container {
+            position: relative;
+        }
+
+        /* Plant Section */
+        .plant-section {
+            height: 200vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .plant-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1400px;
+            width: 100%;
+            align-items: center;
+        }
+
+        .plant-video-container {
+            position: sticky;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 16/9;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+        }
+
+        .plant-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Remove magenta background using blend mode */
+            mix-blend-mode: screen;
+            filter: contrast(1.15) saturate(1.1);
+        }
+
+        .plant-text {
+            position: sticky;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .plant-text h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            color: #6ee7b7;
+        }
+
+        .plant-text p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .plant-text .plant-number {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #6ee7b7;
+        }
+
+        /* Alternate layout for even sections */
+        .plant-section:nth-child(even) .plant-content {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .plant-section:nth-child(even) .plant-video-container {
+            order: 2;
+        }
+
+        .plant-section:nth-child(even) .plant-text {
+            order: 1;
+        }
+
+        /* Footer */
+        .footer {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .footer h2 {
+            font-size: clamp(2rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #10b981, #34d399);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer p {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            opacity: 0.8;
+            max-width: 600px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .plant-content {
+                grid-template-columns: 1fr !important;
+                gap: 2rem;
+            }
+
+            .plant-section:nth-child(even) .plant-video-container,
+            .plant-section:nth-child(even) .plant-text {
+                order: initial;
+            }
+
+            .plant-video-container {
+                max-width: 100%;
+            }
+
+            .plant-text {
+                padding: 2rem;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0f2027;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(110, 231, 183, 0.2);
+            border-top-color: #6ee7b7;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>🌱 Voksende Planter</h1>
+        <p>Scroll ned for at se naturen folde sig ud i en magisk time-lapse rejse</p>
+    </section>
+
+    <!-- Scroll Container -->
+    <div class="scroll-container">
+        <!-- 1. Ivy -->
+        <section class="plant-section" data-plant="ivy">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="1">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916473/veo3_text_to_video_18468_1765916473_v26npc.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">01 / 10</span>
+                    <h2>Klatrende Efeu</h2>
+                    <p>Se hvordan efeu-ranker vokser organisk og finder deres vej opad. Deres dynamiske bevægelse og grønne vitalitet symboliserer naturens udholdenhed og tilpasningsevne.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Fern -->
+        <section class="plant-section" data-plant="fern">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="2">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916480/veo3_text_to_video_18468_1765916480_tsn2nd.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">02 / 10</span>
+                    <h2>Bregne</h2>
+                    <p>En bregnes karakteristiske spiral-udviklingsproces. Fra tæt sammenrullet spire til fuldt udfoldede, detaljerede blade - et mesterværk af naturens geometri.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Wildflowers -->
+        <section class="plant-section" data-plant="wildflowers">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="3">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916463/veo3_text_to_video_18468_1765916463_lzqwqc.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">03 / 10</span>
+                    <h2>Vilde Blomster</h2>
+                    <p>Små, farverige vilde blomster springer frem fra jorden i morgenlysets varme. Deres spontane vækst minder os om livets simple glæder.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Monstera -->
+        <section class="plant-section" data-plant="monstera">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="4">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916495/veo3_text_to_video_18468_1765916495_kr9hgn.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">04 / 10</span>
+                    <h2>Monstera Blad</h2>
+                    <p>Det ikoniske Monstera Deliciosa-blad folder sig ud med sin karakteristiske glossy overflade og distinkte huller - et yndlingsblad i moderne botanik.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Creepers -->
+        <section class="plant-section" data-plant="creepers">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="5">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916465/veo3_text_to_video_18468_1765916465_spqnzs.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">05 / 10</span>
+                    <h2>Slyngplanter</h2>
+                    <p>Observér hvordan slyngplanter vokser i spiraler opad, finder støtte og krydser hinandens veje - en dans af samarbejde og vedholdenhed.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Succulent -->
+        <section class="plant-section" data-plant="succulent">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="6">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765917511/veo3_text_to_video_18468_1765917511_ykmq7f.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">06 / 10</span>
+                    <h2>Sukkulent</h2>
+                    <p>Fra oven ser vi sukkulentens perfekte symmetri. Blade folder sig ud i matematisk præcise mønstre - naturens egen Fibonacci-spiral.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Rose -->
+        <section class="plant-section" data-plant="rose">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="7">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916473/veo3_text_to_video_18468_1765916473_qsob0c.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">07 / 10</span>
+                    <h2>Rød Rose</h2>
+                    <p>En klassisk rød rose åbner sig lag for lag. Kronbladenes dybe røde farve og elegante bevægelse gør denne blomst til et evigt symbol på skønhed.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Moss -->
+        <section class="plant-section" data-plant="moss">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="8">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916463/veo3_text_to_video_18468_1765916462_xiu7rz.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">08 / 10</span>
+                    <h2>Mos</h2>
+                    <p>Levende mos spreder sig langsomt men sikkert henover overflader. Dets fløjlsagtige tekstur og livgivende grønne farve bringer ro til ethvert rum.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Bamboo -->
+        <section class="plant-section" data-plant="bamboo">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="9">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916456/veo3_text_to_video_18468_1765916456_z4e0rw.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">09 / 10</span>
+                    <h2>Bambusskud</h2>
+                    <p>Bambus vokser hurtigere end nogen anden plante på jorden. Se dets kraftfulde, vertikale rejse mod himlen - et symbol på styrke og fleksibilitet.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. String of Pearls -->
+        <section class="plant-section" data-plant="pearls">
+            <div class="plant-content">
+                <div class="plant-video-container">
+                    <video class="plant-video" muted playsinline preload="auto" data-video="10">
+                        <source src="https://cdn.simtheory.ai/video/upload/v1765916467/veo3_text_to_video_18468_1765916467_l4wjvk.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <div class="plant-text">
+                    <span class="plant-number">10 / 10</span>
+                    <h2>Hængende Planter</h2>
+                    <p>String of Pearls kaskadefører elegant nedefter med deres perlelignende blade. Tyngdekraften skaber naturlige gardin-effekter af grønt liv.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <section class="footer">
+        <h2>🌿 Naturen vokser altid</h2>
+        <p>Hver plante fortæller sin egen historie om tålmodighed, vedholdenhed og skønhed.</p>
+    </section>
+
+    <script>
+        // Register GSAP plugin
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Wait for all videos to be loaded
+        let videosLoaded = 0;
+        const totalVideos = document.querySelectorAll('.plant-video').length;
+        const loadingScreen = document.getElementById('loading');
+
+        document.querySelectorAll('.plant-video').forEach(video => {
+            video.addEventListener('loadedmetadata', () => {
+                videosLoaded++;
+                if (videosLoaded === totalVideos) {
+                    // Hide loading screen
+                    setTimeout(() => {
+                        loadingScreen.classList.add('hidden');
+                        initScrollAnimations();
+                    }, 500);
+                }
+            });
+        });
+
+        function initScrollAnimations() {
+            // Animate each plant section
+            document.querySelectorAll('.plant-section').forEach((section, index) => {
+                const video = section.querySelector('.plant-video');
+                const text = section.querySelector('.plant-text');
+                const videoContainer = section.querySelector('.plant-video-container');
+
+                // Video scrubbing animation
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    onEnter: () => video.play(),
+                    onEnterBack: () => video.play(),
+                    onLeave: () => video.pause(),
+                    onLeaveBack: () => video.pause()
+                });
+
+                // Sync video playback with scroll
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 1,
+                    onUpdate: (self) => {
+                        if (video.duration) {
+                            const progress = self.progress;
+                            video.currentTime = video.duration * progress;
+                        }
+                    }
+                });
+
+                // Fade in video container
+                gsap.from(videoContainer, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                        end: 'top 30%',
+                        scrub: 1
+                    },
+                    opacity: 0,
+                    scale: 0.8,
+                    ease: 'power2.out'
+                });
+
+                // Fade in text
+                gsap.from(text, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 70%',
+                        end: 'top 40%',
+                        scrub: 1
+                    },
+                    opacity: 0,
+                    y: 50,
+                    ease: 'power2.out'
+                });
+            });
+
+            // Hero parallax
+            gsap.to('.hero', {
+                scrollTrigger: {
+                    trigger: '.hero',
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1
+                },
+                opacity: 0,
+                y: -100
+            });
+
+            // Footer fade in
+            gsap.from('.footer', {
+                scrollTrigger: {
+                    trigger: '.footer',
+                    start: 'top 80%',
+                    end: 'top 50%',
+                    scrub: 1
+                },
+                opacity: 0,
+                y: 100
+            });
+        }
+
+        // Performance optimization: Pause videos that are far from viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (!entry.isIntersecting) {
+                    video.pause();
+                }
+            });
+        }, {
+            rootMargin: '200px'
+        });
+
+        document.querySelectorAll('.plant-video').forEach(video => {
+            observer.observe(video);
+        });
+    </script>
+</body>
+</html>
