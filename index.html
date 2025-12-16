@@ -167,10 +167,10 @@
     </style>
 </head>
 <body>
-    <!-- PLANT CONTAINER FOR GROWING ANIMATIONS -->
+    <!-- Plant container, login modals, nav - keeping existing code -->
+    
     <div class="plant-container" id="plant-container"></div>
     
-    <!-- LOGIN MODAL -->
     <div id="login-modal" class="login-modal active">
         <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
             <div class="text-center mb-8">
@@ -191,7 +191,6 @@
         </div>
     </div>
 
-    <!-- ADMIN LOGIN MODAL -->
     <div id="admin-login-modal" class="admin-login-modal">
         <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
             <div class="text-center mb-8">
@@ -209,7 +208,6 @@
         </div>
     </div>
 
-    <!-- NAVIGATION -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-deep-night/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -230,7 +228,6 @@
         </div>
     </nav>
 
-    <!-- ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="admin-dashboard">
         <div class="max-w-7xl mx-auto px-4 py-12">
             <button onclick="closeAdmin()" class="px-6 py-3 bg-vivid-green text-deep-night rounded-lg mb-8">Luk Admin</button>
@@ -249,7 +246,7 @@
     </div>
 
     <main id="main-content" class="pt-16">
-        <!-- HERO SECTION -->
+        <!-- HERO -->
         <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-b from-deep-night via-deep-night/80 to-deep-night z-0"></div>
             <div class="organic-shape w-96 h-96 bg-deep-forest top-20 -left-48"></div>
@@ -275,7 +272,7 @@
             </div>
         </section>
 
-        <!-- VERDEN ER FAKTISK BLEVET BEDRE -->
+        <!-- VERDEN -->
         <section id="verden" class="relative py-24 sm:py-32 bg-warm-cream text-deep-night">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -295,6 +292,61 @@
                             <p class="font-body text-deep-night/60 mt-4">Børnedødelighed per 100 børn under 5 år</p>
                             <p class="font-body text-sm text-stone-gray mt-2">1900 → 2024 (globalt)</p>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- LITTERATUR SECTION -->
+        <section id="litteratur" class="relative py-24 sm:py-32 bg-deep-night">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Litteratur</span>
+                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream mt-4 mb-6">Skabt til fremtiden</h2>
+                    <p class="font-body text-lg text-stone-gray max-w-3xl mx-auto">Bøger om håb, handling og at turde se fremad med realisme og mod.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Book 1 -->
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-1">
+                        <h3 class="font-display text-2xl text-vivid-green mb-3">Humankind</h3>
+                        <p class="font-body text-sm text-sun-glow mb-4">Rutger Bregman</p>
+                        <p class="font-body text-stone-gray leading-relaxed">Mennesker er grundlæggende gode. Kynisme og mistillid er ikke realistiske – de er en genvej, der gør os blinde for fakta.</p>
+                    </div>
+
+                    <!-- Book 2 -->
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-2">
+                        <h3 class="font-display text-2xl text-vivid-green mb-3">Factfulness</h3>
+                        <p class="font-body text-sm text-sun-glow mb-4">Hans Rosling</p>
+                        <p class="font-body text-stone-gray leading-relaxed">Verden er faktisk bedre, end du tror. Data viser fremskridt – ikke fordi alt er perfekt, men fordi vi har løst problemer før.</p>
+                    </div>
+
+                    <!-- Book 3 -->
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-3">
+                        <h3 class="font-display text-2xl text-vivid-green mb-3">Utopia for Realists</h3>
+                        <p class="font-body text-sm text-sun-glow mb-4">Rutger Bregman</p>
+                        <p class="font-body text-stone-gray leading-relaxed">Fremtiden kan designes. Vi har råd til basalindkomst, kortere arbejdsuger og åbne grænser – hvis vi tør tænke større.</p>
+                    </div>
+
+                    <!-- Book 4 -->
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-1">
+                        <h3 class="font-display text-2xl text-vivid-green mb-3">The Ministry for the Future</h3>
+                        <p class="font-body text-sm text-sun-glow mb-4">Kim Stanley Robinson</p>
+                        <p class="font-body text-stone-gray leading-relaxed">Klimakrise mødes med handling. En roman om hvordan vi kunne tackle det svære – med politik, teknologi og vilje.</p>
+                    </div>
+
+                    <!-- Book 5 -->
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-2">
+                        <h3 class="font-display text-2xl text-vivid-green mb-3">Doughnut Economics</h3>
+                        <p class="font-body text-sm text-sun-glow mb-4">Kate Raworth</p>
+                        <p class="font-body text-stone-gray leading-relaxed">Økonomi kan tænkes anderledes. Ikke uendelig vækst, men balance: nok til alle, uden at ødelægge planeten.</p>
+                    </div>
+
+                    <!-- Book 6 -->
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-3">
+                        <h3 class="font-display text-2xl text-vivid-green mb-3">Emergent Strategy</h3>
+                        <p class="font-body text-sm text-sun-glow mb-4">adrienne maree brown</p>
+                        <p class="font-body text-stone-gray leading-relaxed">Forandring sker i små skridt, i fællesskaber, i tillid. Vi er naturen – ikke dens fjender. Fremtiden bygges sammen.</p>
                     </div>
                 </div>
             </div>
@@ -341,13 +393,11 @@
                             </div>
                         </div>
                         
-                        <!-- ANSWER REVIEW SECTION -->
                         <div class="mb-12">
                             <h4 class="font-display text-2xl text-deep-night mb-6">Gennemgang af dine svar</h4>
                             <div id="answer-review-container" class="space-y-4"></div>
                         </div>
                         
-                        <!-- SCOREBOARD SECTION -->
                         <div class="mb-12">
                             <h4 class="font-display text-2xl text-deep-night mb-6">Top 10 Scoreboard</h4>
                             <div id="scoreboard-container" class="bg-deep-night/5 rounded-2xl p-6">
@@ -365,9 +415,90 @@
                 </div>
             </div>
         </section>
+
+        <!-- ØVELSER SECTION -->
+        <section id="øvelser" class="relative py-24 sm:py-32 bg-deep-night">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Skriv dig fremad</span>
+                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream mt-4 mb-6">Refleksionsøvelser</h2>
+                    <p class="font-body text-lg text-stone-gray max-w-3xl mx-auto">Små skriveøvelser der hjælper dig med at tænke fremad.</p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-1">
+                        <div class="text-4xl mb-4">📝</div>
+                        <h3 class="font-display text-2xl text-warm-cream mb-4">Mit håb</h3>
+                        <p class="font-body text-stone-gray mb-4">Skriv om noget, du håber på. Hvad ville du ønske for fremtiden – for dig selv, din familie, eller verden?</p>
+                    </div>
+
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-2">
+                        <div class="text-4xl mb-4">💪</div>
+                        <h3 class="font-display text-2xl text-warm-cream mb-4">Min styrke</h3>
+                        <p class="font-body text-stone-gray mb-4">Hvad er du god til? Hvad giver dig energi? Hvordan kan du bruge det til at gøre en forskel?</p>
+                    </div>
+
+                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-3">
+                        <div class="text-4xl mb-4">🌍</div>
+                        <h3 class="font-display text-2xl text-warm-cream mb-4">Mit skridt</h3>
+                        <p class="font-body text-stone-gray mb-4">Hvilket første lille skridt kan du tage? Det behøver ikke være stort – bare noget du rent faktisk kan gøre.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MUSIK SECTION -->
+        <section id="musik" class="relative py-24 sm:py-32 bg-warm-cream">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Lyt med</span>
+                    <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-6">Musik til fremtiden</h2>
+                    <p class="font-body text-lg text-deep-night/70 max-w-3xl mx-auto">En Spotify-playliste fuld af håb, energi og fremtidstro.</p>
+                </div>
+
+                <div class="max-w-3xl mx-auto reveal reveal-delay-1">
+                    <div class="bg-soft-white rounded-3xl p-8 shadow-xl">
+                        <iframe 
+                            style="border-radius: 12px" 
+                            src="https://open.spotify.com/embed/playlist/37i9dQZF1DXdPec7aLTmlC?utm_source=generator" 
+                            width="100%" 
+                            height="380" 
+                            frameBorder="0" 
+                            allowfullscreen="" 
+                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BREVKASSE SECTION -->
+        <section id="brevkasse" class="relative py-24 sm:py-32 bg-deep-night">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Kontakt</span>
+                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream mt-4 mb-6">Brevkasse</h2>
+                    <p class="font-body text-lg text-stone-gray max-w-3xl mx-auto">Send os dine tanker, spørgsmål eller historier.</p>
+                </div>
+
+                <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-3xl p-8 sm:p-10 reveal reveal-delay-1">
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="contact-name" class="block font-body text-sm text-warm-cream mb-2">Dit navn</label>
+                            <input type="text" id="contact-name" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green" placeholder="Navn..." required>
+                        </div>
+                        <div>
+                            <label for="contact-message" class="block font-body text-sm text-warm-cream mb-2">Din besked</label>
+                            <textarea id="contact-message" rows="6" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green" placeholder="Skriv din besked her..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Send besked</button>
+                    </form>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <!-- FOOTER -->
     <footer class="bg-deep-night py-16 border-t border-white/5">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="font-display text-3xl text-warm-cream mb-2">Skabt til fremtiden</h2>
@@ -378,16 +509,15 @@
     </footer>
 
     <script>
-        // SUPABASE INITIALIZATION
         const SUPABASE_URL = 'https://zmfqodkasswmqohppcod.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptZnFvZGthc3N3bXFvaHBwY29kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0NzQ4NTgsImV4cCI6MjA0MTA1MDg1OH0.o3R3x6vZL7H8D8W5K8h8fJ9K8h8fJ9K8h8';
         
         let supabase;
         try {
             supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log('✅ Supabase initialized successfully');
+            console.log('✅ Supabase initialized');
         } catch (error) {
-            console.error('❌ Supabase initialization error:', error);
+            console.error('❌ Supabase error:', error);
         }
 
         const allQuizQuestions = [
@@ -497,19 +627,13 @@
             Object.keys(selectedAnswers).forEach(idx => { if (selectedAnswers[idx] === currentQuiz[idx].c) score++; });
             const pct = (score / 10) * 100;
             
-            console.log('📈 Score:', score, 'Percentage:', pct);
-            
-            // Display score stats
             document.getElementById('score-display').textContent = `${score}/10`;
             document.getElementById('wrong-display').textContent = `${10 - score}`;
             document.getElementById('percentage-display').textContent = `${pct.toFixed(0)}%`;
             
-            // Display answer review
             displayAnswerReview(score);
             
-            // Save to Supabase
             try {
-                console.log('💾 Attempting to save to Supabase...');
                 const { data, error } = await supabase.from('quiz_results').insert([{
                     student_name: studentName,
                     score: score,
@@ -517,25 +641,17 @@
                     percentage: pct
                 }]);
                 
-                if (error) {
-                    console.error('❌ Supabase insert error:', error);
-                    console.error('Error details:', JSON.stringify(error, null, 2));
-                } else {
-                    console.log('✅ Saved to Supabase successfully');
-                }
+                if (error) console.error('❌ Supabase error:', error);
+                else console.log('✅ Saved to Supabase');
             } catch (error) {
-                console.error('❌ Supabase save exception:', error);
+                console.error('❌ Exception:', error);
             }
             
-            // Load and display scoreboard
             await loadScoreboard();
             
-            // Hide quiz container and show results
             document.getElementById('quiz-container').classList.remove('active');
             document.getElementById('quiz-results').style.display = 'block';
             document.getElementById('quiz-results').classList.add('active');
-            
-            console.log('✅ Results should now be visible');
         }
 
         function displayAnswerReview(score) {
@@ -573,9 +689,7 @@
 
         async function loadScoreboard() {
             const container = document.getElementById('scoreboard-list');
-            container.innerHTML = '<p class="font-body text-stone-gray text-center">Indlæser scoreboard...</p>';
-            
-            console.log('🏆 Loading scoreboard...');
+            container.innerHTML = '<p class="font-body text-stone-gray text-center">Indlæser...</p>';
             
             try {
                 const { data, error } = await supabase
@@ -585,13 +699,7 @@
                     .order('created_at', { ascending: true })
                     .limit(10);
                 
-                if (error) {
-                    console.error('❌ Scoreboard load error:', error);
-                    console.error('Error details:', JSON.stringify(error, null, 2));
-                    throw error;
-                }
-                
-                console.log('📊 Scoreboard data:', data);
+                if (error) throw error;
                 
                 if (data && data.length > 0) {
                     container.innerHTML = '';
@@ -610,14 +718,12 @@
                         `;
                         container.appendChild(item);
                     });
-                    console.log('✅ Scoreboard rendered successfully');
                 } else {
                     container.innerHTML = '<p class="font-body text-stone-gray text-center">Ingen resultater endnu</p>';
-                    console.log('ℹ️ No scoreboard data yet');
                 }
             } catch (error) {
-                console.error('❌ Scoreboard exception:', error);
-                container.innerHTML = '<p class="font-body text-red-500 text-center">Kunne ikke indlæse scoreboard</p>';
+                console.error('❌ Scoreboard error:', error);
+                container.innerHTML = '<p class="font-body text-red-500 text-center">Kunne ikke indlæse</p>';
             }
         }
 
@@ -632,8 +738,6 @@
         }
         
         function closeQuizAndScrollToTop() {
-            console.log('🔝 Closing quiz and scrolling to top');
-            // Reset quiz
             document.getElementById('quiz-start').classList.remove('hidden');
             document.getElementById('quiz-results').style.display = 'none';
             document.getElementById('quiz-results').classList.remove('active');
@@ -641,33 +745,21 @@
             selectedAnswers = {};
             currentQuestionIndex = 0;
             currentQuiz = [];
-            
-            // Scroll to top smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         document.getElementById('quiz-name-form').addEventListener('submit', (e) => { e.preventDefault(); startQuiz(document.getElementById('student-name-input').value); });
         
-        // SCROLL REVEAL WITH INTERSECTION OBSERVER
         const revealElements = document.querySelectorAll('.reveal');
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, observerOptions);
         revealElements.forEach(el => observer.observe(el));
 
-        // GROWING PLANTS ANIMATION
         function createGrowingPlants() {
             const container = document.getElementById('plant-container');
             const plants = ['🌱', '🌿', '🍃', '🌾', '🌳'];
-            
             for (let i = 0; i < 12; i++) {
                 const plant = document.createElement('div');
                 plant.className = 'plant grow sway';
