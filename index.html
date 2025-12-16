@@ -160,87 +160,6 @@
         .plant.grow { animation: plant-grow 1.2s ease-out forwards; }
         .plant.sway { animation: leaf-sway 3s ease-in-out infinite; }
         
-        .idea-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1.5rem;
-            background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(26, 61, 46, 0.1) 100%);
-            border: 2px solid rgba(0, 210, 106, 0.2);
-            padding: 2rem;
-            min-height: 300px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.4s ease;
-        }
-        
-        .idea-card:hover {
-            border-color: var(--vivid-green);
-            box-shadow: 0 10px 30px rgba(0, 210, 106, 0.2);
-            transform: translateY(-4px);
-        }
-        
-        .idea-card-content {
-            position: relative;
-            z-index: 1;
-        }
-        
-        .idea-number {
-            font-size: 3rem;
-            font-weight: bold;
-            color: var(--vivid-green);
-            opacity: 0.3;
-            margin-bottom: 1rem;
-        }
-        
-        .idea-title {
-            font-family: 'Instrument Serif', Georgia, serif;
-            font-size: 1.5rem;
-            color: var(--warm-cream);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        .idea-text {
-            font-family: 'DM Sans', system-ui, sans-serif;
-            font-size: 0.95rem;
-            color: rgba(245, 240, 232, 0.8);
-            line-height: 1.6;
-        }
-        
-        .author-card {
-            background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(26, 61, 46, 0.1) 100%);
-            border: 2px solid rgba(0, 210, 106, 0.2);
-            border-radius: 1.5rem;
-            padding: 2rem;
-            transition: all 0.4s ease;
-        }
-        
-        .author-card:hover {
-            border-color: var(--vivid-green);
-            box-shadow: 0 10px 30px rgba(0, 210, 106, 0.2);
-            transform: translateY(-4px);
-        }
-        
-        .author-title {
-            font-family: 'Instrument Serif', Georgia, serif;
-            font-size: 1.3rem;
-            color: var(--vivid-green);
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-        
-        .author-text {
-            font-size: 0.95rem;
-            color: rgba(245, 240, 232, 0.8);
-            line-height: 1.6;
-        }
-        
-        .exercise-card { transition: transform 0.4s ease, border-color 0.3s ease; }
-        .exercise-card:hover { transform: translateY(-4px); border-color: var(--vivid-green); }
-        
-        .song-suggestion-form { background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(255, 217, 61, 0.05) 100%); }
-        
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--deep-night); }
         ::-webkit-scrollbar-thumb { background: var(--deep-forest); border-radius: 4px; }
@@ -330,8 +249,57 @@
     </div>
 
     <main id="main-content" class="pt-16">
-        <!-- HERO + OTHER SECTIONS - Keeping content intact, only showing quiz section below -->
-        
+        <!-- HERO SECTION -->
+        <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-b from-deep-night via-deep-night/80 to-deep-night z-0"></div>
+            <div class="organic-shape w-96 h-96 bg-deep-forest top-20 -left-48"></div>
+            <div class="organic-shape w-80 h-80 bg-vivid-green bottom-20 -right-40"></div>
+            
+            <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+                <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-warm-cream mb-4 hero-text-1">Skabt til fremtiden</h1>
+                <p class="font-body text-lg sm:text-xl text-sun-glow tracking-wide mb-8 hero-text-1">Performance 2026 — Lindenborg Efterskole</p>
+                <div class="space-y-4 max-w-2xl mx-auto hero-text-2">
+                    <p class="font-body text-lg sm:text-xl text-stone-gray">Du står midt i en tid, hvor alle siger, at alt brænder.</p>
+                    <p class="font-body text-lg sm:text-xl text-warm-cream">Men du trækker vejret lige nu. Du er her.</p>
+                    <p class="font-display text-2xl sm:text-3xl text-vivid-green italic">Og fremtiden er der også i morgen.</p>
+                </div>
+                <a href="#verden" class="inline-block mt-12 hero-text-3">
+                    <span class="btn-hope inline-flex items-center gap-2 px-8 py-4 bg-vivid-green text-deep-night font-body font-medium rounded-full">
+                        Kom i gang
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </span>
+                </a>
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator z-10">
+                <svg class="w-6 h-10 text-stone-gray" fill="none" stroke="currentColor" viewBox="0 0 24 40"><rect x="1" y="1" width="22" height="38" rx="11" stroke-width="2"></rect><circle cx="12" cy="12" r="3" fill="currentColor"></circle></svg>
+            </div>
+        </section>
+
+        <!-- VERDEN ER FAKTISK BLEVET BEDRE -->
+        <section id="verden" class="relative py-24 sm:py-32 bg-warm-cream text-deep-night">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div class="reveal">
+                        <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Data mod doomscrolling</span>
+                        <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-8">Verden er faktisk blevet bedre</h2>
+                        <div class="space-y-6 font-body text-lg text-deep-night/80 leading-relaxed">
+                            <p>Overskrifterne siger, at alt kollapser. Men her er noget, de sjældent nævner:</p>
+                            <p>For hundrede år siden døde <span class="font-medium text-deep-night">44 ud af 100 børn</span> under 5 år – i dag er det <span class="font-medium text-vivid-green">4 ud af 100</span>. Globalt.</p>
+                            <p>Verden har problemer. Men verden har også løst problemer, som vores oldeforældre troede var umulige.</p>
+                            <p class="font-medium text-deep-night">Du må godt glæde dig over fremskridt OG gå i gang med det svære. Begge dele er sande.</p>
+                        </div>
+                    </div>
+                    <div class="reveal reveal-delay-1">
+                        <div class="text-center p-8 bg-soft-white rounded-3xl shadow-xl border-2 border-vivid-green/20">
+                            <div class="font-display text-8xl sm:text-9xl text-vivid-green leading-none">44→4</div>
+                            <p class="font-body text-deep-night/60 mt-4">Børnedødelighed per 100 børn under 5 år</p>
+                            <p class="font-body text-sm text-stone-gray mt-2">1900 → 2024 (globalt)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <!-- QUIZ SECTION -->
         <section id="quiz" class="relative py-24 sm:py-32 bg-warm-cream">
             <div class="organic-shape w-[400px] h-[400px] bg-vivid-green -left-32 top-1/2"></div>
@@ -426,7 +394,7 @@
             { q: "De seneste 20 år er andelen af mennesker i verden, der lever i ekstrem fattigdom...", a: ["Næsten fordoblet", "Næsten halveret", "Den samme som før", "Steget med 10%"], c: 1 },
             { q: "Hvor mange af verdens 1-årige børn har fået mindst én vaccination mod en sygdom?", a: ["20%", "50%", "80%", "95%"], c: 2 },
             { q: "Hvis vi kigger på økonomi, hvor bor størstedelen af verdens befolkning så?", a: ["I meget fattige lande", "I meget rige lande", "I midten (mellemindkomstlande)", "Vi ved det ikke"], c: 2 },
-            { q: "Hvor mange piger gør deres grundskole færdig i verdens fattigste lande?", a: ["20%", "40%", "60%", "80%"], c: 2 },
+            { q: "Hvor mange piger gør deres grundskole færdig i verdens fattigeste lande?", a: ["20%", "40%", "60%", "80%"], c: 2 },
             { q: "Hvis du ser på verden generelt, hvad sker der så med udviklingen?", a: ["Det går værre og værre", "De rige bliver rigere, og alle andre bliver fattigere", "Verden bliver faktisk bedre skridt for skridt", "Det står helt stille"], c: 2 },
             { q: "Der er 2 milliarder børn i verden i dag. Hvor mange tror FN, der vil være i år 2100?", a: ["2 milliarder", "3 milliarder", "4 milliarder", "6 milliarder"], c: 0 },
             { q: "Hvad siger forskerne om temperaturen på jorden de næste 100 år?", a: ["Den vil falde", "Den vil stige", "Den forbliver den samme", "Det er umuligt at sige"], c: 1 },
