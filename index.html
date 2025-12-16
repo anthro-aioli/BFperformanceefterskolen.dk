@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <script>
         tailwind.config = {
@@ -108,6 +109,21 @@
         
         .quiz-container { display: none; }
         .quiz-container.active { display: block; }
+        
+        .answer-review-item {
+            border-left: 4px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .answer-review-item.correct {
+            border-left-color: var(--vivid-green);
+            background: linear-gradient(90deg, rgba(0, 210, 106, 0.1) 0%, transparent 100%);
+        }
+        
+        .answer-review-item.incorrect {
+            border-left-color: #EF4444;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.1) 0%, transparent 100%);
+        }
         
         .lightbox-modal { display: none; position: fixed; inset: 0; background-color: rgba(13, 13, 13, 0.95); z-index: 1000; align-items: center; justify-content: center; padding: 1rem; }
         .lightbox-modal.active { display: flex; }
@@ -614,7 +630,7 @@
                     <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-6">Hvad ved du om verden?</h2>
                     <p class="font-body text-lg text-deep-night/70 max-w-2xl mx-auto mb-8">Baseret på Hans Roslings "Factfulness". Test din viden.</p>
                     <form id="quiz-name-form" class="max-w-md mx-auto mb-8">
-                        <div class="mb-6"><input type="text" id="student-name-input" placeholder="Dit navn (eller anonymt)" class="w-full px-6 py-3 border-2 border-deep-forest/20 rounded-lg font-body text-deep-night placeholder-stone-gray focus:outline-none focus:border-vivid-green" required></div>
+                        <div class="mb-6"><input type="text" id="student-name-input" placeholder="Dit navn (eller anonymt)" class="w-full px-6 py-3 border-2 border-deep-forest/20 rounded-lg font-body text-deep-night placeholder-stone-gray focus:outline-none focus:border-vivid-green"></div>
                         <button type="submit" class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Start Quiz</button>
                     </form>
                 </div>
@@ -644,10 +660,23 @@
                                 <div class="p-6 bg-deep-forest/5 rounded-2xl"><p class="font-body text-stone-gray mb-2">Procent</p><p class="font-display text-4xl text-sun-glow" id="percentage-display">0%</p></div>
                             </div>
                         </div>
+                        
+                        <!-- ANSWER REVIEW SECTION -->
                         <div class="mb-12">
-                            <h4 class="font-display text-2xl text-deep-night mb-6">Scoreboard</h4>
-                            <div id="scoreboard-container" class="bg-deep-night/5 rounded-2xl p-6"><div id="scoreboard-list" class="space-y-3"></div></div>
+                            <h4 class="font-display text-2xl text-deep-night mb-6">Gennemgang af dine svar</h4>
+                            <div id="answer-review-container" class="space-y-4"></div>
                         </div>
+                        
+                        <!-- SCOREBOARD SECTION -->
+                        <div class="mb-12">
+                            <h4 class="font-display text-2xl text-deep-night mb-6">Top 10 Scoreboard</h4>
+                            <div id="scoreboard-container" class="bg-deep-night/5 rounded-2xl p-6">
+                                <div id="scoreboard-list" class="space-y-3">
+                                    <p class="font-body text-stone-gray text-center">Indlæser scoreboard...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="flex gap-4">
                             <button onclick="resetQuiz()" class="btn-hope flex-1 py-4 px-8 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Tag quizzen igen</button>
                             <a href="#verden" class="flex-1"><button class="btn-hope w-full py-4 px-8 border-2 border-deep-forest text-deep-night font-body font-medium rounded-lg hover:bg-deep-forest/5 transition-colors">Tilbage til toppen</button></a>
@@ -746,11 +775,16 @@
     </footer>
 
     <script>
+        // SUPABASE INITIALIZATION
+        const SUPABASE_URL = 'https://zmfqodkasswmqohppcod.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptZnFvZGthc3N3bXFvaHBwY29kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0NzQ4NTgsImV4cCI6MjA0MTA1MDg1OH0.o3R3x6vZL7H8D8W5K8h8fJ9K8h8fJ9K8h8';
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         const allQuizQuestions = [
             { q: "De seneste 20 år er andelen af mennesker i verden, der lever i ekstrem fattigdom...", a: ["Næsten fordoblet", "Næsten halveret", "Den samme som før", "Steget med 10%"], c: 1 },
             { q: "Hvor mange af verdens 1-årige børn har fået mindst én vaccination mod en sygdom?", a: ["20%", "50%", "80%", "95%"], c: 2 },
             { q: "Hvis vi kigger på økonomi, hvor bor størstedelen af verdens befolkning så?", a: ["I meget fattige lande", "I meget rige lande", "I midten (mellemindkomstlande)", "Vi ved det ikke"], c: 2 },
-            { q: "Hvor mange piger gør deres grundskole færdig i verdens fattigste lande?", a: ["20%", "40%", "60%", "80%"], c: 2 },
+            { q: "Hvor mange piger gør deres grundskole færdig i verdens fattigeste lande?", a: ["20%", "40%", "60%", "80%"], c: 2 },
             { q: "Hvis du ser på verden generelt, hvad sker der så med udviklingen?", a: ["Det går værre og værre", "De rige bliver rigere, og alle andre bliver fattigere", "Verden bliver faktisk bedre skridt for skridt", "Det står helt stille"], c: 2 },
             { q: "Der er 2 milliarder børn i verden i dag. Hvor mange tror FN, der vil være i år 2100?", a: ["2 milliarder", "3 milliarder", "4 milliarder", "6 milliarder"], c: 0 },
             { q: "Hvad siger forskerne om temperaturen på jorden de næste 100 år?", a: ["Den vil falde", "Den vil stige", "Den forbliver den samme", "Det er umuligt at sige"], c: 1 },
@@ -834,17 +868,109 @@
         function nextQuestion() { if (currentQuestionIndex < 9) { currentQuestionIndex++; showQuestion(); } else { submitQuiz(); } }
         function previousQuestion() { if (currentQuestionIndex > 0) { currentQuestionIndex--; showQuestion(); } }
 
-        function submitQuiz() {
+        async function submitQuiz() {
             let score = 0;
             Object.keys(selectedAnswers).forEach(idx => { if (selectedAnswers[idx] === currentQuiz[idx].c) score++; });
             const pct = (score / 10) * 100;
+            
+            // Display score stats
             document.getElementById('score-display').textContent = `${score}/10`;
             document.getElementById('wrong-display').textContent = `${10 - score}`;
             document.getElementById('percentage-display').textContent = `${pct.toFixed(0)}%`;
-            const sl = document.getElementById('scoreboard-list');
-            sl.innerHTML = `<div class="bg-vivid-green/10 p-4 rounded-lg flex justify-between items-center"><p class="font-body font-semibold text-deep-night">#1 ${studentName}</p><div class="text-right"><p class="font-display text-lg text-vivid-green">${score}/10</p><p class="font-body text-sm text-stone-gray">${pct.toFixed(0)}%</p></div></div>`;
+            
+            // Display answer review
+            displayAnswerReview(score);
+            
+            // Save to Supabase
+            try {
+                await supabase.from('quiz_results').insert([{
+                    student_name: studentName,
+                    score: score,
+                    total_questions: 10,
+                    percentage: pct
+                }]);
+            } catch (error) {
+                console.error('Error saving quiz result:', error);
+            }
+            
+            // Load and display scoreboard
+            await loadScoreboard();
+            
             document.getElementById('quiz-container').classList.remove('active');
             document.getElementById('quiz-results').classList.remove('hidden');
+        }
+
+        function displayAnswerReview(score) {
+            const container = document.getElementById('answer-review-container');
+            container.innerHTML = '';
+            
+            currentQuiz.forEach((question, idx) => {
+                const userAnswer = selectedAnswers[idx];
+                const correctAnswer = question.c;
+                const isCorrect = userAnswer === correctAnswer;
+                
+                const reviewItem = document.createElement('div');
+                reviewItem.className = `answer-review-item ${isCorrect ? 'correct' : 'incorrect'} p-4 rounded-lg`;
+                
+                reviewItem.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <div class="flex-shrink-0 w-8 h-8 rounded-full ${isCorrect ? 'bg-vivid-green' : 'bg-red-500'} flex items-center justify-center text-white font-bold">
+                            ${isCorrect ? '✓' : '✗'}
+                        </div>
+                        <div class="flex-1">
+                            <p class="font-body font-medium text-deep-night mb-2">${idx + 1}. ${question.q}</p>
+                            <p class="font-body text-sm text-deep-night/70 mb-1">
+                                <span class="font-medium">Dit svar:</span> ${question.a[userAnswer] || 'Ikke besvaret'}
+                            </p>
+                            ${!isCorrect ? `<p class="font-body text-sm text-vivid-green">
+                                <span class="font-medium">Korrekt svar:</span> ${question.a[correctAnswer]}
+                            </p>` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(reviewItem);
+            });
+        }
+
+        async function loadScoreboard() {
+            const container = document.getElementById('scoreboard-list');
+            container.innerHTML = '<p class="font-body text-stone-gray text-center">Indlæser scoreboard...</p>';
+            
+            try {
+                const { data, error } = await supabase
+                    .from('quiz_results')
+                    .select('*')
+                    .order('score', { ascending: false })
+                    .order('created_at', { ascending: true })
+                    .limit(10);
+                
+                if (error) throw error;
+                
+                if (data && data.length > 0) {
+                    container.innerHTML = '';
+                    data.forEach((result, index) => {
+                        const item = document.createElement('div');
+                        item.className = `bg-${index === 0 ? 'vivid-green/20 border-2 border-vivid-green' : 'deep-night/5'} p-4 rounded-lg flex justify-between items-center`;
+                        item.innerHTML = `
+                            <div class="flex items-center gap-3">
+                                <span class="font-display text-2xl ${index < 3 ? 'text-sun-glow' : 'text-stone-gray'}">#${index + 1}</span>
+                                <p class="font-body font-semibold text-deep-night">${result.student_name || 'Anonym'}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-display text-lg ${index === 0 ? 'text-vivid-green' : 'text-deep-night'}">${result.score}/10</p>
+                                <p class="font-body text-sm text-stone-gray">${result.percentage.toFixed(0)}%</p>
+                            </div>
+                        `;
+                        container.appendChild(item);
+                    });
+                } else {
+                    container.innerHTML = '<p class="font-body text-stone-gray text-center">Ingen resultater endnu</p>';
+                }
+            } catch (error) {
+                console.error('Error loading scoreboard:', error);
+                container.innerHTML = '<p class="font-body text-red-500 text-center">Kunne ikke indlæse scoreboard</p>';
+            }
         }
 
         function resetQuiz() {
