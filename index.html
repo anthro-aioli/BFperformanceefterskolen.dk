@@ -160,6 +160,87 @@
         .plant.grow { animation: plant-grow 1.2s ease-out forwards; }
         .plant.sway { animation: leaf-sway 3s ease-in-out infinite; }
         
+        .idea-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(26, 61, 46, 0.1) 100%);
+            border: 2px solid rgba(0, 210, 106, 0.2);
+            padding: 2rem;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.4s ease;
+        }
+        
+        .idea-card:hover {
+            border-color: var(--vivid-green);
+            box-shadow: 0 10px 30px rgba(0, 210, 106, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .idea-card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .idea-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--vivid-green);
+            opacity: 0.3;
+            margin-bottom: 1rem;
+        }
+        
+        .idea-title {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.5rem;
+            color: var(--warm-cream);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .idea-text {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            font-size: 0.95rem;
+            color: rgba(245, 240, 232, 0.8);
+            line-height: 1.6;
+        }
+        
+        .author-card {
+            background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(26, 61, 46, 0.1) 100%);
+            border: 2px solid rgba(0, 210, 106, 0.2);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            transition: all 0.4s ease;
+        }
+        
+        .author-card:hover {
+            border-color: var(--vivid-green);
+            box-shadow: 0 10px 30px rgba(0, 210, 106, 0.2);
+            transform: translateY(-4px);
+        }
+        
+        .author-title {
+            font-family: 'Instrument Serif', Georgia, serif;
+            font-size: 1.3rem;
+            color: var(--vivid-green);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .author-text {
+            font-size: 0.95rem;
+            color: rgba(245, 240, 232, 0.8);
+            line-height: 1.6;
+        }
+        
+        .exercise-card { transition: transform 0.4s ease, border-color 0.3s ease; }
+        .exercise-card:hover { transform: translateY(-4px); border-color: var(--vivid-green); }
+        
+        .song-suggestion-form { background: linear-gradient(135deg, rgba(0, 210, 106, 0.1) 0%, rgba(255, 217, 61, 0.05) 100%); }
+        
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--deep-night); }
         ::-webkit-scrollbar-thumb { background: var(--deep-forest); border-radius: 4px; }
@@ -167,10 +248,10 @@
     </style>
 </head>
 <body>
-    <!-- Plant container, login modals, nav - keeping existing code -->
-    
+    <!-- PLANT CONTAINER FOR GROWING ANIMATIONS -->
     <div class="plant-container" id="plant-container"></div>
     
+    <!-- LOGIN MODAL -->
     <div id="login-modal" class="login-modal active">
         <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
             <div class="text-center mb-8">
@@ -191,6 +272,7 @@
         </div>
     </div>
 
+    <!-- ADMIN LOGIN MODAL -->
     <div id="admin-login-modal" class="admin-login-modal">
         <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl max-w-md w-full">
             <div class="text-center mb-8">
@@ -208,6 +290,7 @@
         </div>
     </div>
 
+    <!-- NAVIGATION -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-deep-night/80 backdrop-blur-md border-b border-white/5">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
@@ -228,6 +311,7 @@
         </div>
     </nav>
 
+    <!-- ADMIN DASHBOARD -->
     <div id="admin-dashboard" class="admin-dashboard">
         <div class="max-w-7xl mx-auto px-4 py-12">
             <button onclick="closeAdmin()" class="px-6 py-3 bg-vivid-green text-deep-night rounded-lg mb-8">Luk Admin</button>
@@ -246,7 +330,7 @@
     </div>
 
     <main id="main-content" class="pt-16">
-        <!-- HERO -->
+        <!-- HERO SECTION -->
         <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-b from-deep-night via-deep-night/80 to-deep-night z-0"></div>
             <div class="organic-shape w-96 h-96 bg-deep-forest top-20 -left-48"></div>
@@ -272,7 +356,7 @@
             </div>
         </section>
 
-        <!-- VERDEN -->
+        <!-- VERDEN ER FAKTISK BLEVET BEDRE -->
         <section id="verden" class="relative py-24 sm:py-32 bg-warm-cream text-deep-night">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
@@ -297,56 +381,240 @@
             </div>
         </section>
 
-        <!-- LITTERATUR SECTION -->
+        <!-- SKABT TIL FREMTIDEN - LITTERATUR SEKTION -->
         <section id="litteratur" class="relative py-24 sm:py-32 bg-deep-night">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 reveal">
-                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Litteratur</span>
-                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream mt-4 mb-6">Skabt til fremtiden</h2>
-                    <p class="font-body text-lg text-stone-gray max-w-3xl mx-auto">Bøger om håb, handling og at turde se fremad med realisme og mod.</p>
+            <!-- SEKTION 1: INTRO -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div class="reveal">
+                        <h2 class="font-display text-4xl sm:text-5xl text-warm-cream mb-8">Skabt til fremtiden – Performance EL</h2>
+                        <div class="space-y-6 font-body text-lg text-stone-gray leading-relaxed">
+                            <p>På Performance henter vi ofte inspiration i forskellig litteratur, og vi ønsker at arbejde med litteraturen, så ordene og pointerne bliver mere forståelige og tilgængelige for både voksne og teenagere.</p>
+                            <p>Forfatterne til de fire bøger, vi arbejder med, har brugt hele liv på at opnå deres enorme viden og konklusioner. Den får vi lov at dykke ned i, blive klogere på og inspireret af, så vi kan skrive vores egen performance-årgangsfortælling.</p>
+                        </div>
+                    </div>
+                    <div class="reveal reveal-delay-1">
+                        <div class="w-full h-96 bg-gradient-to-br from-vivid-green/10 to-deep-forest/10 rounded-2xl border-2 border-vivid-green/20 flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-8xl mb-4">🎭</p>
+                                <p class="font-body text-stone-gray">Scene fra Performance</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+            </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Book 1 -->
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-1">
-                        <h3 class="font-display text-2xl text-vivid-green mb-3">Humankind</h3>
-                        <p class="font-body text-sm text-sun-glow mb-4">Rutger Bregman</p>
-                        <p class="font-body text-stone-gray leading-relaxed">Mennesker er grundlæggende gode. Kynisme og mistillid er ikke realistiske – de er en genvej, der gør os blinde for fakta.</p>
+            <!-- SEKTION 2: DE FIRE BØGER -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Fire kilder til inspiration</span>
+                    <h3 class="font-display text-3xl sm:text-4xl text-warm-cream mt-4">Bøgerne hedder:</h3>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16 reveal">
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-6 text-center">
+                        <p class="font-display text-xl text-vivid-green mb-2">Håb</p>
+                        <p class="font-body text-sm text-stone-gray">Kristian Leth</p>
+                    </div>
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-6 text-center">
+                        <p class="font-display text-xl text-vivid-green mb-2">Fremtiden er der også i morgen</p>
+                        <p class="font-body text-sm text-stone-gray">Kristian Leth</p>
+                    </div>
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-6 text-center">
+                        <p class="font-display text-xl text-vivid-green mb-2">Factfulness</p>
+                        <p class="font-body text-sm text-stone-gray">Hans Rosling</p>
+                    </div>
+                    <div class="bg-deep-forest/20 border border-deep-forest/30 rounded-2xl p-6 text-center">
+                        <p class="font-display text-xl text-vivid-green mb-2">Det gode menneske</p>
+                        <p class="font-body text-sm text-stone-gray">Rutger Bregman</p>
+                    </div>
+                </div>
+                <div class="bg-gradient-to-r from-vivid-green/10 to-deep-forest/10 border-l-4 border-vivid-green rounded-xl p-8 reveal reveal-delay-1">
+                    <p class="font-body text-lg text-warm-cream leading-relaxed mb-4">De fire bøger deler en stærk fælles kerne:</p>
+                    <div class="space-y-3">
+                        <p class="font-body text-warm-cream"><span class="font-medium">Verdens tilstand er langt bedre, end de fleste tror.</span></p>
+                        <p class="font-body text-warm-cream"><span class="font-medium">Mennesker er grundlæggende samarbejdende og gode, og fremtiden rummer store muligheder –</span></p>
+                        <p class="font-body text-warm-cream"><span class="font-medium">hvis vi tør se virkeligheden klart og handle med håb, fakta og tillid.</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 3: 9 IDÉER GRID -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Fra fire bøger</span>
+                    <h3 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream mt-4">9 idéer, der former vores forestilling</h3>
+                    <p class="font-body text-lg text-stone-gray max-w-2xl mx-auto mt-6">Bøgerne peger på mange af de samme ting. Her er ni af de vigtigste idéer, vi arbejder videre med, når vi skaber performance:</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="idea-card reveal">
+                        <div class="idea-card-content">
+                            <div class="idea-number">1</div>
+                            <h4 class="idea-title">Verden går markant bedre end vi tror</h4>
+                            <p class="idea-text">Alle fire bøger insisterer på, at vi systematisk undervurderer menneskelig fremgang. Hans Rosling viser dette gennem data om faldende fattigdom, længere levetid og højere uddannelsesniveauer. Kristian Leth og Rutger Bregman skildrer samme mønster gennem historiske, kulturelle og filosofiske perspektiver.</p>
+                        </div>
                     </div>
 
-                    <!-- Book 2 -->
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-2">
-                        <h3 class="font-display text-2xl text-vivid-green mb-3">Factfulness</h3>
-                        <p class="font-body text-sm text-sun-glow mb-4">Hans Rosling</p>
-                        <p class="font-body text-stone-gray leading-relaxed">Verden er faktisk bedre, end du tror. Data viser fremskridt – ikke fordi alt er perfekt, men fordi vi har løst problemer før.</p>
+                    <div class="idea-card reveal reveal-delay-1">
+                        <div class="idea-card-content">
+                            <div class="idea-number">2</div>
+                            <h4 class="idea-title">Mennesker er grundlæggende bedre og mere samarbejdende</h4>
+                            <p class="idea-text">Et centralt budskab er troen på menneskets godhed og evne til at handle rationelt og omsorgsfuldt. Rutger Bregman kritiserer idéen om "det egoistiske menneske". Kristian Leth inviterer os til at forstå, hvorfor vi fortæller dommedagshistorier – og hvorfor de ikke nødvendigvis er sande.</p>
+                        </div>
                     </div>
 
-                    <!-- Book 3 -->
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-3">
-                        <h3 class="font-display text-2xl text-vivid-green mb-3">Utopia for Realists</h3>
-                        <p class="font-body text-sm text-sun-glow mb-4">Rutger Bregman</p>
-                        <p class="font-body text-stone-gray leading-relaxed">Fremtiden kan designes. Vi har råd til basalindkomst, kortere arbejdsuger og åbne grænser – hvis vi tør tænke større.</p>
+                    <div class="idea-card reveal reveal-delay-2">
+                        <div class="idea-card-content">
+                            <div class="idea-number">3</div>
+                            <h4 class="idea-title">Pessimisme er ofte en illusion skabt af medier og bias</h4>
+                            <p class="idea-text">Hans Rosling beskriver vores "dramatiske instinkter". Kristian Leth taler om kulturelle narrativer. Rutger Bregman viser, hvordan negative menneskesyn farver politik, økonomi og uddannelse.</p>
+                        </div>
                     </div>
 
-                    <!-- Book 4 -->
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-1">
-                        <h3 class="font-display text-2xl text-vivid-green mb-3">The Ministry for the Future</h3>
-                        <p class="font-body text-sm text-sun-glow mb-4">Kim Stanley Robinson</p>
-                        <p class="font-body text-stone-gray leading-relaxed">Klimakrise mødes med handling. En roman om hvordan vi kunne tackle det svære – med politik, teknologi og vilje.</p>
+                    <div class="idea-card reveal reveal-delay-3">
+                        <div class="idea-card-content">
+                            <div class="idea-number">4</div>
+                            <h4 class="idea-title">Håb er et aktivt valg – ikke naivitet</h4>
+                            <p class="idea-text">Forfatterne går op imod idéen om, at håb er blåøjet. Håb bliver præsenteret som en måde at forstå verden realistisk – baseret på fakta og menneskers faktiske adfærd.</p>
+                        </div>
                     </div>
 
-                    <!-- Book 5 -->
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-2">
-                        <h3 class="font-display text-2xl text-vivid-green mb-3">Doughnut Economics</h3>
-                        <p class="font-body text-sm text-sun-glow mb-4">Kate Raworth</p>
-                        <p class="font-body text-stone-gray leading-relaxed">Økonomi kan tænkes anderledes. Ikke uendelig vækst, men balance: nok til alle, uden at ødelægge planeten.</p>
+                    <div class="idea-card reveal reveal-delay-4">
+                        <div class="idea-card-content">
+                            <div class="idea-number">5</div>
+                            <h4 class="idea-title">Fremtiden er formbar – ikke forudbestemt</h4>
+                            <p class="idea-text">Hans Rosling: bedre beslutninger gennem fakta. Rutger Bregman: institutioner bør bygges på tillid. Kristian Leth: fremtidens fortælling skabes af, hvordan vi ser verden.</p>
+                        </div>
                     </div>
 
-                    <!-- Book 6 -->
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-3">
-                        <h3 class="font-display text-2xl text-vivid-green mb-3">Emergent Strategy</h3>
-                        <p class="font-body text-sm text-sun-glow mb-4">adrienne maree brown</p>
-                        <p class="font-body text-stone-gray leading-relaxed">Forandring sker i små skridt, i fællesskaber, i tillid. Vi er naturen – ikke dens fjender. Fremtiden bygges sammen.</p>
+                    <div class="idea-card reveal reveal-delay-1">
+                        <div class="idea-card-content">
+                            <div class="idea-number">6</div>
+                            <h4 class="idea-title">Narrativer styrer vores verdensbillede</h4>
+                            <p class="idea-text">Vi tager ofte fejl – ikke fordi verden er dårlig, men fordi fortællingen om verden ser sådan ud. Som i efterskolens hverdagsdramaer oplever mennesker den samme historie vidt forskelligt. Rutger Bregman sammenligner nyhedsstrømmen med et dagligt "skadeligt stof": krig, ødelæggelse og katastrofer får opmærksomheden – stille fremgang gør ikke.</p>
+                        </div>
+                    </div>
+
+                    <div class="idea-card reveal reveal-delay-2">
+                        <div class="idea-card-content">
+                            <div class="idea-number">7</div>
+                            <h4 class="idea-title">Langtidsholdbare valg og ansvar for kommende generationer</h4>
+                            <p class="idea-text">Kristian Leth og Rutger Bregman opfordrer os til at tænke længere end nuet: Hvordan bygger vi en verden, der er god – også for dem, der lever efter os?</p>
+                        </div>
+                    </div>
+
+                    <div class="idea-card reveal reveal-delay-3">
+                        <div class="idea-card-content">
+                            <div class="idea-number">8</div>
+                            <h4 class="idea-title">Empati, samarbejde og tillid er undervurderede redskaber</h4>
+                            <p class="idea-text">Rutger Bregman argumenterer for institutioner bygget på tillid. Kristian Leth og Hans Rosling viser, hvordan menneskeligt samarbejde er grundlaget for næsten al fremgang.</p>
+                        </div>
+                    </div>
+
+                    <div class="idea-card reveal reveal-delay-4">
+                        <div class="idea-card-content">
+                            <div class="idea-number">9</div>
+                            <h4 class="idea-title">Fremtiden er værd at kæmpe for</h4>
+                            <p class="idea-text">Optimisme er ikke ønsketænkning, men en realistisk forventning om forbedring baseret på verdenshistorien.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 4: SÆRLIGT CITAT - TO ULVE -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div class="reveal">
+                        <div class="bg-gradient-to-br from-vivid-green/10 to-deep-forest/10 border-l-4 border-vivid-green rounded-xl p-12">
+                            <p class="font-display text-2xl text-warm-cream mb-6 italic">"En gammel mand sagde til sit barnebarn:</p>
+                            <p class="font-display text-xl text-warm-cream mb-4 italic">Der foregår en kamp indeni mig, det er en skrækkelig kamp om to ulve.</p>
+                            <p class="font-display text-xl text-warm-cream mb-4 italic">… Den ene er ond … den anden er god …</p>
+                            <p class="font-display text-xl text-warm-cream mb-6 italic">Efter et øjeblik spurgte drengen: Hvilken ulv vinder?</p>
+                            <p class="font-display text-xl text-warm-cream mb-2 italic">Den gamle mand smilede og sagde:</p>
+                            <p class="font-display text-2xl text-vivid-green font-bold italic">Den du fodrer."</p>
+                            <p class="font-body text-sm text-stone-gray mt-6">– Uddrag fra Det gode menneske</p>
+                        </div>
+                        <div class="mt-8 reveal reveal-delay-1">
+                            <p class="font-body text-lg text-stone-gray leading-relaxed"><span class="font-medium text-warm-cream">Fortællingen peger på, at vi alle rummer både mørke og lys – men det, vi giver opmærksomhed og handling, vokser.</span></p>
+                        </div>
+                    </div>
+                    <div class="reveal reveal-delay-2">
+                        <div class="w-full h-96 bg-gradient-to-br from-vivid-green/10 to-deep-forest/10 rounded-2xl border-2 border-vivid-green/20 flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-8xl mb-4">🐺</p>
+                                <p class="font-body text-stone-gray">Den ulv du fodrer</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 5: FORFATTERNE -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mb-24">
+                <div class="text-center mb-16 reveal">
+                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Deres perspektiver</span>
+                    <h3 class="font-display text-4xl sm:text-5xl text-warm-cream mt-4">Hvad siger hver forfatter?</h3>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <div class="author-card reveal">
+                        <h4 class="author-title">Kristian Leth – Håb + Fremtiden er der også i morgen</h4>
+                        <ul class="author-text space-y-3">
+                            <li>• Dominerende fortællinger om undergang er kulturelle – ikke nødvendigvis sande.</li>
+                            <li>• Håb er nødvendigt for at forstå verden nuanceret.</li>
+                            <li>• Vi må genopdage det gode i historien, mennesket og fremtiden.</li>
+                        </ul>
+                    </div>
+                    <div class="author-card reveal reveal-delay-1">
+                        <h4 class="author-title">Hans Rosling – Factfulness</h4>
+                        <ul class="author-text space-y-3">
+                            <li>• Vi tager systematisk fejl om verdens tilstand.</li>
+                            <li>• Data viser, at verden på næsten alle områder bliver bedre.</li>
+                            <li>• En korrekt forståelse af verden giver bedre beslutninger – og færre panikløsninger.</li>
+                        </ul>
+                    </div>
+                    <div class="author-card reveal reveal-delay-2">
+                        <h4 class="author-title">Rutger Bregman – Det gode menneske</h4>
+                        <ul class="author-text space-y-3">
+                            <li>• Mennesket er dybt socialt og hjælpsomt.</li>
+                            <li>• Institutioner bør bygges på tillid – ikke mistro.</li>
+                            <li>• En bedre fremtid kræver, at vi gentænker, hvem vi tror mennesker er.</li>
+                        </ul>
+                    </div>
+                    <div class="author-card reveal reveal-delay-3">
+                        <h4 class="author-title">Fælles budskab</h4>
+                        <ul class="author-text space-y-3">
+                            <li>• Verdens tilstand er bedre end vi tror.</li>
+                            <li>• Mennesker er grundlæggende gode og samarbejdende.</li>
+                            <li>• Fremtiden er værd at arbejde for.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEKTION 6: FRA BOG TIL SCENE -->
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
+                    <div class="reveal">
+                        <h3 class="font-display text-3xl sm:text-4xl text-warm-cream mb-8">Fra bog til scene</h3>
+                        <div class="space-y-6 font-body text-lg text-stone-gray leading-relaxed">
+                            <p>I Performance arbejder vi med litteraturen, så idéerne bliver levende – i krop, lyd, ord og billeder.</p>
+                            <p class="font-medium text-warm-cream">Vi bruger bøgerne til at undersøge:</p>
+                            <ul class="space-y-2 ml-4">
+                                <li>• hvad vi tror om mennesker</li>
+                                <li>• hvordan fortællinger former virkeligheden</li>
+                                <li>• hvordan vi selv vil være med til at skabe fremtiden</li>
+                            </ul>
+                            <p>Resultatet er en performance, hvor vi ikke bare spiller roller –</p>
+                            <p class="font-medium text-vivid-green">vi skaber en fortælling, der betyder noget.</p>
+                        </div>
+                    </div>
+                    <div class="reveal reveal-delay-1">
+                        <div class="w-full h-96 bg-gradient-to-br from-vivid-green/10 to-deep-forest/10 rounded-2xl border-2 border-vivid-green/20 flex items-center justify-center">
+                            <div class="text-center">
+                                <p class="text-8xl mb-4">📖🎭</p>
+                                <p class="font-body text-stone-gray">Fra tekst til scene</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -382,7 +650,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="quiz-results" class="quiz-container" style="display: none;">
+                <div id="quiz-results" class="quiz-container hidden">
                     <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-xl">
                         <div class="text-center mb-12">
                             <h3 class="font-display text-4xl text-deep-night mb-4">Dine resultater</h3>
@@ -393,11 +661,13 @@
                             </div>
                         </div>
                         
+                        <!-- ANSWER REVIEW SECTION -->
                         <div class="mb-12">
                             <h4 class="font-display text-2xl text-deep-night mb-6">Gennemgang af dine svar</h4>
                             <div id="answer-review-container" class="space-y-4"></div>
                         </div>
                         
+                        <!-- SCOREBOARD SECTION -->
                         <div class="mb-12">
                             <h4 class="font-display text-2xl text-deep-night mb-6">Top 10 Scoreboard</h4>
                             <div id="scoreboard-container" class="bg-deep-night/5 rounded-2xl p-6">
@@ -416,89 +686,85 @@
             </div>
         </section>
 
-        <!-- ØVELSER SECTION -->
+        <!-- SKRIV DIG FREMAD -->
         <section id="øvelser" class="relative py-24 sm:py-32 bg-deep-night">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 reveal">
-                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Skriv dig fremad</span>
-                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream mt-4 mb-6">Refleksionsøvelser</h2>
-                    <p class="font-body text-lg text-stone-gray max-w-3xl mx-auto">Små skriveøvelser der hjælper dig med at tænke fremad.</p>
-                </div>
-
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="text-center mb-16 reveal"><h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-warm-cream">Skriv dig fremad</h2></div>
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-1">
-                        <div class="text-4xl mb-4">📝</div>
-                        <h3 class="font-display text-2xl text-warm-cream mb-4">Mit håb</h3>
-                        <p class="font-body text-stone-gray mb-4">Skriv om noget, du håber på. Hvad ville du ønske for fremtiden – for dig selv, din familie, eller verden?</p>
+                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal">
+                        <div class="font-display text-7xl text-vivid-green/20 leading-none">01</div>
+                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">Dynen-brevet</h3>
+                        <p class="font-body text-warm-cream/80 leading-relaxed">Skriv et kort brev til dig selv, der ligger under dynen. Hvad ville du sige?</p>
                     </div>
-
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-2">
-                        <div class="text-4xl mb-4">💪</div>
-                        <h3 class="font-display text-2xl text-warm-cream mb-4">Min styrke</h3>
-                        <p class="font-body text-stone-gray mb-4">Hvad er du god til? Hvad giver dig energi? Hvordan kan du bruge det til at gøre en forskel?</p>
+                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal reveal-delay-1">
+                        <div class="font-display text-7xl text-vivid-green/20 leading-none">02</div>
+                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">FOMO vs. JOMO</h3>
+                        <p class="font-body text-warm-cream/80 leading-relaxed">Lav to lister: 5 ting du er bange for at gå glip af, og 5 ting du gerne vil slippe for.</p>
                     </div>
-
-                    <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-2xl p-6 hover:border-vivid-green transition-all reveal reveal-delay-3">
-                        <div class="text-4xl mb-4">🌍</div>
-                        <h3 class="font-display text-2xl text-warm-cream mb-4">Mit skridt</h3>
-                        <p class="font-body text-stone-gray mb-4">Hvilket første lille skridt kan du tage? Det behøver ikke være stort – bare noget du rent faktisk kan gøre.</p>
+                    <div class="exercise-card bg-deep-forest/20 border border-deep-forest/30 rounded-3xl p-8 reveal reveal-delay-2">
+                        <div class="font-display text-7xl text-vivid-green/20 leading-none">03</div>
+                        <h3 class="font-display text-2xl text-warm-cream mt-4 mb-4">Brev fra din fremtid</h3>
+                        <p class="font-body text-warm-cream/80 leading-relaxed">Du er 30 år gammel og har det godt. Hvad vil du sige til dig selv nu?</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- MUSIK SECTION -->
+        <!-- MUSIK & SPOTIFY -->
         <section id="musik" class="relative py-24 sm:py-32 bg-warm-cream">
-            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 reveal">
-                    <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Lyt med</span>
-                    <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4 mb-6">Musik til fremtiden</h2>
-                    <p class="font-body text-lg text-deep-night/70 max-w-3xl mx-auto">En Spotify-playliste fuld af håb, energi og fremtidstro.</p>
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 reveal">
+                    <span class="font-body text-sm font-medium text-deep-forest uppercase tracking-wider">Musik</span>
+                    <h2 class="font-display text-4xl sm:text-5xl text-deep-night mt-4">Soundtrack til fremtiden</h2>
                 </div>
-
-                <div class="max-w-3xl mx-auto reveal reveal-delay-1">
-                    <div class="bg-soft-white rounded-3xl p-8 shadow-xl">
-                        <iframe 
-                            style="border-radius: 12px" 
-                            src="https://open.spotify.com/embed/playlist/37i9dQZF1DXdPec7aLTmlC?utm_source=generator" 
-                            width="100%" 
-                            height="380" 
-                            frameBorder="0" 
-                            allowfullscreen="" 
-                            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                            loading="lazy">
-                        </iframe>
+                <div class="reveal reveal-delay-1 mb-12" style="border-radius:12px; overflow:hidden;">
+                    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3ijtcImNPdAKP7V4KSytaF?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+                <div class="reveal reveal-delay-2">
+                    <div class="song-suggestion-form rounded-3xl p-8 sm:p-10">
+                        <h3 class="font-display text-2xl text-deep-night mb-6">Foreslå en sang</h3>
+                        <form id="song-suggestion-form">
+                            <div class="grid md:grid-cols-2 gap-6 mb-6">
+                                <div><label class="block font-body text-sm text-deep-night/70 mb-2">Sangtitel</label><input type="text" id="song-title" placeholder="F.eks. 'Midnight in Paris'" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green" required></div>
+                                <div><label class="block font-body text-sm text-deep-night/70 mb-2">Kunstner</label><input type="text" id="song-artist" placeholder="F.eks. 'Dua Lipa'" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green" required></div>
+                            </div>
+                            <div class="mb-6"><label class="block font-body text-sm text-deep-night/70 mb-2">Hvorfor foreslår du denne sang?</label><textarea id="song-reason" rows="4" placeholder="Hvad betyder denne sang for dig?" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night resize-none focus:outline-none focus:border-vivid-green"></textarea></div>
+                            <button type="submit" class="btn-hope w-full py-3 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Send forslag</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- BREVKASSE SECTION -->
-        <section id="brevkasse" class="relative py-24 sm:py-32 bg-deep-night">
-            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16 reveal">
-                    <span class="font-body text-sm font-medium text-vivid-green uppercase tracking-wider">Kontakt</span>
-                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream mt-4 mb-6">Brevkasse</h2>
-                    <p class="font-body text-lg text-stone-gray max-w-3xl mx-auto">Send os dine tanker, spørgsmål eller historier.</p>
+        <!-- BREVKASSEN -->
+        <section id="brevkasse" class="relative py-24 sm:py-32 bg-gradient-to-b from-deep-night via-deep-forest/30 to-warm-cream">
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-12 reveal">
+                    <h2 class="font-display text-4xl sm:text-5xl text-warm-cream">Del en tanke</h2>
+                    <p class="font-body text-lg text-warm-cream/80 mt-6">Helt anonymt. Ingen dømmer.</p>
                 </div>
-
-                <div class="bg-deep-forest/20 border-2 border-deep-forest/30 rounded-3xl p-8 sm:p-10 reveal reveal-delay-1">
-                    <form id="contact-form" class="space-y-6">
-                        <div>
-                            <label for="contact-name" class="block font-body text-sm text-warm-cream mb-2">Dit navn</label>
-                            <input type="text" id="contact-name" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green" placeholder="Navn..." required>
+                <form id="brevkasse-form" class="reveal reveal-delay-1">
+                    <div class="bg-soft-white rounded-3xl p-8 sm:p-10 shadow-2xl">
+                        <div class="mb-6"><textarea id="tanke" name="tanke" rows="6" placeholder="Skriv din tanke her..." class="w-full px-6 py-4 bg-warm-cream border-2 border-stone-gray/20 rounded-2xl font-body text-deep-night resize-none focus:outline-none focus:border-vivid-green" required></textarea></div>
+                        <div class="mb-8">
+                            <p class="font-body text-deep-night/70 text-sm mb-4">Vil du have, at en voksen læser det?</p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="deling" value="ja" class="w-5 h-5"><span class="font-body text-deep-night/80">Ja, en voksen må læse det</span></label>
+                                <label class="flex items-center gap-3 cursor-pointer"><input type="radio" name="deling" value="nej" checked class="w-5 h-5"><span class="font-body text-deep-night/80">Nej, det er bare til mig</span></label>
+                            </div>
                         </div>
-                        <div>
-                            <label for="contact-message" class="block font-body text-sm text-warm-cream mb-2">Din besked</label>
-                            <textarea id="contact-message" rows="6" class="w-full px-4 py-3 border-2 border-stone-gray/20 rounded-lg font-body text-deep-night focus:outline-none focus:border-vivid-green" placeholder="Skriv din besked her..." required></textarea>
-                        </div>
-                        <button type="submit" class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-lg">Send besked</button>
-                    </form>
+                        <button type="submit" class="btn-hope w-full py-4 bg-vivid-green text-deep-night font-body font-medium rounded-full">Send tanken afsted</button>
+                    </div>
+                </form>
+                <div id="brevkasse-success" class="hidden text-center py-12">
+                    <h3 class="font-display text-2xl text-deep-night mb-2">Tak for din tanke</h3>
+                    <p class="font-body text-deep-night/70">Den er landet sikkert.</p>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- FOOTER -->
     <footer class="bg-deep-night py-16 border-t border-white/5">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="font-display text-3xl text-warm-cream mb-2">Skabt til fremtiden</h2>
@@ -509,22 +775,23 @@
     </footer>
 
     <script>
+        // SUPABASE INITIALIZATION
         const SUPABASE_URL = 'https://zmfqodkasswmqohppcod.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InptZnFvZGthc3N3bXFvaHBwY29kIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjU0NzQ4NTgsImV4cCI6MjA0MTA1MDg1OH0.o3R3x6vZL7H8D8W5K8h8fJ9K8h8fJ9K8h8';
         
         let supabase;
         try {
             supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            console.log('✅ Supabase initialized');
+            console.log('✅ Supabase initialized successfully');
         } catch (error) {
-            console.error('❌ Supabase error:', error);
+            console.error('❌ Supabase initialization error:', error);
         }
 
         const allQuizQuestions = [
             { q: "De seneste 20 år er andelen af mennesker i verden, der lever i ekstrem fattigdom...", a: ["Næsten fordoblet", "Næsten halveret", "Den samme som før", "Steget med 10%"], c: 1 },
             { q: "Hvor mange af verdens 1-årige børn har fået mindst én vaccination mod en sygdom?", a: ["20%", "50%", "80%", "95%"], c: 2 },
             { q: "Hvis vi kigger på økonomi, hvor bor størstedelen af verdens befolkning så?", a: ["I meget fattige lande", "I meget rige lande", "I midten (mellemindkomstlande)", "Vi ved det ikke"], c: 2 },
-            { q: "Hvor mange piger gør deres grundskole færdig i verdens fattigeste lande?", a: ["20%", "40%", "60%", "80%"], c: 2 },
+            { q: "Hvor mange piger gør deres grundskole færdig i verdens fattigste lande?", a: ["20%", "40%", "60%", "80%"], c: 2 },
             { q: "Hvis du ser på verden generelt, hvad sker der så med udviklingen?", a: ["Det går værre og værre", "De rige bliver rigere, og alle andre bliver fattigere", "Verden bliver faktisk bedre skridt for skridt", "Det står helt stille"], c: 2 },
             { q: "Der er 2 milliarder børn i verden i dag. Hvor mange tror FN, der vil være i år 2100?", a: ["2 milliarder", "3 milliarder", "4 milliarder", "6 milliarder"], c: 0 },
             { q: "Hvad siger forskerne om temperaturen på jorden de næste 100 år?", a: ["Den vil falde", "Den vil stige", "Den forbliver den samme", "Det er umuligt at sige"], c: 1 },
@@ -627,6 +894,8 @@
             Object.keys(selectedAnswers).forEach(idx => { if (selectedAnswers[idx] === currentQuiz[idx].c) score++; });
             const pct = (score / 10) * 100;
             
+            console.log('📈 Score:', score, 'Percentage:', pct);
+            
             document.getElementById('score-display').textContent = `${score}/10`;
             document.getElementById('wrong-display').textContent = `${10 - score}`;
             document.getElementById('percentage-display').textContent = `${pct.toFixed(0)}%`;
@@ -634,6 +903,7 @@
             displayAnswerReview(score);
             
             try {
+                console.log('💾 Attempting to save to Supabase...');
                 const { data, error } = await supabase.from('quiz_results').insert([{
                     student_name: studentName,
                     score: score,
@@ -641,17 +911,22 @@
                     percentage: pct
                 }]);
                 
-                if (error) console.error('❌ Supabase error:', error);
-                else console.log('✅ Saved to Supabase');
+                if (error) {
+                    console.error('❌ Supabase insert error:', error);
+                } else {
+                    console.log('✅ Saved to Supabase successfully');
+                }
             } catch (error) {
-                console.error('❌ Exception:', error);
+                console.error('❌ Supabase save exception:', error);
             }
             
             await loadScoreboard();
             
             document.getElementById('quiz-container').classList.remove('active');
-            document.getElementById('quiz-results').style.display = 'block';
+            document.getElementById('quiz-results').classList.remove('hidden');
             document.getElementById('quiz-results').classList.add('active');
+            
+            console.log('✅ Results should now be visible');
         }
 
         function displayAnswerReview(score) {
@@ -689,7 +964,9 @@
 
         async function loadScoreboard() {
             const container = document.getElementById('scoreboard-list');
-            container.innerHTML = '<p class="font-body text-stone-gray text-center">Indlæser...</p>';
+            container.innerHTML = '<p class="font-body text-stone-gray text-center">Indlæser scoreboard...</p>';
+            
+            console.log('🏆 Loading scoreboard...');
             
             try {
                 const { data, error } = await supabase
@@ -699,7 +976,12 @@
                     .order('created_at', { ascending: true })
                     .limit(10);
                 
-                if (error) throw error;
+                if (error) {
+                    console.error('❌ Scoreboard load error:', error);
+                    throw error;
+                }
+                
+                console.log('📊 Scoreboard data:', data);
                 
                 if (data && data.length > 0) {
                     container.innerHTML = '';
@@ -718,18 +1000,20 @@
                         `;
                         container.appendChild(item);
                     });
+                    console.log('✅ Scoreboard rendered successfully');
                 } else {
                     container.innerHTML = '<p class="font-body text-stone-gray text-center">Ingen resultater endnu</p>';
+                    console.log('ℹ️ No scoreboard data yet');
                 }
             } catch (error) {
-                console.error('❌ Scoreboard error:', error);
-                container.innerHTML = '<p class="font-body text-red-500 text-center">Kunne ikke indlæse</p>';
+                console.error('❌ Scoreboard exception:', error);
+                container.innerHTML = '<p class="font-body text-red-500 text-center">Kunne ikke indlæse scoreboard</p>';
             }
         }
 
         function resetQuiz() {
             document.getElementById('quiz-start').classList.remove('hidden');
-            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('quiz-results').classList.add('hidden');
             document.getElementById('quiz-results').classList.remove('active');
             document.getElementById('quiz-name-form').reset();
             selectedAnswers = {};
@@ -738,8 +1022,9 @@
         }
         
         function closeQuizAndScrollToTop() {
+            console.log('🔝 Closing quiz and scrolling to top');
             document.getElementById('quiz-start').classList.remove('hidden');
-            document.getElementById('quiz-results').style.display = 'none';
+            document.getElementById('quiz-results').classList.add('hidden');
             document.getElementById('quiz-results').classList.remove('active');
             document.getElementById('quiz-name-form').reset();
             selectedAnswers = {};
